@@ -5,27 +5,27 @@ namespace LandscapingTR.Core.Entities.CompanyResources
     public class Employee: BaseEntity<int?>
     {
         /// <summary>
-        /// The employee first name.
+        /// Gets or sets the employee first name.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// The employee last name.
+        /// Gets or sets the employee last name.
         /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
-        /// The employee password
+        /// Gets or sets the employee password
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// The employee type id.
+        /// Gets or sets the employee type id.
         /// </summary>
         public int EmployeeTypeId { get; set; }
 
         /// <summary>
-        /// The employee type.
+        /// Gets or sets the employee type.
         /// </summary>
         public EmployeeType EmployeeType { get; set; }
     }

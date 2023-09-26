@@ -9,8 +9,6 @@ namespace LandscapingTR.Core.Entities
         [Required]
         public TKey Id { get; set; }
 
-        public bool isActive { get; set; }
-
         public DateTime? CreatedDate { get; set; }
     }
 }

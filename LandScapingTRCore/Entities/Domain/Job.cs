@@ -6,32 +6,32 @@ namespace LandscapingTR.Core.Entities.Domain
     public class Job: BaseEntity<int?>
     {
         /// <summary>
-        /// The employee id.
+        /// Gets or sets the employee id.
         /// </summary>
         public int EmployeeId { get; set; }
 
         /// <summary>
-        /// The employee.
+        /// Gets or sets the employee.
         /// </summary>
         public Employee Employee { get; set; }
 
         /// <summary>
-        /// The difficulty type id.
+        /// Gets or sets the difficulty type id.
         /// </summary>
         public int DifficultyTypeId { get; set; }
 
         /// <summary>
-        /// The difficulty type.
+        /// Gets or sets the difficulty type.
         /// </summary>
         public DifficultyType DifficultyType { get; set; }
 
         /// <summary>
-        /// The job type id.
+        /// Gets or sets the job type id.
         /// </summary>
         public int JobTypeId { get; set; }
 
         /// <summary>
-        /// The job type.
+        /// Gets or sets the job type.
         /// </summary>
         public JobType JobType { get; set; }
     }
