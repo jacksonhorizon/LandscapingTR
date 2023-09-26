@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LandScapingTRCore\LandscapingTRCore.csproj" />
-    <ProjectReference Include="..\LandscapingTRInfrastructure\LandscapingTRInfrastructure.csproj" />
+    <ProjectReference Include="..\LandScapingTRCore\LandscapingTR.Core.csproj" />
+    <ProjectReference Include="..\LandscapingTRInfrastructure\LandscapingTR.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

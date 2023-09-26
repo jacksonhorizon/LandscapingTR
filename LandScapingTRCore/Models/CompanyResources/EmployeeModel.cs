@@ -1,8 +1,6 @@
-﻿using LandscapingTRCore.Models.Lookups;
-
-namespace LandscapingTRCore.Models.CompanyResources
+﻿namespace LandscapingTR.Core.Models.CompanyResources
 {
-    public class Employee
+    public class EmployeeModel
     {
         public int Id { get; set; }
 
@@ -13,7 +11,5 @@ namespace LandscapingTRCore.Models.CompanyResources
         public string Password { get; set; }
 
         public int EmployeeTypeId { get; set; }
-
-        public EmployeeType EmployeeType { get; set; }
     }
 }

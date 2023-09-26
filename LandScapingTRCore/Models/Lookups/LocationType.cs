@@ -1,6 +1,6 @@
-﻿namespace LandscapingTRCore.Models.Lookups
+﻿namespace LandscapingTR.Core.Models.Lookups
 {
-    public class LocationType
+    public class LocationTypeModel
     {
         public int Id { get; set; }
 

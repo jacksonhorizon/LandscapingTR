@@ -1,6 +1,6 @@
-﻿namespace LandscapingTRCore.Models.Lookups
+﻿namespace LandscapingTR.Core.Models.Lookups
 {
-    public class JobType
+    public class JobTypeModel
     {
         public int Id { get; set; }
 

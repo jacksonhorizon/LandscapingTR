@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LandScapingTRCore\LandscapingTRCore.csproj" />
+    <ProjectReference Include="..\LandScapingTRCore\LandscapingTR.Core.csproj" />
   </ItemGroup>
 
 </Project>

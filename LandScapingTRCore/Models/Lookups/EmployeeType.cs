@@ -1,6 +1,6 @@
-﻿namespace LandscapingTRCore.Models.Lookups
+﻿namespace LandscapingTR.Core.Models.Lookups
 {
-    public class EmployeeType
+    public class EmployeeTypeModel
     {
         public int Id { get; set; }
 

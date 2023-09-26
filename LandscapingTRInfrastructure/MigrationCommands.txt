@@ -1,0 +1,3 @@
+﻿add-migration InitialCreate -StartupProject LandscapingTR.Web.Api -Context LandscapingTRDbContext -o Data/Migrations
+update-database -StartupProject LandscapingTR.Web.Api 
+remove-migration -StartupProject LandscapingTR.Web.Api

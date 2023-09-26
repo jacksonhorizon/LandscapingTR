@@ -1,9 +1,9 @@
-﻿namespace LandscapingTRCore.Models.Lookups
+﻿namespace LandscapingTR.Core.Models.Lookups
 {
-    public class DifficultyType
+    public class DifficultyTypeModel
     {
         public int Id { get; set; }
 
-        public string DifficultTypeDispalyValue { get; set; }
+        public string DifficultTypeDisplayValue { get; set; }
     }
 }
