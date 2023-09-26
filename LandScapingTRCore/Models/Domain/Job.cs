@@ -1,7 +1,7 @@
-﻿using LandscapingTRWebAPI.Models.Lookups;
-using LandscapingTRWebAPI.Models.CompanyResources;
+﻿using LandscapingTRCore.Models.Lookups;
+using LandscapingTRCore.Models.CompanyResources;
 
-namespace LandscapingTRWebAPI.Models.Domain
+namespace LandscapingTRCore.Models.Domain
 {
     public class Job
     {

@@ -1,6 +1,6 @@
-﻿using LandscapingTRWebAPI.Models.Lookups;
+﻿using LandscapingTRCore.Models.Lookups;
 
-namespace LandscapingTRWebAPI.Models.CompanyResources
+namespace LandscapingTRCore.Models.CompanyResources
 {
     public class Employee
     {

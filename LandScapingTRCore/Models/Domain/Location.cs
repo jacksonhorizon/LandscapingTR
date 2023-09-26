@@ -1,6 +1,6 @@
-﻿using LandscapingTRWebAPI.Models.Lookups;
+﻿using LandscapingTRCore.Models.Lookups;
 
-namespace LandscapingTRWebAPI.Models.Domain
+namespace LandscapingTRCore.Models.Domain
 {
     public class Location
     {

@@ -1,4 +1,4 @@
-﻿namespace LandscapingTRWebAPI.Models.Lookups
+﻿namespace LandscapingTRCore.Models.Lookups
 {
     public class LocationType
     {
