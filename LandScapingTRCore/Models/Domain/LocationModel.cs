@@ -1,14 +1,10 @@
-﻿using LandscapingTRCore.Models.Lookups;
-
-namespace LandscapingTRCore.Models.Domain
+﻿namespace LandscapingTR.Core.Models.Domain
 {
-    public class Location
+    public class LocationModel
     {
         public int Id { get; set; }
 
         public int LocationTypeId { get; set; }
-
-        public LocationType LocationType { get; set; }
 
         public string Address { get; set; }
 
