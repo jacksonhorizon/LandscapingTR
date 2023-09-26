@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTRWeb", "Landsca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTRWebAPI", "..\LandscapingTRWebAPI\LandscapingTRWebAPI\LandscapingTRWebAPI.csproj", "{59F2CC90-7DC2-4505-B906-D3175F875017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTRCore", "LandScapingTRCore\LandscapingTRCore.csproj", "{8EA018EA-6EC6-4762-B7F4-922694CF120A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTRCore", "LandScapingTRCore\LandscapingTRCore.csproj", "{8EA018EA-6EC6-4762-B7F4-922694CF120A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTRInfrastructure", "LandscapingTRInfrastructure\LandscapingTRInfrastructure.csproj", "{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTRInfrastructure", "LandscapingTRInfrastructure\LandscapingTRInfrastructure.csproj", "{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTRService", "LandscapingTRService\LandscapingTRService.csproj", "{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTRTest", "LandscapingTRTest\LandscapingTRTest.csproj", "{3188EAEF-768B-4421-B19E-87F480770F85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3188EAEF-768B-4421-B19E-87F480770F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3188EAEF-768B-4421-B19E-87F480770F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3188EAEF-768B-4421-B19E-87F480770F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3188EAEF-768B-4421-B19E-87F480770F85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

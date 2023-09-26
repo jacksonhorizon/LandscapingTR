@@ -1,6 +1,6 @@
 ﻿namespace LandscapingTRCore.Models.Lookups
 {
-    public class Difficulty
+    public class DifficultyType
     {
         public int Id { get; set; }
 

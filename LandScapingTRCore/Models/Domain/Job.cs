@@ -11,9 +11,9 @@ namespace LandscapingTRCore.Models.Domain
 
         public Employee Employee { get; set; }
 
-        public int DifficultyId { get; set; }
+        public int DifficultyTypeId { get; set; }
 
-        public Difficulty Difficulty { get; set; }
+        public DifficultyType DifficultyType { get; set; }
 
         public int JobTypeId { get; set; }
 
