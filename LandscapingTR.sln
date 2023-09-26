@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Core", "LandS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Infrastructure", "LandscapingTRInfrastructure\LandscapingTR.Infrastructure.csproj", "{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTR.Service", "LandscapingTRService\LandscapingTR.Service.csproj", "{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTR.Test", "LandscapingTRTest\LandscapingTR.Test.csproj", "{3188EAEF-768B-4421-B19E-87F480770F85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Test", "LandscapingTRTest\LandscapingTR.Test.csproj", "{3188EAEF-768B-4421-B19E-87F480770F85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}.Release|Any CPU.Build.0 = Release|Any CPU
-		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{291AAA2C-EE09-4F8C-9D75-0C2DE7F947EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
