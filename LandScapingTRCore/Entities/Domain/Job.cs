@@ -3,7 +3,7 @@ using LandscapingTR.Core.Entities.Lookups;
 
 namespace LandscapingTR.Core.Entities.Domain
 {
-    public class Job: BaseEntity
+    public class Job: BaseEntity<int?>
     {
         /// <summary>
         /// The employee id.

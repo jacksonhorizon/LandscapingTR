@@ -2,7 +2,7 @@
 
 namespace LandscapingTR.Core.Entities.CompanyResources
 {
-    public class Customer: BaseEntity
+    public class Customer: BaseEntity<int?>
     {
         /// <summary>
         /// The customer name.

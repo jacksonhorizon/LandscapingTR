@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LandscapingTR.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCustomerType : Migration
+    public partial class ChangeBaseEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -2,7 +2,7 @@
 
 namespace LandscapingTR.Core.Entities.CompanyResources
 {
-    public class Employee: BaseEntity
+    public class Employee: BaseEntity<int?>
     {
         /// <summary>
         /// The employee first name.

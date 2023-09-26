@@ -1,8 +1,13 @@
-﻿namespace LandscapingTR.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LandscapingTR.Core.Entities
 {
-    public class BaseEntity
+
+    public class BaseEntity<TKey>
     {
-        public int Id { get; set; }
+        [Key]
+        [Required]
+        public TKey Id { get; set; }
 
         public bool isActive { get; set; }
 

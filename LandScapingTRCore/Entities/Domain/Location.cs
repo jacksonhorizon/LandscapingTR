@@ -2,7 +2,7 @@
 
 namespace LandscapingTR.Core.Entities.Domain
 {
-    public class Location: BaseEntity
+    public class Location: BaseEntity<int?>
     {
         /// <summary>
         /// The location type id.
