@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTR", "LandscapingTR\LandscapingTR.csproj", "{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR", "LandscapingTR\LandscapingTR.csproj", "{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTRWebAPI", "..\LandscapingTRWebAPI\LandscapingTRWebAPI\LandscapingTRWebAPI.csproj", "{59F2CC90-7DC2-4505-B906-D3175F875017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F2CC90-7DC2-4505-B906-D3175F875017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F2CC90-7DC2-4505-B906-D3175F875017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F2CC90-7DC2-4505-B906-D3175F875017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F2CC90-7DC2-4505-B906-D3175F875017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
