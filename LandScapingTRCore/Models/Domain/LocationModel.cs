@@ -2,7 +2,7 @@
 {
     public class LocationModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public int LocationTypeId { get; set; }
 
