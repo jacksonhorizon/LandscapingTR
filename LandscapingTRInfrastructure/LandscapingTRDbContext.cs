@@ -2,6 +2,7 @@
 using LandscapingTR.Core.Entities.Lookups;
 using LandscapingTR.Core.Entities.CompanyResources;
 using Microsoft.EntityFrameworkCore;
+using LandscapingTR.Core.Entities;
 
 namespace LandscapingTR.Infrastructure
 {
@@ -24,11 +25,6 @@ namespace LandscapingTR.Infrastructure
 
 
         // Lookups Section.
-
-        /// <summary>
-        /// The difficulty types.
-        /// </summary>
-        public DbSet<DifficultyType> Difficulties { get; set; }
 
         /// <summary>
         /// The employee types.
@@ -62,5 +58,25 @@ namespace LandscapingTR.Infrastructure
         /// The locations.
         /// </summary>
         public DbSet<Location> Locations { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder){
+            base.OnModelCreating(builder);
+
+            this.RenameTableAndId<Employee, int?>(builder);
+            this.RenameTableAndId<Customer, int?>(builder);
+            this.RenameTableAndId<EmployeeType, int?>(builder);
+            this.RenameTableAndId<JobType, int?>(builder);
+            this.RenameTableAndId<LocationType, int?>(builder);
+            this.RenameTableAndId<CustomerType, int?>(builder);
+
+        }
+
+
+        private void RenameTableAndId<TEntity, TKey>(ModelBuilder builder) where TEntity : BaseEntity<TKey>
+        {
+            Type type = typeof(TEntity);
+            builder.Entity<TEntity>().ToTable(type.Name).Property(prop => prop.Id).HasColumnName(type.Name + "Id");
+        }
     }
 }

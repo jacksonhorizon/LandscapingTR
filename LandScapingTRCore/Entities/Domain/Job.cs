@@ -16,16 +16,6 @@ namespace LandscapingTR.Core.Entities.Domain
         public Employee Employee { get; set; }
 
         /// <summary>
-        /// Gets or sets the difficulty type id.
-        /// </summary>
-        public int DifficultyTypeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the difficulty type.
-        /// </summary>
-        public DifficultyType DifficultyType { get; set; }
-
-        /// <summary>
         /// Gets or sets the job type id.
         /// </summary>
         public int JobTypeId { get; set; }
