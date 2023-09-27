@@ -1,6 +1,6 @@
 ﻿using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Lookups;
-using LandscapingTR.Core.Factories;
+using AutoMapper;
 
 namespace LandscapingTR.Core.Services
 {
@@ -8,9 +8,11 @@ namespace LandscapingTR.Core.Services
     {
         private ILookupRepository lookupRepository;
 
-        public LookupService(ILookupRepository lookupRepository)
+        private readonly IMapper mapper;
+        public LookupService(ILookupRepository lookupRepository, IMapper mapper)
         {
             this.lookupRepository = lookupRepository;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -27,8 +29,7 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
-                //return lookupEntities.Select(x => ModelFactory.Create(x)).ToListAsync();
-                return new List<LookupItemModel>();
+                return lookupEntities.Select(x => this.mapper.Map<LookupItemModel>(x)).ToList();
             }
         }
 
@@ -46,8 +47,7 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
-                //return lookupEntities.Select(x => ModelFactory.Create(x)).ToListAsync();
-                return new List<LookupItemModel>();
+                return lookupEntities.Select(x => this.mapper.Map<LookupItemModel>(x)).ToList();
             }
         }
 
@@ -66,8 +66,7 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
-                //return lookupEntities.Select(x => ModelFactory.Create(x)).ToListAsync();
-                return new List<LookupItemModel>();
+                return lookupEntities.Select(x => this.mapper.Map<LookupItemModel>(x)).ToList();
             }
         }
 
@@ -86,8 +85,7 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
-                //return lookupEntities.Select(x => ModelFactory.Create(x)).ToListAsync();
-                return new List<LookupItemModel>();
+                return lookupEntities.Select(x => this.mapper.Map<LookupItemModel>(x)).ToList();
             }
         }
     }
