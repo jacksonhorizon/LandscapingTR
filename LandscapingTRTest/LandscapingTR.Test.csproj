@@ -20,8 +20,4 @@
     <ProjectReference Include="..\LandscapingTRInfrastructure\LandscapingTR.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Lookups\" />
-  </ItemGroup>
-
 </Project>

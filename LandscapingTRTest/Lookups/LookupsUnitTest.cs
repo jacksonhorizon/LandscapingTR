@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LandscapingTR.Core.Interfaces;
+﻿using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Infrastructure;
 using LandscapingTR.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace LandscapingTR.Test
+namespace LandscapingTR.Test.Lookups
 {
     [TestClass]
     public class LookupsRepositoryUnitTest
@@ -17,7 +12,7 @@ namespace LandscapingTR.Test
         private static ILookupRepository lookupRepository;
 
         private static LandscapingTRDbContext context;
-     
+
 
         [ClassInitialize]
         public static void Setup(TestContext testContext)

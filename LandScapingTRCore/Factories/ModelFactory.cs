@@ -7,7 +7,7 @@ using LandscapingTR.Core.Models.Lookups;
 
 namespace LandscapingTR.Core.Factories
 {
-    public static class ModelFactory
+    public class ModelFactory
     {
         public static CustomerModel Create(Customer entity)
         {
