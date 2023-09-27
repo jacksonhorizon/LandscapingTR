@@ -5,13 +5,13 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Web", "LandscapingTR\LandscapingTR.Web.csproj", "{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Web.API", "..\LandscapingTRWebAPI\LandscapingTRWebAPI\LandscapingTR.Web.API.csproj", "{59F2CC90-7DC2-4505-B906-D3175F875017}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Core", "LandScapingTRCore\LandscapingTR.Core.csproj", "{8EA018EA-6EC6-4762-B7F4-922694CF120A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Infrastructure", "LandscapingTRInfrastructure\LandscapingTR.Infrastructure.csproj", "{96541B28-EC6C-4613-8AA0-5E8C3DE4D549}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandscapingTR.Test", "LandscapingTRTest\LandscapingTR.Test.csproj", "{3188EAEF-768B-4421-B19E-87F480770F85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapingTR.Web.API", "LandscapingTR.Web.API\LandscapingTR.Web.API.csproj", "{53535060-2987-42FA-BAF9-0829F3823877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D64E0A-E67F-435A-A4EE-7E4EA800E6C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59F2CC90-7DC2-4505-B906-D3175F875017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59F2CC90-7DC2-4505-B906-D3175F875017}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59F2CC90-7DC2-4505-B906-D3175F875017}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59F2CC90-7DC2-4505-B906-D3175F875017}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EA018EA-6EC6-4762-B7F4-922694CF120A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EA018EA-6EC6-4762-B7F4-922694CF120A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EA018EA-6EC6-4762-B7F4-922694CF120A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3188EAEF-768B-4421-B19E-87F480770F85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53535060-2987-42FA-BAF9-0829F3823877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53535060-2987-42FA-BAF9-0829F3823877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53535060-2987-42FA-BAF9-0829F3823877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53535060-2987-42FA-BAF9-0829F3823877}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
