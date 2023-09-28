@@ -3,6 +3,7 @@ using LandscapingTR.Core.Entities.Lookups;
 using LandscapingTR.Core.Entities.CompanyResources;
 using Microsoft.EntityFrameworkCore;
 using LandscapingTR.Core.Entities;
+using LandscapingTR.Core.Entities.Time;
 
 namespace LandscapingTR.Infrastructure
 {
@@ -12,6 +13,14 @@ namespace LandscapingTR.Infrastructure
         {
 
         }
+
+        // Time Section.
+
+        /// <summary>
+        /// The employees.
+        /// </summary>
+        public DbSet<TimeEntry> TimeEntries { get; set; }
+
 
         // Company Resources Section.
 
@@ -63,6 +72,7 @@ namespace LandscapingTR.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder){
             base.OnModelCreating(builder);
 
+            this.RenameTableAndId<TimeEntry, int?>(builder);
             this.RenameTableAndId<Employee, int?>(builder);
             this.RenameTableAndId<Customer, int?>(builder);
             this.RenameTableAndId<EmployeeType, int?>(builder);

@@ -22,6 +22,8 @@ builder.Services.AddDbContext<LandscapingTRDbContext>(options =>
 builder.Services.AddTransient<IMapper>(_ => mapper);
 builder.Services.AddTransient<ILookupRepository, LookupRepository>();
 builder.Services.AddTransient<ILookupService, LookupService>();
+builder.Services.AddTransient<ILookupService, LookupService>();
+builder.Services.AddTransient<ITimeEntryRepository, TimeEntryRepository>();
 
 
 
