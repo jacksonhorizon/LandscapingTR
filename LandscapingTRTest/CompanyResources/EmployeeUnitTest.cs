@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Transactions;
+using AutoMapper;
 using LandscapingTR.Core;
 using LandscapingTR.Core.Entities.CompanyResources;
 using LandscapingTR.Core.Enums.Lookups;
+using LandscapingTR.Core.Factories;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.CompanyResources;
 using LandscapingTR.Core.Models.Lookups;
@@ -9,6 +11,7 @@ using LandscapingTR.Core.Services;
 using LandscapingTR.Infrastructure;
 using LandscapingTR.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LandscapingTR.Test.Lookups
 {
@@ -23,6 +26,8 @@ namespace LandscapingTR.Test.Lookups
         private static LandscapingTRDbContext Context;
 
         private static IMapper Mapper;
+
+        private TransactionScope TransactionScope;
 
 
         [ClassInitialize]
@@ -55,18 +60,34 @@ namespace LandscapingTR.Test.Lookups
         }
 
         [ClassCleanup]
-        public static void TestCleanup()
+        public static void ClassCleanup()
         {
             // Class Cleanup
             Context.Dispose();
         }
 
-        [TestMethod]
-        public async Task Employee_SaveNewEmployee_Succeeds()
+        [TestInitialize]
+        public void TestInitialize()
         {
+            this.TransactionScope = TransactionScopeFactory.createReadUncommitted();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            TransactionScope.Dispose();
+        }
+
+        /// <summary>
+        /// Adds a new employee.
+        /// </summary>
+        /// <returns>The saved employee.</returns>
+        private async Task<EmployeeModel> AddNewEmployee(string firstName)
+        {
+            // Add a new employee.
             var newEmployee = new Employee()
             {
-                FirstName = "Test Name",
+                FirstName = firstName,
                 LastName = "Test Last Name",
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
@@ -77,32 +98,68 @@ namespace LandscapingTR.Test.Lookups
 
             var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
             Assert.IsNotNull(savedEmployeeModel);
+
+            return savedEmployeeModel;
+        }
+
+        [TestMethod]
+        public async Task Employee_SaveNewEmployee_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployee("Employee 1");
+            Assert.IsNotNull(savedEmployeeModel);
+        }
+
+        [TestMethod]
+        public async Task Employee_GetEmployee_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployee("Employee 2");
+            Assert.IsNotNull(savedEmployeeModel);
+
+            var newSavedEmployeeModel = await EmployeeService.GetEmployeeAsync(savedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+            Assert.AreEqual(savedEmployeeModel.Id.Value, newSavedEmployeeModel.Id.Value);
         }
 
         [TestMethod]
         public async Task Employee_UpdateEmployee_Succeeds()
         {
-            var newEmployee = new Employee()
-            {
-                FirstName = "Test Name",
-                LastName = "Test Last Name",
-                Password = "Test Password",
-                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
-            };
-            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployee("Employee 3");
 
-            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
-
-            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
-            Assert.IsNotNull(savedEmployeeModel);
-
+            // Update the employee.
             savedEmployeeModel.EmployeeTypeId = (int)EmployeeTypes.CrewSupervisor;
 
-            newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(savedEmployeeModel);
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(savedEmployeeModel);
 
             savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
             Assert.IsNotNull(savedEmployeeModel);
             Assert.AreEqual(savedEmployeeModel.EmployeeTypeId, (int)EmployeeTypes.CrewSupervisor);
+        }
+
+        [TestMethod]
+        public async Task Employee_GetEmployees_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModelOne = await AddNewEmployee("Employee 4");
+
+            // Add a new employee.
+            var savedEmployeeModelTwo = await AddNewEmployee("Employee 5");
+
+            // Add a new employee.
+            var savedEmployeeModelThree = await AddNewEmployee("Employee 6");
+
+            // Add a new employee.
+            var savedEmployeeModelFour = await AddNewEmployee("Employee 7");
+
+            // Add a new employee.
+            var savedEmployeeModelFive = await AddNewEmployee("Employee 8");
+
+
+            var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();
+            Assert.IsNotNull(savedEmployeeModels);
+            Assert.AreEqual(5, savedEmployeeModels.Count);
         }
     }
 }

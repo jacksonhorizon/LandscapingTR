@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Transactions;
+using AutoMapper;
 using LandscapingTR.Core;
+using LandscapingTR.Core.Factories;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Lookups;
 using LandscapingTR.Core.Services;
@@ -21,6 +23,7 @@ namespace LandscapingTR.Test.Lookups
 
         private static IMapper Mapper;
 
+        private TransactionScope TransactionScope;
 
         [ClassInitialize]
         public static void Setup(TestContext testContext)
@@ -52,10 +55,22 @@ namespace LandscapingTR.Test.Lookups
         }
 
         [ClassCleanup]
-        public static void TestCleanup()
+        public static void ClassCleanup()
         {
             // Class Cleanup
             Context.Dispose();
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.TransactionScope = TransactionScopeFactory.createReadUncommitted();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            TransactionScope.Dispose();
         }
 
         [TestMethod]
