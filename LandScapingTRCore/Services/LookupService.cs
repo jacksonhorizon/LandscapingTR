@@ -1,6 +1,7 @@
 ﻿using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Lookups;
 using AutoMapper;
+using LandscapingTR.Core.Models;
 
 namespace LandscapingTR.Core.Services
 {
@@ -87,6 +88,25 @@ namespace LandscapingTR.Core.Services
             {
                 return lookupEntities.Select(x => this.Mapper.Map<LookupItemModel>(x)).ToList();
             }
+        }
+
+        /// <summary>
+        /// Gets the LandscapingTR lookups model.
+        /// </summary>
+        /// <returns>The lookups model.</returns>
+        public async Task<LandscapingTRLookupsModel> GetLandscapingTRLookupsAsync()
+        {
+            var jobTypes = await this.GetJobTypesAsync();
+            var employeeTypes = await this.GetEmployeeTypesAsync();
+            var locationTypes = await this.GetLocationTypesAsync();
+            var customerTypes = await this.GetCustomerTypesAsync();
+
+            return new LandscapingTRLookupsModel() { 
+                CustomerTypes = customerTypes,
+                JobTypes = jobTypes,
+                LocationTypes = locationTypes,
+                EmployeeTypes = employeeTypes
+            };
         }
     }
 }
