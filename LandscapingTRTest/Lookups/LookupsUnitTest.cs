@@ -33,6 +33,7 @@ namespace LandscapingTR.Test.Lookups
             // Create the database if it doesn't exist
             using (var context = new LandscapingTRDbContext(options))
             {
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
                 context.Database.EnsureCreated();
             }
@@ -54,10 +55,11 @@ namespace LandscapingTR.Test.Lookups
         public static void TestCleanup()
         {
             // Class Cleanup
+            Context.Dispose();
         }
 
         [TestMethod]
-        public async Task LookupRepository_GetJobTypes_Succeeds()
+        public async Task Lookup_GetJobTypes_Succeeds()
         {
             var lookupEntities = await LookupService.GetJobTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
@@ -66,7 +68,7 @@ namespace LandscapingTR.Test.Lookups
         }
 
         [TestMethod]
-        public async Task LookupRepository_GetLocationTypes_Succeeds()
+        public async Task Lookup_GetLocationTypes_Succeeds()
         {
             var lookupEntities = await LookupService.GetLocationTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
@@ -75,7 +77,7 @@ namespace LandscapingTR.Test.Lookups
         }
 
         [TestMethod]
-        public async Task LookupRepository_GetEmployeeTypes_Succeeds()
+        public async Task Lookupy_GetEmployeeTypes_Succeeds()
         {
             var lookupEntities = await LookupService.GetEmployeeTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
@@ -84,7 +86,7 @@ namespace LandscapingTR.Test.Lookups
         }
 
         [TestMethod]
-        public async Task LookupRepository_GetCustomerTypes_Succeeds()
+        public async Task Lookup_GetCustomerTypes_Succeeds()
         {
             var lookupEntities = await LookupService.GetCustomerTypesAsync();
             var entity = lookupEntities.FirstOrDefault();

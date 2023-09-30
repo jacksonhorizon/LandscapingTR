@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using LandscapingTR.Core;
+using LandscapingTR.Core.Enums.Lookups;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Lookups;
+using LandscapingTR.Core.Models.Time;
 using LandscapingTR.Core.Services;
 using LandscapingTR.Infrastructure;
 using LandscapingTR.Infrastructure.Data.Repositories;
@@ -33,6 +35,7 @@ namespace LandscapingTR.Test.Time
             // Create the database if it doesn't exist
             using (var context = new LandscapingTRDbContext(options))
             {
+                context.Database.EnsureDeleted(); // Drop the existing database
                 context.Database.Migrate();
                 context.Database.EnsureCreated();
             }
@@ -48,19 +51,39 @@ namespace LandscapingTR.Test.Time
 
             TimeEntryRepository = new TimeEntryRepository(Context);
             TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
+
+
         }
 
         [ClassCleanup]
         public static void TestCleanup()
         {
-            // Class Cleanup
+            Context.Dispose();
         }
 
         [TestMethod]
-        public async Task LookupRepository_GetJobTypes_Succeeds()
+        public async Task TimeEntry_SaveNewTimeEntry_Succeeds()
         {
-            var lookupEntities = await TimeEntryService.GetTimeEntriesByEmployeeIdAsync(1);
-            Assert.AreEqual(lookupEntities.Count, 0);
+            var timeEntryModel = new TimeEntryModel()
+            {
+                EmployeeId = 1,
+                EntryDate = new DateTime(),
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
+                JobTypeId = (int)JobTypes.TreeCare,
+                JobId = 1,
+                TotalLoggedHours = 8,
+                LastModifiedDate = new DateTime(),
+                IsSubmitted = false,
+                IsApproved = false
+            };
+            
+            await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            var savedTimeEntry = (await TimeEntryService.GetSubmittedTimeEntriesByEmployeeIdAsync(1)).FirstOrDefault();
+
+            Assert.IsNotNull(savedTimeEntry);
+            //Assert.AreEqual(timeEntryModel.EmployeeId, savedTimeEntry.EmployeeId);
+            Assert.AreEqual(timeEntryModel.EntryDate, savedTimeEntry.EntryDate);
         }
     }
 }

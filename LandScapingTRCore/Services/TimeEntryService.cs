@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LandscapingTR.Core.Entities.Time;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Time;
 
@@ -112,6 +113,34 @@ namespace LandscapingTR.Core.Services
             else
             {
                 return entities.Select(x => this.Mapper.Map<TimeEntryModel>(x)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Saves a time entry.
+        /// </summary>
+        /// <param name="timeEntryModel">The time entry.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task SaveTimeEntryAsync(TimeEntryModel timeEntryModel)
+        {
+            var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
+
+            await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+        }
+
+
+        /// <summary>
+        /// Saves a list of time entries.
+        /// </summary>
+        /// <param name="timeEntryModels">The time entries.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task SaveTimeEntryRangeAsync(List<TimeEntryModel> timeEntryModels)
+        {
+            foreach (var timeEntryModel in timeEntryModels)
+            {
+                var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
+
+                await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
             }
         }
     }

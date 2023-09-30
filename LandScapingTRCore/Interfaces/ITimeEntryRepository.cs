@@ -43,5 +43,20 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="jobId">The job id.</param>
         /// <returns>The time entries.</returns>
         Task<List<TimeEntry>> GetTimeEntriesByJobIdAsync(int jobId);
+
+        /// <summary>
+        /// Saves a time entry.
+        /// </summary>
+        /// <param name="timeEntry">The time entry.</param>
+        /// <returns>The saved time entry.</returns>
+        Task<TimeEntry> SaveTimeEntryAsync(TimeEntry timeEntry);
+
+
+        /// <summary>
+        /// Saves a list of time entries.
+        /// </summary>
+        /// <param name="timeEntries">The time entries.</param>
+        /// <returns>The saved time entry.</returns>
+        Task<List<TimeEntry>> SaveTimeEntryRangeAsync(List<TimeEntry> timeEntries);
     }
 }

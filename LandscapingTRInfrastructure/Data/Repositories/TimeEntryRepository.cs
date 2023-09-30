@@ -78,5 +78,33 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
                 .Where(x => x.JobId == jobId)
                 .ToListAsync();
         }
+
+        /// <summary>
+        /// Saves a time entry.
+        /// </summary>
+        /// <param name="timeEntry">The time entry.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task<TimeEntry> SaveTimeEntryAsync(TimeEntry timeEntry)
+        {
+            this.DataContext.TimeEntries.Add(timeEntry);
+
+            await this.DataContext.SaveChangesAsync();
+
+            return timeEntry;
+        }
+
+        /// <summary>
+        /// Saves a list of time entries.
+        /// </summary>
+        /// <param name="timeEntries">The time entries.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task<List<TimeEntry>> SaveTimeEntryRangeAsync(List<TimeEntry> timeEntries)
+        {
+            this.DataContext.TimeEntries.AddRange(timeEntries);
+
+            await this.DataContext.SaveChangesAsync();
+
+            return timeEntries;
+        }
     }
 }
