@@ -62,7 +62,8 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByJobType(int jobTypeId)
         {
             return await this.DataContext.TimeEntries
-                .Where(x => x.JobTypeId == jobTypeId)
+                .Include(x => x.Job)
+                .Where(x => x.Job.JobTypeId == jobTypeId)
                 .ToListAsync();
         }
 

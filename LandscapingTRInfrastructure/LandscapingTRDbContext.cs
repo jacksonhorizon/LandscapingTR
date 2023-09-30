@@ -73,8 +73,12 @@ namespace LandscapingTR.Infrastructure
             base.OnModelCreating(builder);
 
             this.RenameTableAndId<TimeEntry, int?>(builder);
+            this.RenameTableAndId<Job, int?>(builder);
+            this.RenameTableAndId<Location, int?>(builder);
+            
             this.RenameTableAndId<Employee, int?>(builder);
             this.RenameTableAndId<Customer, int?>(builder);
+
             this.RenameTableAndId<EmployeeType, int?>(builder);
             this.RenameTableAndId<JobType, int?>(builder);
             this.RenameTableAndId<LocationType, int?>(builder);

@@ -8,11 +8,6 @@
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the employee id.
-        /// </summary>
-        public int EmployeeId { get; set; }
-
-        /// <summary>
         /// Gets or sets the job type id.
         /// </summary>
         public int JobTypeId { get; set; }

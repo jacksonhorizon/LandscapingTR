@@ -13,13 +13,13 @@ namespace LandscapingTR.Test.Lookups
     public class LookupsRepositoryUnitTest
     {
 
-        private static ILookupRepository lookupRepository;
+        private static ILookupRepository LookupRepository;
 
-        private static ILookupService lookupService;
+        private static ILookupService LookupService;
 
-        private static LandscapingTRDbContext context;
+        private static LandscapingTRDbContext Context;
 
-        private static IMapper mapper;
+        private static IMapper Mapper;
 
 
         [ClassInitialize]
@@ -27,19 +27,27 @@ namespace LandscapingTR.Test.Lookups
         {
             DbContextOptions<LandscapingTRDbContext> options;
             var builder = new DbContextOptionsBuilder<LandscapingTRDbContext>();
-            builder.UseSqlServer("Server=.\\SQLEXPRESS;Database=LandscapingTRDb;Trusted_Connection=True;TrustServerCertificate=True;");
+            builder.UseSqlServer("Server=.\\SQLEXPRESS;Database=LandscapingTRDb.Test;Trusted_Connection=True;TrustServerCertificate=True;");
             options = builder.Options;
-            context = new LandscapingTRDbContext(options);
 
-            var mapperConfig = new MapperConfiguration(cfg =>
+            // Create the database if it doesn't exist
+            using (var context = new LandscapingTRDbContext(options))
+            {
+                context.Database.Migrate();
+                context.Database.EnsureCreated();
+            }
+
+            Context = new LandscapingTRDbContext(options);
+
+            var MapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperProfile());
             });
 
-            mapper = mapperConfig.CreateMapper();
+            Mapper = MapperConfig.CreateMapper();
 
-            lookupRepository = new LookupRepository(context);
-            lookupService = new LookupService(lookupRepository, mapper);
+            LookupRepository = new LookupRepository(Context);
+            LookupService = new LookupService(LookupRepository, Mapper);
         }
 
         [ClassCleanup]
@@ -51,7 +59,7 @@ namespace LandscapingTR.Test.Lookups
         [TestMethod]
         public async Task LookupRepository_GetJobTypes_Succeeds()
         {
-            var lookupEntities = await lookupService.GetJobTypesAsync();
+            var lookupEntities = await LookupService.GetJobTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
             Assert.AreEqual(11, lookupEntities.Count);
@@ -60,7 +68,7 @@ namespace LandscapingTR.Test.Lookups
         [TestMethod]
         public async Task LookupRepository_GetLocationTypes_Succeeds()
         {
-            var lookupEntities = await lookupService.GetLocationTypesAsync();
+            var lookupEntities = await LookupService.GetLocationTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
             Assert.AreEqual(5, lookupEntities.Count);
@@ -69,7 +77,7 @@ namespace LandscapingTR.Test.Lookups
         [TestMethod]
         public async Task LookupRepository_GetEmployeeTypes_Succeeds()
         {
-            var lookupEntities = await lookupService.GetEmployeeTypesAsync();
+            var lookupEntities = await LookupService.GetEmployeeTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
             Assert.AreEqual(5, lookupEntities.Count);
@@ -78,7 +86,7 @@ namespace LandscapingTR.Test.Lookups
         [TestMethod]
         public async Task LookupRepository_GetCustomerTypes_Succeeds()
         {
-            var lookupEntities = await lookupService.GetCustomerTypesAsync();
+            var lookupEntities = await LookupService.GetCustomerTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
             Assert.AreEqual(3, lookupEntities.Count);
