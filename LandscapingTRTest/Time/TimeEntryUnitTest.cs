@@ -27,6 +27,8 @@ namespace LandscapingTR.Test.Time
 
         private static IEmployeeService EmployeeService;
 
+        /* BEGIN TEST HEADER */
+
         private static LandscapingTRDbContext Context;
 
         private static IMapper Mapper;
@@ -44,7 +46,7 @@ namespace LandscapingTR.Test.Time
             // Create the database if it doesn't exist
             using (var context = new LandscapingTRDbContext(options))
             {
-                context.Database.EnsureDeleted(); // Drop the existing database
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
                 context.Database.EnsureCreated();
             }
@@ -58,16 +60,17 @@ namespace LandscapingTR.Test.Time
 
             Mapper = MapperConfig.CreateMapper();
 
-            TimeEntryRepository = new TimeEntryRepository(Context);
-            TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
-
             EmployeeRepository = new EmployeeRepository(Context);
             EmployeeService = new EmployeeService(EmployeeRepository, Mapper);
+
+            TimeEntryRepository = new TimeEntryRepository(Context);
+            TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
         }
 
         [ClassCleanup]
         public static void ClassCleanup()
         {
+            // Class Cleanup
             Context.Dispose();
         }
 
@@ -82,6 +85,8 @@ namespace LandscapingTR.Test.Time
         {
             TransactionScope.Dispose();
         }
+
+        /* END OF TEST HEADER */
 
         /// <summary>
         /// Adds a new employee.

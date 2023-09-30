@@ -23,12 +23,13 @@ namespace LandscapingTR.Test.Lookups
 
         private static IEmployeeService EmployeeService;
 
+        /* BEGIN TEST HEADER */
+
         private static LandscapingTRDbContext Context;
 
         private static IMapper Mapper;
 
         private TransactionScope TransactionScope;
-
 
         [ClassInitialize]
         public static void Setup(TestContext testContext)
@@ -77,6 +78,8 @@ namespace LandscapingTR.Test.Lookups
         {
             TransactionScope.Dispose();
         }
+
+        /* END OF TEST HEADER */
 
         /// <summary>
         /// Adds a new employee.
