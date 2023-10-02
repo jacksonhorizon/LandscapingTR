@@ -28,14 +28,14 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns>The time entries.</returns>
-        Task<List<TimeEntryModel>> GetTimeEntriesByDateRange(DateTime? startDate, DateTime? endDate);
+        Task<List<TimeEntryModel>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate);
 
         /// <summary>
         /// Gets the time entries by jobe type.
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
         /// <returns>The time entries.</returns>
-        Task<List<TimeEntryModel>> GetTimeEntriesByJobType(int jobTypeId);
+        Task<List<TimeEntryModel>> GetTimeEntriesByJobTypeAsync(int jobTypeId);
 
         /// <summary>
         /// Gets the time entries by job.

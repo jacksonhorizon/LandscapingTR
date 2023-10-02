@@ -16,23 +16,18 @@ using Microsoft.EntityFrameworkCore;
 namespace LandscapingTR.Test.Time
 {
     [TestClass]
-    public class BaseUnitTest
+    public class JobUnitTest
     {
-        private static ILookupRepository LookupRepository;
 
-        private static ILookupService LookupService;
+        private static IJobRepository JobRepository;
 
-        private static ITimeEntryRepository TimeEntryRepository;
-
-        private static ITimeEntryService TimeEntryService;
+        private static IJobService JobService;
 
         private static IEmployeeRepository EmployeeRepository;
 
         private static IEmployeeService EmployeeService;
 
-        private static IJobRepository JobRepository;
-
-        private static IJobService JobService;
+        /* BEGIN TEST HEADER */
 
         private static LandscapingTRDbContext Context;
 
@@ -40,7 +35,7 @@ namespace LandscapingTR.Test.Time
 
         private TransactionScope TransactionScope;
 
-        [AssemblyInitialize]
+        [ClassInitialize]
         public static void Setup(TestContext testContext)
         {
             DbContextOptions<LandscapingTRDbContext> options;
@@ -51,7 +46,7 @@ namespace LandscapingTR.Test.Time
             // Create the database if it doesn't exist
             using (var context = new LandscapingTRDbContext(options))
             {
-                context.Database.EnsureDeleted(); // Drop the existing database
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
                 context.Database.EnsureCreated();
             }
@@ -65,16 +60,17 @@ namespace LandscapingTR.Test.Time
 
             Mapper = MapperConfig.CreateMapper();
 
-            TimeEntryRepository = new TimeEntryRepository(Context);
-            TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
-
             EmployeeRepository = new EmployeeRepository(Context);
             EmployeeService = new EmployeeService(EmployeeRepository, Mapper);
+
+            JobRepository = new JobRepository(Context);
+            JobService = new JobService(JobRepository, Mapper);
         }
 
-        [AssemblyCleanup]
+        [ClassCleanup]
         public static void ClassCleanup()
         {
+            // Class Cleanup
             Context.Dispose();
         }
 
@@ -88,6 +84,41 @@ namespace LandscapingTR.Test.Time
         public void TestCleanup()
         {
             TransactionScope.Dispose();
+        }
+
+        /* END OF TEST HEADER */
+
+        /// <summary>
+        /// Adds a new employee.
+        /// </summary>
+        /// <returns>The saved employee.</returns>
+        private async Task<EmployeeModel> AddNewEmployee()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "Test Name",
+                LastName = "Test Last Name",
+                Password = "Test Password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            return savedEmployeeModel;
+        }
+
+        [TestMethod]
+        public async Task Job_SaveNewJob_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployee();
+
+            
         }
     }
 }

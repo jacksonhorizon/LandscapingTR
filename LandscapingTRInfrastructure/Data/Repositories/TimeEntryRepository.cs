@@ -47,7 +47,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntry>> GetTimeEntriesByDateRange(DateTime? startDate, DateTime? endDate)
+        public async Task<List<TimeEntry>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
             return await this.DataContext.TimeEntries
                 .Where(x => x.EntryDate < endDate && x.EntryDate > startDate)
@@ -59,7 +59,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntry>> GetTimeEntriesByJobType(int jobTypeId)
+        public async Task<List<TimeEntry>> GetTimeEntriesByJobTypeAsync(int jobTypeId)
         {
             return await this.DataContext.TimeEntries
                 .Include(x => x.Job)

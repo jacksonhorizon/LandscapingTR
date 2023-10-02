@@ -64,9 +64,9 @@ namespace LandscapingTR.Core.Services
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntryModel>> GetTimeEntriesByDateRange(DateTime? startDate, DateTime? endDate)
+        public async Task<List<TimeEntryModel>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
-            var entities = await this.TimeEntryRepository.GetTimeEntriesByDateRange(startDate, endDate);
+            var entities = await this.TimeEntryRepository.GetTimeEntriesByDateRangeAsync(startDate, endDate);
 
             if (entities == null)
             {
@@ -83,9 +83,9 @@ namespace LandscapingTR.Core.Services
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntryModel>> GetTimeEntriesByJobType(int jobTypeId)
+        public async Task<List<TimeEntryModel>> GetTimeEntriesByJobTypeAsync(int jobTypeId)
         {
-            var entities = await this.TimeEntryRepository.GetTimeEntriesByJobType(jobTypeId);
+            var entities = await this.TimeEntryRepository.GetTimeEntriesByJobTypeAsync(jobTypeId);
 
             if (entities == null)
             {

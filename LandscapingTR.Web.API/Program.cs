@@ -26,6 +26,8 @@ builder.Services.AddTransient<ILookupService, LookupService>();
 builder.Services.AddTransient<ILookupService, LookupService>();
 builder.Services.AddTransient<ITimeEntryRepository, TimeEntryRepository>();
 builder.Services.AddTransient<ITimeEntryService, TimeEntryService>();
+builder.Services.AddTransient<IJobRepository, JobRepository>();
+builder.Services.AddTransient<IJobService, JobService>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
