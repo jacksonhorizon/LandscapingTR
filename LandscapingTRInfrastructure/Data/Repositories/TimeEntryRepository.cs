@@ -20,8 +20,9 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EmployeeId == employeeId &&
-                    (startDate == null || endDate == null) ? (x.EntryDate > startDate && x.EntryDate < endDate) : true)
+                    (startDate == null || endDate == null) ? true : (x.EntryDate > startDate && x.EntryDate < endDate))
                 .ToListAsync();
         }
 
@@ -35,8 +36,9 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetSubmittedTimeEntriesByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EmployeeId == employeeId && 
-                    ((startDate == null || endDate == null) ? (x.EntryDate > startDate && x.EntryDate < endDate) : true)
+                    ((startDate == null || endDate == null) ? true : (x.EntryDate > startDate && x.EntryDate < endDate))
                     && x.IsSubmitted == true)
                 .ToListAsync();
         }
@@ -47,9 +49,10 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntry>> GetTimeEntriesByDateRange(DateTime? startDate, DateTime? endDate)
+        public async Task<List<TimeEntry>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EntryDate < endDate && x.EntryDate > startDate)
                 .ToListAsync();
         }
@@ -59,10 +62,11 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
         /// <returns>The time entries.</returns>
-        public async Task<List<TimeEntry>> GetTimeEntriesByJobType(int jobTypeId)
+        public async Task<List<TimeEntry>> GetTimeEntriesByJobTypeAsync(int jobTypeId)
         {
             return await this.DataContext.TimeEntries
-                .Where(x => x.JobTypeId == jobTypeId)
+                .Include(x => x.Job)
+                .Where(x => x.Job.JobTypeId == jobTypeId)
                 .ToListAsync();
         }
 
@@ -74,8 +78,33 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByJobIdAsync(int jobId)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.JobId == jobId)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Saves a time entry.
+        /// </summary>
+        /// <param name="timeEntry">The time entry.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task<TimeEntry> SaveTimeEntryAsync(TimeEntry timeEntry)
+        {
+            await SaveAsync(timeEntry);
+
+            return timeEntry;
+        }
+
+        /// <summary>
+        /// Saves a list of time entries.
+        /// </summary>
+        /// <param name="timeEntries">The time entries.</param>
+        /// <returns>The saved time entry.</returns>
+        public async Task<List<TimeEntry>> SaveTimeEntryRangeAsync(List<TimeEntry> timeEntries)
+        {
+            await SaveRangeAsync(timeEntries);
+
+            return timeEntries;
         }
     }
 }

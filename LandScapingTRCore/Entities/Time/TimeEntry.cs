@@ -27,16 +27,6 @@ namespace LandscapingTR.Core.Entities.Time
         public int EmployeeTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the job type id.
-        /// </summary>
-        public int JobTypeId { get; set; }
-       
-        /// <summary>
-        /// Gets or sets the job type.
-        /// </summary>
-        public JobType JobType { get; set; }
-
-        /// <summary>
         /// Gets or sets the job id.
         /// </summary>
         public int JobId { get; set; }

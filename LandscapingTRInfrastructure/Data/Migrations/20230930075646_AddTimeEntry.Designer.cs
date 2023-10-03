@@ -4,6 +4,7 @@ using LandscapingTR.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandscapingTR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LandscapingTRDbContext))]
-    partial class LandscapingTRDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230930075646_AddTimeEntry")]
+    partial class AddTimeEntry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,50 +97,12 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CrewSupervisorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EquipmentAndSafetyOfficerId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("EstimatedTotalHours")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("FirstCrewMemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FourthCrewMemberId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("JobDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("JobTypeId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("LandscapeDesignerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SecondCrewMemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ThirdCrewMemberId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalLoggedHours")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("isCompleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobTypeId");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Job", (string)null);
                 });
@@ -359,13 +324,7 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LandscapingTR.Core.Entities.Domain.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.Navigation("JobType");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("LandscapingTR.Core.Entities.Domain.Location", b =>

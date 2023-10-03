@@ -19,13 +19,17 @@ IMapper mapper = mapperConfig.CreateMapper();
 // Add services to the container.
 builder.Services.AddDbContext<LandscapingTRDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LandscapingTRConnectionString")));
+
 builder.Services.AddTransient<IMapper>(_ => mapper);
 builder.Services.AddTransient<ILookupRepository, LookupRepository>();
 builder.Services.AddTransient<ILookupService, LookupService>();
 builder.Services.AddTransient<ILookupService, LookupService>();
 builder.Services.AddTransient<ITimeEntryRepository, TimeEntryRepository>();
-
-
+builder.Services.AddTransient<ITimeEntryService, TimeEntryService>();
+builder.Services.AddTransient<IJobRepository, JobRepository>();
+builder.Services.AddTransient<IJobService, JobService>();
+builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 
 

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
+using LandscapingTR.Core.Entities.CompanyResources;
+using LandscapingTR.Core.Entities.Domain;
 using LandscapingTR.Core.Entities.Lookups;
 using LandscapingTR.Core.Entities.Time;
+using LandscapingTR.Core.Models.CompanyResources;
+using LandscapingTR.Core.Models.Domain;
 using LandscapingTR.Core.Models.Lookups;
 using LandscapingTR.Core.Models.Time;
 
@@ -24,6 +28,10 @@ namespace LandscapingTR.Core
                 .ReverseMap();
             CreateMap<TimeEntry, TimeEntryModel>()
                 .ReverseMap();
+            CreateMap<Employee, EmployeeModel>()
+               .ReverseMap();
+            CreateMap<Job, JobModel>()
+               .ReverseMap();
         }
     }
 }
