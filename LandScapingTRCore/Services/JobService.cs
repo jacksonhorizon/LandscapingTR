@@ -17,6 +17,17 @@ namespace LandscapingTR.Core.Services
         }
 
         /// <summary>
+        /// Gets the jobs by id.
+        /// </summary>
+        /// <param name="jobId">The job id.</param>
+        /// <returns>The job.</returns>
+        public async Task<JobModel> GetJobByIdAsync(int jobId)
+        {
+            var job = await JobRepository.GetJobByIdAsync(jobId);
+            return Mapper.Map<JobModel>(job);
+        }
+
+        /// <summary>
         /// Gets the jobs by employee id.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>
@@ -57,10 +68,10 @@ namespace LandscapingTR.Core.Services
         /// </summary>
         /// <param name="jobModel">The job.</param>
         /// <returns>The added job.</returns>
-        public async Task<JobModel> AddJobAsync(JobModel jobModel)
+        public async Task<JobModel> SaveJobAsync(JobModel jobModel)
         {
             var job = Mapper.Map<Job>(jobModel);
-            job = await JobRepository.SaveAsync(job);
+            job = await JobRepository.SaveJobAsync(job);
 
             return Mapper.Map<JobModel>(job);
         }
@@ -69,27 +80,28 @@ namespace LandscapingTR.Core.Services
         /// Assigns an employee to a job.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>
-        /// <param name="jobModel">The job.</param>
+        /// <param name="jobId">The job id.</param>
         /// <returns>The assigned job.</returns>
-        public async Task<JobModel> AssignEmployeeToJobAsync(int employeeId, JobModel jobModel)
+        public async Task<JobModel> AssignEmployeeToJobAsync(int employeeId, int jobId)
         {
-            var job = await JobRepository.GetJobIdAsync(jobModel.Id.Value);
+            var job = await JobRepository.GetJobByIdAsync(jobId);
             if (!job.FirstCrewMemberId.HasValue){
                 job.FirstCrewMemberId = employeeId;
             } 
-            else if (job.SecondCrewMemberId.HasValue)
+            else if (!job.SecondCrewMemberId.HasValue)
             {
                 job.SecondCrewMemberId = employeeId;
             }
-            else if (job.ThirdCrewMemberId.HasValue)
+            else if (!job.ThirdCrewMemberId.HasValue)
             {
                 job.ThirdCrewMemberId = employeeId;
             }
-            else if (job.FourthCrewMemberId.HasValue)
+            else if (!job.FourthCrewMemberId.HasValue)
             {
                 job.FourthCrewMemberId = employeeId;
 
             }
+
             var savedJob = await JobRepository.SaveJobAsync(job);
             return Mapper.Map<JobModel>(savedJob);
         }

@@ -20,8 +20,9 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EmployeeId == employeeId &&
-                    (startDate == null || endDate == null) ? (x.EntryDate > startDate && x.EntryDate < endDate) : true)
+                    (startDate == null || endDate == null) ? true : (x.EntryDate > startDate && x.EntryDate < endDate))
                 .ToListAsync();
         }
 
@@ -35,8 +36,9 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetSubmittedTimeEntriesByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EmployeeId == employeeId && 
-                    ((startDate == null || endDate == null) ? (x.EntryDate > startDate && x.EntryDate < endDate) : true)
+                    ((startDate == null || endDate == null) ? true : (x.EntryDate > startDate && x.EntryDate < endDate))
                     && x.IsSubmitted == true)
                 .ToListAsync();
         }
@@ -50,6 +52,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.EntryDate < endDate && x.EntryDate > startDate)
                 .ToListAsync();
         }
@@ -75,6 +78,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<TimeEntry>> GetTimeEntriesByJobIdAsync(int jobId)
         {
             return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
                 .Where(x => x.JobId == jobId)
                 .ToListAsync();
         }
@@ -86,9 +90,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<TimeEntry> SaveTimeEntryAsync(TimeEntry timeEntry)
         {
-            this.DataContext.TimeEntries.Add(timeEntry);
-
-            await this.DataContext.SaveChangesAsync();
+            await SaveAsync(timeEntry);
 
             return timeEntry;
         }
@@ -100,9 +102,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<List<TimeEntry>> SaveTimeEntryRangeAsync(List<TimeEntry> timeEntries)
         {
-            this.DataContext.TimeEntries.AddRange(timeEntries);
-
-            await this.DataContext.SaveChangesAsync();
+            await SaveRangeAsync(timeEntries);
 
             return timeEntries;
         }

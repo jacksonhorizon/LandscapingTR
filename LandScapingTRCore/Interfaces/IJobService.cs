@@ -7,6 +7,13 @@ namespace LandscapingTR.Core.Interfaces
         /// <summary>
         /// Gets the jobs by employee id.
         /// </summary>
+        /// <param name="jobId">The job id.</param>
+        /// <returns>The jobs.</returns>
+        Task<JobModel> GetJobByIdAsync(int jobId);
+
+        /// <summary>
+        /// Gets the jobs by employee id.
+        /// </summary>
         /// <param name="employeeId">The employee id.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
@@ -33,14 +40,14 @@ namespace LandscapingTR.Core.Interfaces
         /// </summary>
         /// <param name="jobModel">The job.</param>
         /// <returns>The added job.</returns>
-        Task<JobModel> AddJobAsync(JobModel jobModel);
+        Task<JobModel> SaveJobAsync(JobModel jobModel);
 
         /// <summary>
         /// Assigns an employee to a job.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>
-        /// <param name="jobModel">The job.</param>
+        /// <param name="jobId">The job id.</param>
         /// <returns>The assigned job.</returns>
-        Task<JobModel> AssignEmployeeToJobAsync(int employeeId, JobModel jobModel);
+        Task<JobModel> AssignEmployeeToJobAsync(int employeeId, int jobId);
     }
 }

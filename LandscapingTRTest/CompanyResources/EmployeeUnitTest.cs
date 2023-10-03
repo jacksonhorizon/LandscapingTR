@@ -85,7 +85,7 @@ namespace LandscapingTR.Test.Lookups
         /// Adds a new employee.
         /// </summary>
         /// <returns>The saved employee.</returns>
-        private async Task<EmployeeModel> AddNewEmployee(string firstName)
+        private async Task<EmployeeModel> AddNewEmployeeAsync(string firstName)
         {
             // Add a new employee.
             var newEmployee = new Employee()
@@ -109,7 +109,7 @@ namespace LandscapingTR.Test.Lookups
         public async Task Employee_SaveNewEmployee_Succeeds()
         {
             // Add a new employee.
-            var savedEmployeeModel = await AddNewEmployee("Employee 1");
+            var savedEmployeeModel = await AddNewEmployeeAsync("Employee 1");
             Assert.IsNotNull(savedEmployeeModel);
         }
 
@@ -117,7 +117,7 @@ namespace LandscapingTR.Test.Lookups
         public async Task Employee_GetEmployee_Succeeds()
         {
             // Add a new employee.
-            var savedEmployeeModel = await AddNewEmployee("Employee 2");
+            var savedEmployeeModel = await AddNewEmployeeAsync("Employee 2");
             Assert.IsNotNull(savedEmployeeModel);
 
             var newSavedEmployeeModel = await EmployeeService.GetEmployeeAsync(savedEmployeeModel.Id.Value);
@@ -129,7 +129,7 @@ namespace LandscapingTR.Test.Lookups
         public async Task Employee_UpdateEmployee_Succeeds()
         {
             // Add a new employee.
-            var savedEmployeeModel = await AddNewEmployee("Employee 3");
+            var savedEmployeeModel = await AddNewEmployeeAsync("Employee 3");
 
             // Update the employee.
             savedEmployeeModel.EmployeeTypeId = (int)EmployeeTypes.CrewSupervisor;
@@ -145,19 +145,19 @@ namespace LandscapingTR.Test.Lookups
         public async Task Employee_GetEmployees_Succeeds()
         {
             // Add a new employee.
-            var savedEmployeeModelOne = await AddNewEmployee("Employee 4");
+            var savedEmployeeModelOne = await AddNewEmployeeAsync("Employee 4");
 
             // Add a new employee.
-            var savedEmployeeModelTwo = await AddNewEmployee("Employee 5");
+            var savedEmployeeModelTwo = await AddNewEmployeeAsync("Employee 5");
 
             // Add a new employee.
-            var savedEmployeeModelThree = await AddNewEmployee("Employee 6");
+            var savedEmployeeModelThree = await AddNewEmployeeAsync("Employee 6");
 
             // Add a new employee.
-            var savedEmployeeModelFour = await AddNewEmployee("Employee 7");
+            var savedEmployeeModelFour = await AddNewEmployeeAsync("Employee 7");
 
             // Add a new employee.
-            var savedEmployeeModelFive = await AddNewEmployee("Employee 8");
+            var savedEmployeeModelFive = await AddNewEmployeeAsync("Employee 8");
 
 
             var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();

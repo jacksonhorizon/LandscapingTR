@@ -65,8 +65,8 @@ namespace LandscapingTR.Test.Time
 
             Mapper = MapperConfig.CreateMapper();
 
-            TimeEntryRepository = new TimeEntryRepository(Context);
-            TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
+            //TimeEntryRepository = new TimeEntryRepository(Context);
+            //TimeEntryService = new TimeEntryService(TimeEntryRepository, Mapper);
 
             EmployeeRepository = new EmployeeRepository(Context);
             EmployeeService = new EmployeeService(EmployeeRepository, Mapper);

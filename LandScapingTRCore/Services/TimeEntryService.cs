@@ -9,10 +9,13 @@ namespace LandscapingTR.Core.Services
     {
         private ITimeEntryRepository TimeEntryRepository;
 
+        private IJobRepository JobRepository;
+
         private readonly IMapper Mapper;
-        public TimeEntryService(ITimeEntryRepository timeEntryRepository, IMapper mapper)
+        public TimeEntryService(ITimeEntryRepository timeEntryRepository, IJobRepository jobRepository, IMapper mapper)
         {
             this.TimeEntryRepository = timeEntryRepository;
+            this.JobRepository = jobRepository;
             this.Mapper = mapper;
         }
 
@@ -25,7 +28,7 @@ namespace LandscapingTR.Core.Services
         /// <returns>The time entries.</returns>
         public async Task<List<TimeEntryModel>> GetTimeEntriesByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
-            var entities = await this.TimeEntryRepository.GetSubmittedTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
+            var entities = await this.TimeEntryRepository.GetTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
             
             if (entities == null)
             {
@@ -33,7 +36,11 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
-                return entities.Select(x => this.Mapper.Map<TimeEntryModel>(x)).ToList();
+                return entities.Select(x => {
+                    var model = this.Mapper.Map<TimeEntryModel>(x);
+                    model.JobTypeId = x.Job.JobTypeId;
+                    return model;
+                    }).ToList();
             }
         }
 
@@ -121,11 +128,17 @@ namespace LandscapingTR.Core.Services
         /// </summary>
         /// <param name="timeEntryModel">The time entry.</param>
         /// <returns>The saved time entry.</returns>
-        public async Task SaveTimeEntryAsync(TimeEntryModel timeEntryModel)
+        public async Task<TimeEntryModel> SaveTimeEntryAsync(TimeEntryModel timeEntryModel)
         {
             var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
 
-            await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+            var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId);
+            job.TotalLoggedHours += timeEntry.TotalLoggedHours;
+
+            await this.JobRepository.SaveJobAsync(job);
+            var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+
+            return Mapper.Map<TimeEntryModel>(savedTimeEntry);
         }
 
 
@@ -140,6 +153,10 @@ namespace LandscapingTR.Core.Services
             {
                 var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
 
+                var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId);
+                job.TotalLoggedHours += timeEntry.TotalLoggedHours;
+
+                await this.JobRepository.SaveJobAsync(job);
                 await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
             }
         }

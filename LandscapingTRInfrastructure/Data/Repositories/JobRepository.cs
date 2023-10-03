@@ -15,7 +15,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// </summary>
         /// <param name="jobId">The employee id.</param>
         /// <returns>The jobs.</returns>
-        public async Task<Job> GetJobIdAsync(int jobId)
+        public async Task<Job> GetJobByIdAsync(int jobId)
         {
             return await this.DataContext.Jobs.FirstOrDefaultAsync(x => x.Id == jobId);
         }
@@ -37,7 +37,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
                     x.CrewSupervisorId == employeeId ||
                     x.LandscapeDesignerId == employeeId ||
                     x.EquipmentAndSafetyOfficerId == employeeId &&
-                    (startDate == null || endDate == null) ? (x.JobDate > startDate && x.JobDate < endDate) : true)
+                    (startDate == null || endDate == null) ? true : (x.JobDate > startDate && x.JobDate < endDate))
                 .ToListAsync();
         }
 
@@ -73,10 +73,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<Job> SaveJobAsync(Job job)
         {
-            this.DataContext.Jobs.Add(job);
-
-            await this.DataContext.SaveChangesAsync();
-
+            await this.SaveAsync(job);
             return job;
         }
 
@@ -87,9 +84,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<List<Job>> SaveJobRangeAsync(List<Job> jobs)
         {
-            this.DataContext.Jobs.AddRange(jobs);
-
-            await this.DataContext.SaveChangesAsync();
+            await this.SaveRangeAsync(jobs);
 
             return jobs;
         }

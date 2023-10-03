@@ -7,10 +7,9 @@ namespace LandscapingTR.Core.Interfaces
         /// <summary>
         /// Gets a job by job id.
         /// </summary>
-        /// <param name="jobId">The employee id.</param>
+        /// <param name="jobId">The job id.</param>
         /// <returns>The jobs.</returns>
-        Task<Job> GetJobIdAsync(int jobId);
-
+        Task<Job> GetJobByIdAsync(int jobId);
 
         /// <summary>
         /// Gets the jobs by employee id.

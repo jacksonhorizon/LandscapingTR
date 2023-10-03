@@ -6,6 +6,7 @@ using LandscapingTR.Core.Enums.Lookups;
 using LandscapingTR.Core.Factories;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.CompanyResources;
+using LandscapingTR.Core.Models.Domain;
 using LandscapingTR.Core.Models.Lookups;
 using LandscapingTR.Core.Models.Time;
 using LandscapingTR.Core.Services;
@@ -92,12 +93,12 @@ namespace LandscapingTR.Test.Time
         /// Adds a new employee.
         /// </summary>
         /// <returns>The saved employee.</returns>
-        private async Task<EmployeeModel> AddNewEmployee()
+        private async Task<EmployeeModel> AddNewEmployeeAsync(string firstName)
         {
             // Add a new employee.
             var newEmployee = new Employee()
             {
-                FirstName = "Test Name",
+                FirstName = firstName,
                 LastName = "Test Last Name",
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
@@ -112,13 +113,146 @@ namespace LandscapingTR.Test.Time
             return savedEmployeeModel;
         }
 
+        /// <summary>
+        /// Adds a new job.
+        /// </summary>
+        /// <param name="jobTypeId">The job type id.</param>
+        /// <returns>The saved job.</returns>
+        private async Task<JobModel> AddNewJobModelAsync(int jobTypeId, DateTime? date = null)
+        {
+            // Add a new employee.
+            var newJobModel = new JobModel()
+            {
+                JobTypeId = jobTypeId,
+                EstimatedTotalHours = 8,
+                TotalLoggedHours = 0,
+                JobDate = date.HasValue ? date.Value : DateTime.Now,
+                isCompleted = false
+            };
+
+            var savedJobModel = await JobService.SaveJobAsync(newJobModel);
+
+            var jobModel = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+            Assert.IsNotNull(jobModel);
+
+            return jobModel;
+        }
+
         [TestMethod]
         public async Task Job_SaveNewJob_Succeeds()
         {
-            // Add a new employee.
-            var savedEmployeeModel = await AddNewEmployee();
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+        }
 
-            
+        [TestMethod]
+        public async Task Job_SaveNewJobs_Succeeds()
+        {
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+            savedJobModel = await AddNewJobModelAsync((int)JobTypes.LandscapeDesign);
+            savedJobModel = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+        }
+
+        [TestMethod]
+        public async Task Job_AssignFirstCrewmember_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployeeAsync("Employee 1");
+
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+
+            var updatedJobModel = await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModel.Id.Value);
+
+            Assert.AreEqual(updatedJobModel.FirstCrewMemberId, savedEmployeeModel.Id.Value);
+        }
+
+        [TestMethod]
+        public async Task Job_AssignFourCrewMembers_Succeeds()
+        {
+            // Add employees.
+            var savedEmployeeModelOne = await AddNewEmployeeAsync("Employee 1");
+            var savedEmployeeModelTwo = await AddNewEmployeeAsync("Employee 2");
+            var savedEmployeeModelThree = await AddNewEmployeeAsync("Employee 3");
+            var savedEmployeeModelFour = await AddNewEmployeeAsync("Employee 4");
+
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelOne.Id.Value, savedJobModel.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelTwo.Id.Value, savedJobModel.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelThree.Id.Value, savedJobModel.Id.Value);
+            var updatedJobModel = await JobService.AssignEmployeeToJobAsync(savedEmployeeModelFour.Id.Value, savedJobModel.Id.Value);
+
+            Assert.AreEqual(updatedJobModel.FirstCrewMemberId, savedEmployeeModelOne.Id.Value);
+            Assert.AreEqual(updatedJobModel.SecondCrewMemberId, savedEmployeeModelTwo.Id.Value);
+            Assert.AreEqual(updatedJobModel.ThirdCrewMemberId, savedEmployeeModelThree.Id.Value);
+            Assert.AreEqual(updatedJobModel.FourthCrewMemberId, savedEmployeeModelFour.Id.Value);
+        }
+
+        [TestMethod]
+        public async Task Job_GetJobsByJobTypes_Succeeds()
+        {
+            // Add employees.
+            var savedEmployeeModelOne = await AddNewEmployeeAsync("Employee 1");
+            var savedEmployeeModelTwo = await AddNewEmployeeAsync("Employee 2");
+            var savedEmployeeModelThree = await AddNewEmployeeAsync("Employee 3");
+            var savedEmployeeModelFour = await AddNewEmployeeAsync("Employee 4");
+
+            // Save jobs
+            var savedJobModelOne = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+            var savedJobModelTwo = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+            var savedJobModelThree = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+            var savedJobModelFour = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelOne.Id.Value, savedJobModelOne.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelTwo.Id.Value, savedJobModelTwo.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelThree.Id.Value, savedJobModelThree.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModelFour.Id.Value, savedJobModelFour.Id.Value);
+
+
+            var jobsOfTypeWaterManagement = await JobService.GetJobsByJobTypeAsync((int)JobTypes.WaterManagement);
+            Assert.AreEqual(4, jobsOfTypeWaterManagement.Count);
+        }
+
+        [TestMethod]
+        public async Task Job_GetJobsByDateRange_Succeeds()
+        {
+            // Save jobs
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 10));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 11));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 12));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 13));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 14));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 15));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 9, 24));
+
+            // Save jobs outside of search range.
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 8, 29));
+            await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 8, 30));
+
+            var jobsOfTypeWaterManagement = await JobService.GetJobsByDateRangeAsync(new DateTime(2023, 9, 1), DateTime.Now);
+            Assert.AreEqual(7, jobsOfTypeWaterManagement.Count());
+        }
+
+        [TestMethod]
+        public async Task Job_GetJobsByEmployeeId_Succeeds()
+        {
+            // Add employee.
+            var savedEmployeeModel = await AddNewEmployeeAsync("Employee 1");
+
+            // Save jobs
+            var savedJobModelOne = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+            var savedJobModelTwo = await AddNewJobModelAsync((int)JobTypes.RoutineMaintenance);
+            var savedJobModelThree = await AddNewJobModelAsync((int)JobTypes.LandscapeDesign);
+            var savedJobModelFour = await AddNewJobModelAsync((int)JobTypes.ArtisticLandscaping);
+            var savedJobModelFive = await AddNewJobModelAsync((int)JobTypes.WaterManagement);
+
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModelOne.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModelTwo.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModelThree.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModelFour.Id.Value);
+            await JobService.AssignEmployeeToJobAsync(savedEmployeeModel.Id.Value, savedJobModelFive.Id.Value);
+
+            var jobsAssignedToEmployeeModel = await JobService.GetJobsByEmployeeIdAsync(savedEmployeeModel.Id.Value);
+            Assert.AreEqual(5, jobsAssignedToEmployeeModel.Count);
         }
     }
 }
