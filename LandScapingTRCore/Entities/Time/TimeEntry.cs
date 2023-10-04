@@ -29,12 +29,12 @@ namespace LandscapingTR.Core.Entities.Time
         /// <summary>
         /// Gets or sets the job id.
         /// </summary>
-        public int JobId { get; set; }
+        public int? JobId { get; set; }
 
         /// <summary>
         /// Gets or sets the job.
         /// </summary>
-        public Job Job { get; set; }
+        public Job? Job { get; set; }
 
         /// <summary>
         /// Gets or sets the total logged hours.

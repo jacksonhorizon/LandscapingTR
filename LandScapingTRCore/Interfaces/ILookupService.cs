@@ -1,4 +1,5 @@
-﻿using LandscapingTR.Core.Models.Lookups;
+﻿using LandscapingTR.Core.Models;
+using LandscapingTR.Core.Models.Lookups;
 
 namespace LandscapingTR.Core.Interfaces
 {
@@ -29,5 +30,11 @@ namespace LandscapingTR.Core.Interfaces
         /// </summary>
         /// <returns>The customer types.</returns>
         Task<List<LookupItemModel>> GetCustomerTypesAsync();
+
+        /// <summary>
+        /// Gets the LandscapingTR lookups model.
+        /// </summary>
+        /// <returns>The lookups model.</returns>
+        Task<LandscapingTRLookupsModel> GetLandscapingTRLookupsAsync();
     }
 }
