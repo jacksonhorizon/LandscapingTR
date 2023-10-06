@@ -49,9 +49,9 @@ namespace LandscapingTR.Core.Services
                 var existingEntity = await this.EmployeeRepository.GetEmployeeAsync(employeeModel.Id.Value);
 
                 this.Mapper.Map(employeeModel, existingEntity);
-                
-                // hash password
 
+                existingEntity.Username = Cryptography.Encrypt(existingEntity.Username);
+                existingEntity.Password = Cryptography.Encrypt(existingEntity.Password);
 
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(existingEntity);
 
@@ -61,8 +61,8 @@ namespace LandscapingTR.Core.Services
             {
                 var employee = this.Mapper.Map<Employee>(employeeModel);
 
-                // hash password
-
+                employee.Username = Cryptography.Encrypt(employee.Username);
+                employee.Password = Cryptography.Encrypt(employee.Password);
 
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(employee);
 
@@ -80,9 +80,10 @@ namespace LandscapingTR.Core.Services
         {
             var employees = await this.EmployeeRepository.GetEmployeesAsync();
 
-            var hashedPassword = "";
+            var encryptedUsername = Cryptography.Encrypt(username);
+            var encryptedPassword = Cryptography.Encrypt(password);
 
-            var matchingEmployee = employees.FirstOrDefault(x => x.Username.Equals(username) && x.Password.Equals(hashedPassword));
+            var matchingEmployee = employees.FirstOrDefault(x => x.Username.Equals(encryptedUsername) && x.Password.Equals(encryptedPassword));
 
             if (matchingEmployee == null)
             {

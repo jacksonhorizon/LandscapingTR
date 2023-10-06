@@ -92,6 +92,7 @@ namespace LandscapingTR.Test.Lookups
             {
                 FirstName = firstName,
                 LastName = "Test Last Name",
+                Username = "Test Username",
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
             };
@@ -163,6 +164,102 @@ namespace LandscapingTR.Test.Lookups
             var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();
             Assert.IsNotNull(savedEmployeeModels);
             Assert.AreEqual(5, savedEmployeeModels.Count);
+        }
+
+        [TestMethod]
+        public async Task Employee_Login_Succeeds()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "LoginSucceed",
+                LastName = "Test Last Name",
+                Username = "potato",
+                Password = "I am not sure what to put as the password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            try
+            {
+                var username = "potato";
+                var password = "I am not sure what to put as the password";
+                var savedEmployeeModels = await EmployeeService.Login(username, password);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(false);
+            }
+        }
+
+
+        [TestMethod]
+        public async Task Employee_LoginWrongUsername_Fails()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "LoginSucceed",
+                LastName = "Test Last Name",
+                Username = "potato",
+                Password = "I am not sure what to put as the password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            try
+            {
+                var username = "potasdasdatos";
+                var password = "I am not sure what to put as the password";
+                var savedEmployeeModels = await EmployeeService.Login(username, password);
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public async Task Employee_LoginWrongPassword_Fails()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "LoginSucceed",
+                LastName = "Test Last Name",
+                Username = "potato",
+                Password = "I am not sure what to put as the password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            try
+            {
+                var username = "potato";
+                var password = "I am not sure what to put as the asdasdad";
+                var savedEmployeeModels = await EmployeeService.Login(username, password);
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(true);
+            }
         }
     }
 }
