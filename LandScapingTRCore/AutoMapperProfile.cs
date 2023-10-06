@@ -28,6 +28,8 @@ namespace LandscapingTR.Core
                 .ReverseMap();
             CreateMap<TimeEntry, TimeEntryModel>()
                 .ReverseMap();
+            CreateMap<TimeEntryHistory, TimeEntryModel>()
+                .ReverseMap();
             CreateMap<Employee, EmployeeModel>()
                .ReverseMap();
             CreateMap<Job, JobModel>()

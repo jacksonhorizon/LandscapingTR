@@ -24,6 +24,10 @@ namespace LandscapingTR.Test.Time
 
         private static ITimeEntryService TimeEntryService;
 
+        private static ITimeEntryHistoryRepository TimeEntryHistoryRepository;
+
+        private static ITimeEntryHistoryService TimeEntryHistoryService;
+
         private static IEmployeeRepository EmployeeRepository;
 
         private static IEmployeeService EmployeeService;
@@ -71,8 +75,11 @@ namespace LandscapingTR.Test.Time
             JobRepository = new JobRepository(Context);
             JobService = new JobService(JobRepository, Mapper);
 
+            TimeEntryHistoryRepository = new TimeEntryHistoryRepository(Context);
+            TimeEntryHistoryService = new TimeEntryHistoryService(TimeEntryHistoryRepository, JobRepository, Mapper);
+
             TimeEntryRepository = new TimeEntryRepository(Context);
-            TimeEntryService = new TimeEntryService(TimeEntryRepository, JobRepository, Mapper);
+            TimeEntryService = new TimeEntryService(TimeEntryRepository, TimeEntryHistoryRepository, JobRepository, Mapper);
 
         }
 
@@ -169,6 +176,40 @@ namespace LandscapingTR.Test.Time
                 IsApproved = false
             };
             
+            var savedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            var savedTimeEntryHistory = (await TimeEntryHistoryService.GetTimeEntriesByEmployeeIdAsync(savedEmployeeModel.Id.Value)).FirstOrDefault();
+
+            var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+
+            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.IsNotNull(savedTimeEntryHistory);
+            Assert.AreEqual(timeEntryModel.EntryDate, savedTimeEntryHistory.EntryDate);
+        }
+
+        [TestMethod]
+        public async Task TimeEntry_SaveNewSubmittedTimeEntry_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployeeAsync();
+
+            // Add a new job.
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+
+            // Save time Entry for added employee.
+            var timeEntryModel = new TimeEntryModel()
+            {
+                EmployeeId = savedEmployeeModel.Id.Value,
+                EntryDate = DateTime.Now,
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
+                JobTypeId = (int)JobTypes.TreeCare,
+                JobId = savedJobModel.Id.Value,
+                TotalLoggedHours = 8,
+                LastModifiedDate = DateTime.Now,
+                IsSubmitted = true,
+                IsApproved = false
+            };
+
             var savedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
 
             var savedTimeEntry = (await TimeEntryService.GetTimeEntriesByEmployeeIdAsync(savedEmployeeModel.Id.Value)).FirstOrDefault();

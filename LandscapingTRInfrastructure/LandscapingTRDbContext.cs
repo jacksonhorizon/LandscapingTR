@@ -17,10 +17,14 @@ namespace LandscapingTR.Infrastructure
         // Time Section.
 
         /// <summary>
-        /// The employees.
+        /// The time entries.
         /// </summary>
         public DbSet<TimeEntry> TimeEntries { get; set; }
 
+        /// <summary>
+        /// The time entry histories.
+        /// </summary>
+        public DbSet<TimeEntryHistory> TimeEntryHistories { get; set; }
 
         // Company Resources Section.
 
@@ -28,10 +32,6 @@ namespace LandscapingTR.Infrastructure
         /// The employees.
         /// </summary>
         public DbSet<Employee> Employees { get; set; }
-
-
-        public DbSet<Customer> Customers { get; set; }
-
 
         // Lookups Section.
 
@@ -73,11 +73,12 @@ namespace LandscapingTR.Infrastructure
             base.OnModelCreating(builder);
 
             this.RenameTableAndId<TimeEntry, int?>(builder);
+            this.RenameTableAndId<TimeEntryHistory, int?>(builder);
+
             this.RenameTableAndId<Job, int?>(builder);
             this.RenameTableAndId<Location, int?>(builder);
             
             this.RenameTableAndId<Employee, int?>(builder);
-            this.RenameTableAndId<Customer, int?>(builder);
 
             this.RenameTableAndId<EmployeeType, int?>(builder);
             this.RenameTableAndId<JobType, int?>(builder);

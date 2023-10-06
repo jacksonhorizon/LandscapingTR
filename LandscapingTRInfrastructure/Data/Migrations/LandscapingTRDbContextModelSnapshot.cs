@@ -22,32 +22,6 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Customer", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("CustomerId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerTypeId");
-
-                    b.ToTable("Customer", (string)null);
-                });
-
             modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Employee", b =>
                 {
                     b.Property<int?>("Id")
@@ -329,15 +303,49 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.ToTable("TimeEntry", (string)null);
                 });
 
-            modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Customer", b =>
+            modelBuilder.Entity("LandscapingTR.Core.Entities.Time.TimeEntryHistory", b =>
                 {
-                    b.HasOne("LandscapingTR.Core.Entities.Lookups.CustomerType", "CustomerType")
-                        .WithMany()
-                        .HasForeignKey("CustomerTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("TimeEntryHistoryId");
 
-                    b.Navigation("CustomerType");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TotalLoggedHours")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("TimeEntryHistory", (string)null);
                 });
 
             modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Employee", b =>
@@ -390,6 +398,25 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.HasOne("LandscapingTR.Core.Entities.Domain.Job", "Job")
                         .WithMany()
                         .HasForeignKey("JobId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("LandscapingTR.Core.Entities.Time.TimeEntryHistory", b =>
+                {
+                    b.HasOne("LandscapingTR.Core.Entities.CompanyResources.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LandscapingTR.Core.Entities.Domain.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employee");
 
