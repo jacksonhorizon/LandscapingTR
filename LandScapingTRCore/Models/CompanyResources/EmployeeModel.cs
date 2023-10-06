@@ -18,6 +18,11 @@
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets or sets the employee username.
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
         /// Gets or sets the employee password
         /// </summary>
         public string Password { get; set; }

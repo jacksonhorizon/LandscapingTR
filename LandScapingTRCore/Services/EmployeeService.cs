@@ -49,6 +49,9 @@ namespace LandscapingTR.Core.Services
                 var existingEntity = await this.EmployeeRepository.GetEmployeeAsync(employeeModel.Id.Value);
 
                 this.Mapper.Map(employeeModel, existingEntity);
+                
+                // hash password
+
 
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(existingEntity);
 
@@ -57,11 +60,36 @@ namespace LandscapingTR.Core.Services
             else
             {
                 var employee = this.Mapper.Map<Employee>(employeeModel);
+
+                // hash password
+
+
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(employee);
 
                 return this.Mapper.Map<EmployeeModel>(savedEmployee);
             }
-            
+        }
+
+        /// <summary>
+        /// Returns the model of an employee if they are able to login.
+        /// </summary>
+        /// <param name="username">The employee's username.</param>
+        /// <param name="password">The employee's password.</param>
+        /// <returns></returns>
+        public async Task<EmployeeModel> Login(string username, string password)
+        {
+            var employees = await this.EmployeeRepository.GetEmployeesAsync();
+
+            var hashedPassword = "";
+
+            var matchingEmployee = employees.FirstOrDefault(x => x.Username.Equals(username) && x.Password.Equals(hashedPassword));
+
+            if (matchingEmployee == null)
+            {
+                throw new Exception("Please enter valid credentials");
+            }
+
+            return this.Mapper.Map<EmployeeModel>(matchingEmployee);
         }
     }
 }

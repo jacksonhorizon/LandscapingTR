@@ -23,5 +23,14 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="employee">The employee.</param>
         /// <returns>The saved employee.</returns>
         Task<EmployeeModel> SaveEmployeeAsync(EmployeeModel employeeModel);
+
+
+        /// <summary>
+        /// Returns the model of an employee if they are able to login.
+        /// </summary>
+        /// <param name="username">The employee's username.</param>
+        /// <param name="password">The employee's password.</param>
+        /// <returns></returns>
+        Task<EmployeeModel> Login(string username, string password);
     }
 }
