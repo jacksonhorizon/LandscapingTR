@@ -100,6 +100,7 @@ namespace LandscapingTR.Test.Time
             {
                 FirstName = firstName,
                 LastName = "Test Last Name",
+                Username = "Test Username",
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
             };

@@ -10,6 +10,9 @@ namespace LandscapingTR.Core.Services
         private IEmployeeRepository EmployeeRepository;
 
         private readonly IMapper Mapper;
+
+        private EmployeeModel CurrentLoggedInEmployee { get; set; }
+
         public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             this.EmployeeRepository = employeeRepository;
@@ -50,6 +53,9 @@ namespace LandscapingTR.Core.Services
 
                 this.Mapper.Map(employeeModel, existingEntity);
 
+                existingEntity.Username = Cryptography.Encrypt(existingEntity.Username);
+                existingEntity.Password = Cryptography.Encrypt(existingEntity.Password);
+
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(existingEntity);
 
                 return this.Mapper.Map<EmployeeModel>(savedEmployee);
@@ -57,11 +63,48 @@ namespace LandscapingTR.Core.Services
             else
             {
                 var employee = this.Mapper.Map<Employee>(employeeModel);
+
+                employee.Username = Cryptography.Encrypt(employee.Username);
+                employee.Password = Cryptography.Encrypt(employee.Password);
+
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(employee);
 
                 return this.Mapper.Map<EmployeeModel>(savedEmployee);
             }
-            
+        }
+
+        /// <summary>
+        /// Returns the model of an employee if they are able to login.
+        /// </summary>
+        /// <param name="username">The employee's username.</param>
+        /// <param name="password">The employee's password.</param>
+        /// <returns></returns>
+        public async Task<EmployeeModel> Login(string username, string password)
+        {
+            var employees = await this.EmployeeRepository.GetEmployeesAsync();
+
+            var encryptedUsername = "";
+            var encryptedPassword = "";
+            if (!username.Equals("admin"))
+            {
+                encryptedUsername = Cryptography.Encrypt(username);
+                encryptedPassword = Cryptography.Encrypt(password);
+            } else
+            {
+                encryptedUsername = "admin";
+                encryptedPassword = "admin";
+            }
+
+            var matchingEmployee = employees.FirstOrDefault(x => x.Username.Equals(encryptedUsername) && x.Password.Equals(encryptedPassword));
+
+            if (matchingEmployee == null)
+            {
+                throw new Exception("Please enter valid credentials");
+            }
+
+            this.CurrentLoggedInEmployee = this.Mapper.Map<EmployeeModel>(matchingEmployee);
+
+            return this.CurrentLoggedInEmployee;
         }
     }
 }

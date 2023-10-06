@@ -138,7 +138,7 @@ namespace LandscapingTR.Core.Services
 
             if (timeEntryModel.IsSubmitted)
             {
-                var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId);
+                var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId.Value);
                 job.TotalLoggedHours += timeEntry.TotalLoggedHours;
 
                 await this.JobRepository.SaveJobAsync(job);
@@ -170,7 +170,7 @@ namespace LandscapingTR.Core.Services
 
                 if (timeEntryModel.IsSubmitted)
                 {
-                    var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId);
+                    var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId.Value);
                     job.TotalLoggedHours += timeEntry.TotalLoggedHours;
 
                     await this.JobRepository.SaveJobAsync(job);
