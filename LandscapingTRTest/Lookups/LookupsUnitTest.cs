@@ -3,6 +3,7 @@ using AutoMapper;
 using LandscapingTR.Core;
 using LandscapingTR.Core.Factories;
 using LandscapingTR.Core.Interfaces;
+using LandscapingTR.Core.Models;
 using LandscapingTR.Core.Models.Lookups;
 using LandscapingTR.Core.Services;
 using LandscapingTR.Infrastructure;
@@ -112,6 +113,22 @@ namespace LandscapingTR.Test.Lookups
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
             Assert.AreEqual(3, lookupEntities.Count);
+        }
+
+        [TestMethod]
+        public async Task Lookup_GetAllLookups_Succeeds()
+        {
+            var lookupsModel = await LookupService.GetLandscapingTRLookupsAsync();
+            var locationTypes = lookupsModel.EmployeeTypes;
+            var employeeTypes = lookupsModel.EmployeeTypes;
+            var customerTypes = lookupsModel.CustomerTypes;
+            var jobTypes = lookupsModel.JobTypes;
+
+            Assert.IsInstanceOfType(lookupsModel, typeof(LandscapingTRLookupsModel));
+            Assert.AreEqual(5, locationTypes.Count);
+            Assert.AreEqual(5, employeeTypes.Count);
+            Assert.AreEqual(3, customerTypes.Count);
+            Assert.AreEqual(11, jobTypes.Count);
         }
     }
 }
