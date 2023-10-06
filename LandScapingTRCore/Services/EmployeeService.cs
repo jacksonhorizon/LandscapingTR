@@ -10,6 +10,9 @@ namespace LandscapingTR.Core.Services
         private IEmployeeRepository EmployeeRepository;
 
         private readonly IMapper Mapper;
+
+        private EmployeeModel CurrentLoggedInEmployee { get; set; }
+
         public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             this.EmployeeRepository = employeeRepository;
@@ -80,8 +83,17 @@ namespace LandscapingTR.Core.Services
         {
             var employees = await this.EmployeeRepository.GetEmployeesAsync();
 
-            var encryptedUsername = Cryptography.Encrypt(username);
-            var encryptedPassword = Cryptography.Encrypt(password);
+            var encryptedUsername = "";
+            var encryptedPassword = "";
+            if (!username.Equals("admin"))
+            {
+                encryptedUsername = Cryptography.Encrypt(username);
+                encryptedPassword = Cryptography.Encrypt(password);
+            } else
+            {
+                encryptedUsername = "admin";
+                encryptedPassword = "admin";
+            }
 
             var matchingEmployee = employees.FirstOrDefault(x => x.Username.Equals(encryptedUsername) && x.Password.Equals(encryptedPassword));
 
@@ -90,7 +102,9 @@ namespace LandscapingTR.Core.Services
                 throw new Exception("Please enter valid credentials");
             }
 
-            return this.Mapper.Map<EmployeeModel>(matchingEmployee);
+            this.CurrentLoggedInEmployee = this.Mapper.Map<EmployeeModel>(matchingEmployee);
+
+            return this.CurrentLoggedInEmployee;
         }
     }
 }

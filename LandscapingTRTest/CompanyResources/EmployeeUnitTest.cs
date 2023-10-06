@@ -163,7 +163,9 @@ namespace LandscapingTR.Test.Lookups
 
             var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();
             Assert.IsNotNull(savedEmployeeModels);
-            Assert.AreEqual(5, savedEmployeeModels.Count);
+
+            // Includes admin and base user
+            Assert.AreEqual(7, savedEmployeeModels.Count);
         }
 
         [TestMethod]
@@ -189,7 +191,7 @@ namespace LandscapingTR.Test.Lookups
             {
                 var username = "potato";
                 var password = "I am not sure what to put as the password";
-                var savedEmployeeModels = await EmployeeService.Login(username, password);
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
             }
             catch (Exception e)
             {
@@ -221,7 +223,7 @@ namespace LandscapingTR.Test.Lookups
             {
                 var username = "potasdasdatos";
                 var password = "I am not sure what to put as the password";
-                var savedEmployeeModels = await EmployeeService.Login(username, password);
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
                 Assert.IsTrue(false);
             }
             catch (Exception e)
@@ -253,12 +255,28 @@ namespace LandscapingTR.Test.Lookups
             {
                 var username = "potato";
                 var password = "I am not sure what to put as the asdasdad";
-                var savedEmployeeModels = await EmployeeService.Login(username, password);
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
                 Assert.IsTrue(false);
             }
             catch (Exception e)
             {
                 Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public async Task Employee_LoginAdmin_Succeeds()
+        {
+            try
+            {
+                var username = "admin";
+                var password = "admin";
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
+                Assert.AreEqual(loggedInEmployeeModel.EmployeeTypeId, (int)EmployeeTypes.Administrator);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(false);
             }
         }
     }
