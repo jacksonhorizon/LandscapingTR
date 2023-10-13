@@ -28,7 +28,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         public async Task<List<Location>> GetLocationsByCityAsync(string city)
         {
             return await this.DataContext.Locations
-                .Where(x => x.State.Equals(city))
+                .Where(x => x.City.Equals(city))
                 .ToListAsync();
         }
 
