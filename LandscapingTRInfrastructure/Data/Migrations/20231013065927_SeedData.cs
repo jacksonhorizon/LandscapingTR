@@ -12,11 +12,11 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            AddBaseUserAndAdmin(migrationBuilder);
             AddCustomerType(migrationBuilder);
             AddJobType(migrationBuilder);
             AddEmployeeType(migrationBuilder);
             AddLocationType(migrationBuilder);
+            AddBaseUserAndAdmin(migrationBuilder);
         }
 
         private void AddCustomerType(MigrationBuilder migrationBuilder)
@@ -96,18 +96,18 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
         }
         private void AddBaseUserAndAdmin(MigrationBuilder migrationBuilder)
         {
-            //var sql = "SET IDENTITY_INSERT [Employee] ON; " +
-            //    "DECLARE @CurrentDate DATE = CAST( GETDATE() AS DATE )" +
-            //    "INSERT INTO [Employee] " +
-            //    "                   ([EmployeeId],     [FirstName], [LastName], [UserName], [Password], [EmployeeTypeId], [CreatedDate])" +
-            //    "VALUES " +
-            //                        $"(1,                'admin',    'admin',    'admin',    'admin',  {(int)EmployeeTypes.Administrator},      @CurrentDate)," +
-            //                        $"(2,                'A',          'Guy',    'I',       'dontknow',  {(int)EmployeeTypes.FieldCrewWorker},      @CurrentDate);" +
+            var sql = "SET IDENTITY_INSERT [Employee] ON; " +
+                "DECLARE @CurrentDate DATE = CAST( GETDATE() AS DATE )" +
+                "INSERT INTO [Employee] " +
+                "                   ([EmployeeId],     [FirstName], [LastName], [UserName], [Password], [EmployeeTypeId], [CreatedDate])" +
+                "VALUES " +
+                                    $"(1,                'admin',    'admin',    'admin',    'admin',  {(int)EmployeeTypes.Administrator},      @CurrentDate)," +
+                                    $"(2,                'A',          'Guy',    'I',       'dontknow',  {(int)EmployeeTypes.FieldCrewWorker},      @CurrentDate);" +
 
 
-            //    "SET IDENTITY_INSERT [Employee] OFF; ";
+                "SET IDENTITY_INSERT [Employee] OFF; ";
 
-            //migrationBuilder.Sql(sql);
+            migrationBuilder.Sql(sql);
         }
 
         /// <inheritdoc />
