@@ -28,6 +28,10 @@ namespace LandscapingTR.Test.Time
 
         private static IEmployeeService EmployeeService;
 
+        private static ILocationRepository LocationRepository;
+
+        private static ILocationService LocationService;
+
         /* BEGIN TEST HEADER */
 
         private static LandscapingTRDbContext Context;
@@ -66,6 +70,9 @@ namespace LandscapingTR.Test.Time
 
             JobRepository = new JobRepository(Context);
             JobService = new JobService(JobRepository, Mapper);
+
+            LocationRepository = new LocationRepository(Context);
+            LocationService = new LocationService(LocationRepository, Mapper);
         }
 
         [ClassCleanup]
@@ -118,8 +125,10 @@ namespace LandscapingTR.Test.Time
         /// Adds a new job.
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
+        /// <param name="date">The date of the job.</param>
+        /// <param name="locationId">The location id.</param>
         /// <returns>The saved job.</returns>
-        private async Task<JobModel> AddNewJobModelAsync(int jobTypeId, DateTime? date = null)
+        private async Task<JobModel> AddNewJobModelAsync(int jobTypeId, DateTime? date = null, int? locationId = null)
         {
             // Add a new job.
             var newJobModel = new JobModel()
@@ -128,7 +137,8 @@ namespace LandscapingTR.Test.Time
                 EstimatedTotalHours = 8,
                 TotalLoggedHours = 0,
                 JobDate = date.HasValue ? date.Value : DateTime.Now,
-                isCompleted = false
+                isCompleted = false,
+                LocationId = locationId
             };
 
             var savedJobModel = await JobService.SaveJobAsync(newJobModel);
@@ -137,6 +147,30 @@ namespace LandscapingTR.Test.Time
             Assert.IsNotNull(jobModel);
 
             return jobModel;
+        }
+
+        /// <summary>
+        /// Adds a new location.
+        /// </summary>
+        /// <param name="locationTypeId">The location type id.</param>
+        /// <returns>The saved location.</returns>
+        private async Task<LocationModel> AddNewLocationModelAsync(int locationTypeId, string city, string state)
+        {
+            // Add a new location.
+            var newLocationModel = new LocationModel()
+            {
+                LocationTypeId = locationTypeId,
+                Address = "15332 Does Not Exist St",
+                City = city,
+                State = state,
+            };
+
+            var savedLocationModel = await LocationService.SaveLocationAsync(newLocationModel);
+
+            var locationModel = await LocationService.GetLocationByIdAsync(savedLocationModel.Id.Value);
+            Assert.IsNotNull(locationModel);
+
+            return locationModel;
         }
 
         [TestMethod]
@@ -254,6 +288,25 @@ namespace LandscapingTR.Test.Time
 
             var jobsAssignedToEmployeeModel = await JobService.GetJobsByEmployeeIdAsync(savedEmployeeModel.Id.Value);
             Assert.AreEqual(5, jobsAssignedToEmployeeModel.Count);
+        }
+
+        [TestMethod]
+        public async Task Job_GetJobsByLocationId_Succeeds()
+        {
+            var savedLocationModelOne = await AddNewLocationModelAsync((int)LocationTypes.PublicAndInstitutional, "Tucson", "Arizona");
+            var savedLocationModelTwo = await AddNewLocationModelAsync((int)LocationTypes.CommercialAndBusiness, "Mesa", "Arizona");
+
+            // Save jobs
+            var savedJobModelOne = await AddNewJobModelAsync((int)JobTypes.WaterManagement, DateTime.Today, savedLocationModelOne.Id);
+            var savedJobModelTwo = await AddNewJobModelAsync((int)JobTypes.RoutineMaintenance, DateTime.Today, savedLocationModelTwo.Id);
+            var savedJobModelThree = await AddNewJobModelAsync((int)JobTypes.LandscapeDesign, DateTime.Today, savedLocationModelTwo.Id);
+            var savedJobModelFour = await AddNewJobModelAsync((int)JobTypes.ArtisticLandscaping, DateTime.Today, savedLocationModelTwo.Id);
+            var savedJobModelFive = await AddNewJobModelAsync((int)JobTypes.WaterManagement, DateTime.Today, savedLocationModelOne.Id);
+
+            var jobsAssignedToLocationOne = await JobService.GetJobsByLocationIdAsync(savedLocationModelOne.Id.Value);
+            var jobsAssignedToLocationTwo = await JobService.GetJobsByLocationIdAsync(savedLocationModelTwo.Id.Value);
+            Assert.AreEqual(2, jobsAssignedToLocationOne.Count);
+            Assert.AreEqual(3, jobsAssignedToLocationTwo.Count);
         }
     }
 }
