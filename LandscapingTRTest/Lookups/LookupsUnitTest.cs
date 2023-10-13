@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LandscapingTR.Test.Lookups
 {
     [TestClass]
-    public class LookupsRepositoryUnitTest : BaseUnitTest
+    public class LookupsRepositoryUnitTest
     {
 
         private static ILookupRepository LookupRepository;

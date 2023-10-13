@@ -34,6 +34,8 @@ namespace LandscapingTR.Core
                .ReverseMap();
             CreateMap<Job, JobModel>()
                .ReverseMap();
+            CreateMap<Location, LocationModel>()
+               .ReverseMap();
         }
     }
 }

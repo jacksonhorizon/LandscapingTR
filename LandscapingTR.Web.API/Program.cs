@@ -68,6 +68,23 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+
+    // Get the database context
+    var dbContext = serviceProvider.GetRequiredService<LandscapingTRDbContext>();
+
+    // Ensure that the database is created
+    var alreadyCreated = dbContext.Database.EnsureCreated();
+
+    if (!alreadyCreated)
+    {
+        // Apply any pending migrations
+        dbContext.Database.Migrate();
+    }
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
