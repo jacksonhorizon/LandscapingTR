@@ -121,7 +121,7 @@ namespace LandscapingTR.Test.Time
         /// <returns>The saved job.</returns>
         private async Task<JobModel> AddNewJobModelAsync(int jobTypeId, DateTime? date = null)
         {
-            // Add a new employee.
+            // Add a new job.
             var newJobModel = new JobModel()
             {
                 JobTypeId = jobTypeId,

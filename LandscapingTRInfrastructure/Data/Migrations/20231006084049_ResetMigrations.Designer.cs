@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandscapingTR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LandscapingTRDbContext))]
-    [Migration("20231006075115_AddAdminAndBaseUser")]
-    partial class AddAdminAndBaseUser
+    [Migration("20231006084049_ResetMigrations")]
+    partial class ResetMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

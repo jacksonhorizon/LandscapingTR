@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandscapingTR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LandscapingTRDbContext))]
-    [Migration("20231002204921_AddJob")]
-    partial class AddJob
+    [Migration("20231006084522_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,32 +24,6 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Customer", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("CustomerId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerTypeId");
-
-                    b.ToTable("Customer", (string)null);
-                });
 
             modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Employee", b =>
                 {
@@ -75,6 +49,10 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -314,7 +292,7 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("JobId")
+                    b.Property<int?>("JobId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedDate")
@@ -332,15 +310,49 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.ToTable("TimeEntry", (string)null);
                 });
 
-            modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Customer", b =>
+            modelBuilder.Entity("LandscapingTR.Core.Entities.Time.TimeEntryHistory", b =>
                 {
-                    b.HasOne("LandscapingTR.Core.Entities.Lookups.CustomerType", "CustomerType")
-                        .WithMany()
-                        .HasForeignKey("CustomerTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("TimeEntryHistoryId");
 
-                    b.Navigation("CustomerType");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TotalLoggedHours")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("TimeEntryHistory", (string)null);
                 });
 
             modelBuilder.Entity("LandscapingTR.Core.Entities.CompanyResources.Employee", b =>
@@ -383,6 +395,23 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                 });
 
             modelBuilder.Entity("LandscapingTR.Core.Entities.Time.TimeEntry", b =>
+                {
+                    b.HasOne("LandscapingTR.Core.Entities.CompanyResources.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LandscapingTR.Core.Entities.Domain.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("LandscapingTR.Core.Entities.Time.TimeEntryHistory", b =>
                 {
                     b.HasOne("LandscapingTR.Core.Entities.CompanyResources.Employee", "Employee")
                         .WithMany()

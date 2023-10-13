@@ -28,7 +28,5 @@ namespace LandscapingTR.Core.Entities.Domain
         /// Gets or sets the location state.
         /// </summary>
         public string State { get; set; }
-
-
     }
 }
