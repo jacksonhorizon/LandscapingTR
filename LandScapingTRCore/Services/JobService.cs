@@ -41,6 +41,17 @@ namespace LandscapingTR.Core.Services
         }
 
         /// <summary>
+        /// Gets the jobs by location id.
+        /// </summary>
+        /// <param name="locationId">The location id.</param>
+        /// <returns>The jobs.</returns>
+        public async Task<List<JobModel>> GetJobsByLocationIdAsync(int locationId)
+        {
+            var jobModels = (await JobRepository.GetJobsByLocationIdAsync(locationId)).Select(x => Mapper.Map<JobModel>(x)).ToList();
+            return jobModels;
+        }
+
+        /// <summary>
         /// Gets the jobs in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>

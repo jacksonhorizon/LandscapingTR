@@ -42,6 +42,18 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
+        /// Gets the jobs by location id.
+        /// </summary>
+        /// <param name="locationId">The location id.</param>
+        /// <returns>The jobs.</returns>
+        public async Task<List<Job>> GetJobsByLocationIdAsync(int locationId)
+        {
+            return await this.DataContext.Jobs
+                .Where(x => x.LocationId == locationId)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Gets the time entries in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>
