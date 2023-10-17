@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginModel } from '../core/models/company-resources/login.model';
 import { LoginService } from '../core/services/login.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   user: string = '';
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -35,7 +37,7 @@ export class LoginComponent implements OnInit {
         this.user = username;
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.reloadPage();
+        this.reroute();
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
+  reroute(): void {
+    this.router.navigate(["employee-home"])
   }
 }
