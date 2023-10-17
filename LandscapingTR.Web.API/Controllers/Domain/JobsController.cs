@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LandscapingTR.Core.Interfaces;
 
-namespace LandscapingTR.Web.API.Controllers.Lookups
+namespace LandscapingTR.Web.API.Controllers.Domain
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,6 +14,18 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
             this.JobService = jobService;
         }
 
+        [HttpGet]
+        [Route("AllJobs")]
+        public async Task<IActionResult> GetJobTypes()
+        {
+            var lookupModels = await this.JobService.GetJobsByDateRangeAsync(DateTime.MinValue, DateTime.Now);
 
+            if (lookupModels.Count == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok(lookupModels);
+        }
     }
 }

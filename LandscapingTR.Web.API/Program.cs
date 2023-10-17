@@ -7,7 +7,11 @@ using LandscapingTR.Infrastructure;
 using LandscapingTR.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Automapper config
 var mapperConfig = new MapperConfiguration(cfg =>
@@ -34,6 +38,18 @@ builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 
+// ConfigureServices
+builder.Services.AddCors(options =>
+{
+    // Default Policy
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:44464", "http://localhost:5028")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
 
 
 // Add other Services
@@ -54,6 +70,15 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddControllers();
 var app = builder.Build();
+
+// Configure
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+});
 
 // Configure the HTTP request pipeline.
 
@@ -84,6 +109,7 @@ using (var scope = app.Services.CreateScope())
         dbContext.Database.Migrate();
     }
 }
+
 
 app.UseHttpsRedirection();
 

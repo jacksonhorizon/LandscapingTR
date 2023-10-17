@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LandscapingTR.Core.Interfaces;
 
-namespace LandscapingTR.Web.API.Controllers.Lookups
+namespace LandscapingTR.Web.API.Controllers.Time
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,6 +14,18 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
             this.TimeEntryService = timeEntryService;
         }
 
+        [HttpGet]
+        [Route("AllTimeEntries")]
+        public async Task<IActionResult> GetJobTypes()
+        {
+            var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByDateRangeAsync(DateTime.MinValue, DateTime.Now);
 
+            if (timeEntryModels.Count == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok(timeEntryModels);
+        }
     }
 }

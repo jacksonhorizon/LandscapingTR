@@ -14,6 +14,18 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
             this.LocationService = locationService;
         }
 
+        [HttpGet]
+        [Route("AllLocations")]
+        public async Task<IActionResult> GetJobTypes()
+        {
+            var locationsModels = await this.LocationService.GetLocationsByStateAsync("Arizona");
 
+            if (locationsModels.Count == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok(locationsModels);
+        }
     }
 }
