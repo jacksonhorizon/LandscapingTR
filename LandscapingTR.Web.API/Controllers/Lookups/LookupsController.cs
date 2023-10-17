@@ -5,11 +5,11 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationsController : ControllerBase
+    public class LookupsController : ControllerBase
     {
         private readonly ILookupService LookupService;
 
-        public LocationsController(ILookupService lookupService)
+        public LookupsController(ILookupService lookupService)
         {
             this.LookupService = lookupService;
         }
