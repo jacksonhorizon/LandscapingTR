@@ -2,9 +2,13 @@
 
 .card {
     padding: 10px;
-    margin: 2%;
 }
 
 .inside-card {
     margin: 5px;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
 }
