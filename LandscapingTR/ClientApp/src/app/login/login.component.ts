@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginModel } from '../core/models/company-resources/login.model';
 import { LoginService } from '../core/services/login.service';
 
 @Component({
@@ -17,21 +19,25 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   user: string = '';
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
     const { username, password } = this.form;
+    const loginModel = new LoginModel();
+    loginModel.username = username;
+    loginModel.password = password;
 
-    this.loginService.login(username, password).subscribe({
+    this.loginService.login(loginModel).subscribe({
       next: data => {
 
         this.user = username;
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.reloadPage();
+        this.reroute();
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -40,7 +46,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reloadPage(): void {
-    window.location.reload();
+  reroute(): void {
+    this.router.navigate(["employee-home"])
   }
 }

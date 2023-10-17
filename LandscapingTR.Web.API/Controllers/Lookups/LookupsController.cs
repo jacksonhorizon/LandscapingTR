@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LandscapingTR.Core.Models.CompanyResources;
 using LandscapingTR.Core.Interfaces;
 
 namespace LandscapingTR.Web.API.Controllers.Lookups
@@ -8,18 +7,18 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
     [ApiController]
     public class LookupsController : ControllerBase
     {
-        private readonly ILookupService lookupService;
+        private readonly ILookupService LookupService;
 
         public LookupsController(ILookupService lookupService)
         {
-            this.lookupService = lookupService;
+            this.LookupService = lookupService;
         }
 
         [HttpGet]
         [Route("JobTypes")]
         public async Task<IActionResult> GetJobTypes()
         {
-            var lookupModels = await this.lookupService.GetJobTypesAsync();
+            var lookupModels = await this.LookupService.GetJobTypesAsync();
 
             if (lookupModels.Count == 0)
             {
@@ -33,7 +32,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         [Route("CustomerTypes")]
         public async Task<IActionResult> GetCustomerTypes()
         {
-            var lookupModels = await this.lookupService.GetCustomerTypesAsync();
+            var lookupModels = await this.LookupService.GetCustomerTypesAsync();
 
             if (lookupModels.Count == 0)
             {
@@ -47,7 +46,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         [Route("EmployeeTypes")]
         public async Task<IActionResult> GetEmployeeTypes()
         {
-            var lookupModels = await this.lookupService.GetEmployeeTypesAsync();
+            var lookupModels = await this.LookupService.GetEmployeeTypesAsync();
 
             if (lookupModels.Count == 0)
             {
@@ -61,7 +60,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         [Route("LocationTypes")]
         public async Task<IActionResult> GetLocationTypes()
         {
-            var lookupModels = await this.lookupService.GetLocationTypesAsync();
+            var lookupModels = await this.LookupService.GetLocationTypesAsync();
 
             if (lookupModels.Count == 0)
             {
