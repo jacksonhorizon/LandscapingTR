@@ -25,7 +25,13 @@ The following items must be completed before the code can be compiled and run su
 - The default user has the following credentials:
 	- Username: admin
 	- password: admin
-- If you would like to add your own user, either through testing or otherwise, it must be done either through the UI, or by using the swagger web API. 
+- If you would like to add your own user, either through testing or otherwise, it must be done either through the UI, or by using the Swagger Web API. 
+### Adding an employee through Swapper Web API
+- In the Employee's Accordion, select the Post to /api/Employees/Employee:
+- Click "Try it out"
+- Remove the "id: 0" field
+- Change information Note: employeeTypeId must be valid Id in EmployeeType table
+- Click "Execute"
 
 
 
