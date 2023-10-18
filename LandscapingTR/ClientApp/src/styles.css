@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+a/* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
 a {
@@ -13,4 +13,8 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.login-page {
+    margin-top: 3%;
 }

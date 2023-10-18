@@ -10,15 +10,18 @@ import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
+import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+
+    LoginNavMenuComponent,
     LoginComponent,
     SettingsComponent,
     TimeEntryComponent,
-    EmployeeHomeComponent
+    EmployeeHomeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
