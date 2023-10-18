@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TimeEntryComponent } from './time-entry/time-entry.component';
@@ -15,8 +14,6 @@ import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-
     LoginNavMenuComponent,
     LoginComponent,
     SettingsComponent,

@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { TimeEntryModel } from '../core/models/time/time-entry.model';
 
 @Component({
   selector: 'app-time-entry',
@@ -7,18 +9,37 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './time-entry.component.html'
 })
 export class TimeEntryComponent {
-  public forecasts: WeatherForecast[] = [];
+  // The employee Id as a number/string
+  employeeId!: number;
+  pathEmployeeId!: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+  // General properties
+  timeEntries: TimeEntryModel[] = [];
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    // Gets the employee Id
+    const employeeIdFromUrl = this.route.snapshot.paramMap.get('id')?.slice(1);
+    if (employeeIdFromUrl == null) {
+      this.employeeId = -1;
+    } else {
+      this.employeeId = +employeeIdFromUrl;
+    }
+
+    this.pathEmployeeId = ":" + this.employeeId.toString();
   }
-}
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  // Is for the header
+  isExpanded = false;
+
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  // General methods
 }

@@ -1,26 +1,59 @@
-<app-nav-menu></app-nav-menu>
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand">LandscapingTR</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+           [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time Entry</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
+
 <div class="container">
-  <h1 id="tableLabel">Weather forecast</h1>
+  <h1 id="tableLabel">Weekly Timesheet</h1>
 
-  <p>This component demonstrates fetching data from the server.</p>
+  <p *ngIf="!timeEntries"><em>Loading...</em></p>
 
-  <p *ngIf="!forecasts"><em>Loading...</em></p>
-
-  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timeEntries">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Temp. (C)</th>
-        <th>Temp. (F)</th>
-        <th>Summary</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let forecast of forecasts">
-        <td>{{ forecast.date }}</td>
-        <td>{{ forecast.temperatureC }}</td>
-        <td>{{ forecast.temperatureF }}</td>
-        <td>{{ forecast.summary }}</td>
+      <tr *ngFor="let timeEntry of timeEntries">
+        <!--<td>{{ timeEntry.date }}</td>
+  <td>{{ timeEntry.temperatureC }}</td>
+  <td>{{ timeEntry.temperatureF }}</td>
+  <td>{{ timeEntry.summary }}</td>-->
       </tr>
     </tbody>
   </table>
