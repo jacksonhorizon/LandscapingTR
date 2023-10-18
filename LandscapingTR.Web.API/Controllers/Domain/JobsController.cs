@@ -16,7 +16,7 @@ namespace LandscapingTR.Web.API.Controllers.Domain
         }
 
         [HttpGet]
-        [Route("AllJobs")]
+        [Route("GetAllJobs")]
         public async Task<IActionResult> GetJobTypes()
         {
             var jobModels = await this.JobService.GetJobsByDateRangeAsync(DateTime.MinValue, DateTime.Now);

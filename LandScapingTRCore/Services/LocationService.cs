@@ -67,8 +67,18 @@ namespace LandscapingTR.Core.Services
         /// <returns>The saved location.</returns>
         public async Task<LocationModel> SaveLocationAsync(LocationModel locationModel)
         {
-            var location = Mapper.Map<Location>(locationModel);
-            location = await LocationRepository.SaveLocationAsync(location);
+            Location location = new Location();
+            if (!locationModel.Id.HasValue)
+            {
+                var locationToSave = Mapper.Map<Location>(locationModel);
+                location = await LocationRepository.SaveLocationAsync(locationToSave);
+            }
+            else
+            {
+                var savedLocation = await this.LocationRepository.GetLocationByIdAsync(locationModel.Id.Value);
+                Mapper.Map(locationModel, savedLocation);
+                location = await LocationRepository.SaveLocationAsync(savedLocation);
+            }
 
             return Mapper.Map<LocationModel>(location);
         }
