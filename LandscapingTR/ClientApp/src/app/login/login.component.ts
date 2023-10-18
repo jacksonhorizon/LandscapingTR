@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LoginModel } from '../core/models/company-resources/login.model';
 import { LoginService } from '../core/services/login.service';
 
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.user = username;
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.reroute();
+        this.reroute(data);
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  reroute(): void {
-    this.router.navigate(["employee-home"])
+  reroute(data : EmployeeModel): void {
+    this.router.navigate(["employee-home/:" + data.id])
   }
 }

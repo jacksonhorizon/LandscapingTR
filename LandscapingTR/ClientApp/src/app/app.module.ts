@@ -29,9 +29,9 @@ import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'employee-home', component: EmployeeHomeComponent },
-      { path: 'settings', component: SettingsComponent },
-      { path: 'time-entry', component: TimeEntryComponent },
+      { path: 'employee-home/:id', component: EmployeeHomeComponent },
+      { path: 'settings/:id', component: SettingsComponent },
+      { path: 'time-entry/:id', component: TimeEntryComponent },
     ])
   ],
   providers: [],

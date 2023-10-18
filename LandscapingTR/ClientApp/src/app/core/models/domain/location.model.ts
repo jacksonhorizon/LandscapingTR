@@ -1,7 +1,7 @@
 export class LocationModel {
-  Id?: number;
-  LocationTypeId?: number;
-  Address?: string;
-  City?: string;
-  State?: string;
+  id?: number;
+  locationTypeId?: number;
+  address?: string;
+  city?: string;
+  state?: string;
 }
