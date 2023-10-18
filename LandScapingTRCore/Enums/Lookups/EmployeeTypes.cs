@@ -5,26 +5,26 @@
         /// <summary>
         /// Field crew worker.
         /// </summary>
-        FieldCrewWorker = 1,
+        FieldCrewWorker = 0,
 
         /// <summary>
         /// Crew supervisor.
         /// </summary>
-        CrewSupervisor = 2,
+        CrewSupervisor = 1,
 
         /// <summary>
         /// Landscape designer.
         /// </summary>
-        LandscapeDesigner = 3,
+        LandscapeDesigner = 2,
 
         /// <summary>
         /// Administrator.
         /// </summary>
-        Administrator = 4,
+        Administrator = 3,
 
         /// <summary>
         /// Equipment and safety officer.
         /// </summary>
-        EquipmentAndSafetyOfficer = 5
+        EquipmentAndSafetyOfficer = 4
     }
 }

@@ -2,7 +2,7 @@
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.Domain;
 
-namespace LandscapingTR.Web.API.Controllers.Lookups
+namespace LandscapingTR.Web.API.Controllers.Domain
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
 
         [HttpGet]
         [Route("GetAllLocations")]
-        public async Task<IActionResult> GetLocationTypes()
+        public async Task<IActionResult> GetAllLocations()
         {
             var locationsModels = await this.LocationService.GetLocationsByStateAsync("Arizona");
 
@@ -45,7 +45,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
 
         [HttpGet]
         [Route("LocationByCity")]
-        public async Task<IActionResult> GetlocationsByCity(string city)
+        public async Task<IActionResult> GetLocationsByCity(string city)
         {
             var locationModels = await this.LocationService.GetLocationsByCityAsync(city);
 
@@ -59,9 +59,9 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
 
         [HttpGet]
         [Route("LocationByState")]
-        public async Task<IActionResult> GetlocationsByState(string state)
+        public async Task<IActionResult> GetLocationsByState(string state)
         {
-            var locationModels = await this.LocationService.GetLocationsByCityAsync(state);
+            var locationModels = await this.LocationService.GetLocationsByStateAsync(state);
 
             if (locationModels.Count == 0)
             {

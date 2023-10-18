@@ -5,16 +5,16 @@
         /// <summary>
         /// Residential.
         /// </summary>
-        Residential = 1,
+        Residential = 0,
 
         /// <summary>
         /// Commercial.
         /// </summary>
-        Commercial = 2,
+        Commercial = 1,
 
         /// <summary>
         /// Government.
         /// </summary>
-        Government = 3,
+        Government = 2,
     }
 }

@@ -5,26 +5,26 @@
         /// <summary>
         /// Residential and community.
         /// </summary>
-        ResidentialAndCommunity = 1,
+        ResidentialAndCommunity = 0,
 
         /// <summary>
         /// Commercial and business.
         /// </summary>
-        CommercialAndBusiness = 2,
+        CommercialAndBusiness = 1,
 
         /// <summary>
         /// Public and institutional.
         /// </summary>
-        PublicAndInstitutional = 3,
+        PublicAndInstitutional = 2,
 
         /// <summary>
         /// Event and entertainment.
         /// </summary>
-        EventAndEntertainment = 4,
+        EventAndEntertainment = 3,
 
         /// <summary>
         /// Transportation and green spaces.
         /// </summary>
-        TransportationAndGreenSpaces = 5
+        TransportationAndGreenSpaces = 4
     }
 }
