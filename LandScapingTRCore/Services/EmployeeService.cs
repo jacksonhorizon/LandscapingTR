@@ -63,6 +63,7 @@ namespace LandscapingTR.Core.Services
             else
             {
                 var employee = this.Mapper.Map<Employee>(employeeModel);
+                employee.CreatedDate = DateTime.Now;
 
                 employee.Username = Cryptography.Encrypt(employee.Username);
                 employee.Password = Cryptography.Encrypt(employee.Password);

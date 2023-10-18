@@ -18,7 +18,7 @@ namespace LandscapingTR.Web.API.Controllers.CompanyResources
         }
 
         [HttpGet]
-        [Route("AllEmployees")]
+        [Route("GetAllEmployees")]
         public async Task<IActionResult> GetEmployees()
         {
             var employeeModels = await this.EmployeeService.GetEmployeesAsync();
@@ -29,6 +29,48 @@ namespace LandscapingTR.Web.API.Controllers.CompanyResources
             }
 
             return Ok(employeeModels);
+        }
+
+        [HttpGet]
+        [Route("GetEmployee")]
+        public async Task<IActionResult> GetEmployee(int employeeId)
+        {
+            var employeeModel = await this.EmployeeService.GetEmployeeAsync(employeeId);
+
+            if (employeeModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(employeeModel);
+        }
+
+        [HttpPost]
+        [Route("Employee")]
+        public async Task<IActionResult> SaveNewEmployee(EmployeeModel employeeModel)
+        {
+            var savedEmployeeModel = await this.EmployeeService.SaveEmployeeAsync(employeeModel);
+
+            if (savedEmployeeModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedEmployeeModel);
+        }
+
+        [HttpPut]
+        [Route("Employee")]
+        public async Task<IActionResult> SaveEmployee(EmployeeModel employeeModel)
+        {
+            var savedEmployeeModel = await this.EmployeeService.SaveEmployeeAsync(employeeModel);
+
+            if (savedEmployeeModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedEmployeeModel);
         }
 
         [HttpPut]
