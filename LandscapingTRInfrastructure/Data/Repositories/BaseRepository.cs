@@ -87,6 +87,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
             if  (entity.Id == null || entity.Id.Equals(default(TKey)))
             {
                 // If the entity has a default (unset) key, it's a new entity to be inserted
+                entity.CreatedDate = DateTime.Now;
                 await DataContext.Set<TEntity>().AddAsync(entity);
             }
             else

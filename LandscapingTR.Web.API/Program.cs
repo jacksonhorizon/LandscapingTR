@@ -36,6 +36,8 @@ builder.Services.AddTransient<IJobRepository, JobRepository>();
 builder.Services.AddTransient<IJobService, JobService>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<ILocationRepository, LocationRepository>();
+builder.Services.AddTransient<ILocationService, LocationService>();
 
 
 // ConfigureServices

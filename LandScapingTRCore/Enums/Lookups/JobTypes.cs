@@ -5,56 +5,56 @@
         /// <summary>
         /// Routine Maintenance.
         /// </summary>
-        RoutineMaintenance = 1,
+        RoutineMaintenance = 0,
 
         /// <summary>
         /// Intermediate Maintenance.
         /// </summary>
-        IntermediateMaintenace = 2,
+        IntermediateMaintenace = 1,
 
         /// <summary>
         /// Hardscaping and construction.
         /// </summary>
-        HardscapingAndConstruction = 3,
+        HardscapingAndConstruction = 2,
 
         /// <summary>
         /// Landscape Design.
         /// </summary>
-        LandscapeDesign = 4,
+        LandscapeDesign = 3,
 
         /// <summary>
         /// Tree care.
         /// </summary>
-        TreeCare = 5,
+        TreeCare = 4,
 
         /// <summary>
         /// Water management.
         /// </summary>
-        WaterManagement = 6,
+        WaterManagement = 5,
 
         /// <summary>
         /// Environmental landscaping.
         /// </summary>
-        EnvironmentalLandscaping = 7,
+        EnvironmentalLandscaping = 6,
 
         /// <summary>
         /// Erosion control and restoration.
         /// </summary>
-        ErosionControlAndRestoration = 8,
+        ErosionControlAndRestoration = 7,
 
         /// <summary>
         /// Commercial landscaping.
         /// </summary>
-        CommercialLandscaping = 9,
+        CommercialLandscaping = 8,
 
         /// <summary>
         /// Seasonal landscaping.
         /// </summary>
-        SeasonalLandscaping = 10,
+        SeasonalLandscaping = 9,
 
         /// <summary>
         /// Artistic landscaping.
         /// </summary>
-        ArtisticLandscaping = 11,
+        ArtisticLandscaping = 10,
     }
 }
