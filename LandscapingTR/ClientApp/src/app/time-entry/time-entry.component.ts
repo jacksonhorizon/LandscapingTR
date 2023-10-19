@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { TimeEntryModel } from '../core/models/time/time-entry.model';
+import { EmployeeService } from '../core/services/employee.service';
+import { EmployeeModel } from '../core/models/company-resources/employee.model';
 
 @Component({
   selector: 'app-time-entry',
@@ -13,10 +15,13 @@ export class TimeEntryComponent {
   employeeId!: number;
   pathEmployeeId!: string;
 
+  employeeModel!: EmployeeModel;
+
   // General properties
   timeEntries: TimeEntryModel[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+    private employeeService: EmployeeService) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -28,6 +33,18 @@ export class TimeEntryComponent {
     }
 
     this.pathEmployeeId = ":" + this.employeeId.toString();
+
+    // Gets employee model
+    this.employeeService.getEmployee(this.employeeId).subscribe({
+      next: data => {
+
+        this.employeeModel = data;
+        console.log(this.employeeModel)
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
   // Is for the header

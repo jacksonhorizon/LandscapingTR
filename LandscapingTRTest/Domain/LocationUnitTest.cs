@@ -134,10 +134,10 @@ namespace LandscapingTR.Test.Time
         {
             // Add locations.
             var savedLocationModelOne = await AddNewLocationModelAsync((int)LocationTypes.ResidentialAndCommunity, "Tucson", "Arizona");
-            var savedLocationModelTwo = await AddNewLocationModelAsync((int)LocationTypes.EventAndEntertainment, "Tucson", "Arizona");
+            var savedLocationModelTwo = await AddNewLocationModelAsync((int)LocationTypes.EventAndEntertainment, "Scottsdale", "Arizona");
             var savedLocationModelThree = await AddNewLocationModelAsync((int)LocationTypes.PublicAndInstitutional, "Scottsdale", "Arizona");
 
-            var locationsInTucson = await LocationService.GetLocationsByCityAsync("Tucson");
+            var locationsInTucson = await LocationService.GetLocationsByCityAsync("Scottsdale");
             Assert.AreEqual(2, locationsInTucson.Count);
         }
 
@@ -145,11 +145,11 @@ namespace LandscapingTR.Test.Time
         public async Task Location_GetLocationsByState_Succeeds()
         {
             // Add locations.
-            var savedLocationModelOne = await AddNewLocationModelAsync((int)LocationTypes.CommercialAndBusiness, "Tucson", "Arizona");
+            var savedLocationModelOne = await AddNewLocationModelAsync((int)LocationTypes.CommercialAndBusiness, "Jackson", "Wyoming");
             var savedLocationModelTwo = await AddNewLocationModelAsync((int)LocationTypes.PublicAndInstitutional, "Phoenix", "Arizona");
             var savedLocationModelThree = await AddNewLocationModelAsync((int)LocationTypes.ResidentialAndCommunity, "Cheyenne", "Wyoming");
 
-            var locationsInArizona = await LocationService.GetLocationsByStateAsync("Arizona");
+            var locationsInArizona = await LocationService.GetLocationsByStateAsync("Wyoming");
             Assert.AreEqual(2, locationsInArizona.Count);
         }
     }

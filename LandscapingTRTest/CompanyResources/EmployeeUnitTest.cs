@@ -164,8 +164,8 @@ namespace LandscapingTR.Test.Lookups
             var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();
             Assert.IsNotNull(savedEmployeeModels);
 
-            // Includes admin and base user
-            Assert.AreEqual(7, savedEmployeeModels.Count);
+            // Includes admin, base user, and test user
+            Assert.AreEqual(8, savedEmployeeModels.Count);
         }
 
         [TestMethod]
