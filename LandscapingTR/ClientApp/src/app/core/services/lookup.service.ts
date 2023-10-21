@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { LandscapingTRLookupsModel } from '../models/landscaping-tr-lookups.model';
+import { LookupItemModel } from '../models/lookups/lookup-item.model';
 
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = 'http://localhost:5028/api/Lookups/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +24,8 @@ export class LookupService {
     return this.http.get(API_URL + 'user', { responseType: 'text' });
   }
 
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
-  }
-
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+  getEmployeeTypes(): Observable<LookupItemModel[]> {
+    var x = this.http.get<LookupItemModel[]>(API_URL + 'GetEmployeeTypes');
+    return x;
   }
 }

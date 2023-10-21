@@ -18,4 +18,9 @@ export class EmployeeService {
   getEmployee(employeeId: number): Observable<EmployeeModel> {
     return this.http.get(API_URL + 'GetEmployee?employeeId=' + employeeId);
   }
+
+  getAllEmployees(): Observable<EmployeeModel[]> {
+    var x = this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
+    return x;
+  }
 }

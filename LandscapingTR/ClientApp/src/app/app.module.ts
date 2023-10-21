@@ -10,6 +10,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component';
+import { AdministrationToolsComponent } from './administration-tools/administration-tools.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component
     SettingsComponent,
     TimeEntryComponent,
     EmployeeHomeComponent,
+    AdministrationToolsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +31,7 @@ import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component
       { path: 'employee-home/:id', component: EmployeeHomeComponent },
       { path: 'settings/:id', component: SettingsComponent },
       { path: 'time-entry/:id', component: TimeEntryComponent },
+      { path: 'admin/:id', component: AdministrationToolsComponent },
     ])
   ],
   providers: [],

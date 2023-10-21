@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
+import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
 
 @Component({
@@ -9,10 +10,13 @@ import { EmployeeService } from '../core/services/employee.service';
   templateUrl: './employee-home.component.html',
 })
 export class EmployeeHomeComponent {
+  loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;
   pathEmployeeId!: string;
+
   employeeModel!: EmployeeModel;
+  lookupsModel!: LandscapingTRLookupsModel;
   // General properties
   
 
@@ -33,12 +37,14 @@ export class EmployeeHomeComponent {
     // Gets employee model
     this.employeeService.getEmployee(this.employeeId).subscribe({
       next: data => {
-
         this.employeeModel = data;
-        console.log(this.employeeModel)
+        console.log(this.employeeModel);
+
+        this.loaded = true;
       },
       error: err => {
         console.log(err);
+        this.loaded = false;
       }
     });
   }

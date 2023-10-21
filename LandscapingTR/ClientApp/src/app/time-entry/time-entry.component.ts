@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
+import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 
 @Component({
   selector: 'app-time-entry',
@@ -11,11 +12,13 @@ import { EmployeeModel } from '../core/models/company-resources/employee.model';
   templateUrl: './time-entry.component.html'
 })
 export class TimeEntryComponent {
+  loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;
   pathEmployeeId!: string;
 
   employeeModel!: EmployeeModel;
+  lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
   timeEntries: TimeEntryModel[] = [];
@@ -45,6 +48,8 @@ export class TimeEntryComponent {
         console.log(err);
       }
     });
+
+    this.loaded = true;
   }
 
   // Is for the header

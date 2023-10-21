@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
+import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
 
 @Component({
@@ -9,11 +10,13 @@ import { EmployeeService } from '../core/services/employee.service';
   templateUrl: './settings.component.html'
 })
 export class SettingsComponent {
+  loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;
   pathEmployeeId!: string;
-  
+
   employeeModel!: EmployeeModel;
+  lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
   currentCount = 0;
@@ -43,6 +46,8 @@ export class SettingsComponent {
         console.log(err);
       }
     });
+
+    this.loaded = true;
   }
 
   // Is for the header

@@ -25,6 +25,11 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
           </li>
+
+          <!-- Make this only if the employee is of type admin, must use enums that match c#-->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -35,7 +40,7 @@
 
 
 
-<div class="container">
+<div *ngIf="loaded" class="container">
 
   <h1>Counter</h1>
 

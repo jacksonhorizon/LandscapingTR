@@ -15,7 +15,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         }
 
         [HttpGet]
-        [Route("JobTypes")]
+        [Route("GetJobTypes")]
         public async Task<IActionResult> GetJobTypes()
         {
             var lookupModels = await this.LookupService.GetJobTypesAsync();
@@ -29,7 +29,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         }
 
         [HttpGet]
-        [Route("CustomerTypes")]
+        [Route("GetCustomerTypes")]
         public async Task<IActionResult> GetCustomerTypes()
         {
             var lookupModels = await this.LookupService.GetCustomerTypesAsync();
@@ -43,7 +43,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         }
 
         [HttpGet]
-        [Route("EmployeeTypes")]
+        [Route("GetEmployeeTypes")]
         public async Task<IActionResult> GetEmployeeTypes()
         {
             var lookupModels = await this.LookupService.GetEmployeeTypesAsync();
@@ -57,7 +57,7 @@ namespace LandscapingTR.Web.API.Controllers.Lookups
         }
 
         [HttpGet]
-        [Route("LocationTypes")]
+        [Route("GetLocationTypes")]
         public async Task<IActionResult> GetLocationTypes()
         {
             var lookupModels = await this.LookupService.GetLocationTypesAsync();
