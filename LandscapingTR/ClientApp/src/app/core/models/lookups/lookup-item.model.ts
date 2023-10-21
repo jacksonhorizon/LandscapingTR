@@ -1,6 +1,6 @@
 export class LookupItemModel{
-  Id?: number;
-  LookupValue?: string;
-  SortOrder?: number;
-  Active?: boolean;
+  id?: number;
+  lookupValue?: string;
+  sortOrder?: number;
+  active?: boolean;
 }

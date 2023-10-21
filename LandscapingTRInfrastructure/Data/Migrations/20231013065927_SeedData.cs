@@ -101,8 +101,7 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                 "INSERT INTO [Employee] " +
                 "                   ([EmployeeId],     [FirstName], [LastName], [UserName], [Password], [EmployeeTypeId], [CreatedDate])" +
                 "VALUES " +
-                                    $"(1,                'admin',    'admin',    'admin',    'admin',  {(int)EmployeeTypes.Administrator},      @CurrentDate)," +
-                                    $"(2,                'A',          'Guy',    'I',       'dontknow',  {(int)EmployeeTypes.FieldCrewWorker},      @CurrentDate);" +
+                                    $"(1,                'admin',    'admin',    'admin',    'admin',  {(int)EmployeeTypes.Administrator},      @CurrentDate);" +
 
 
                 "SET IDENTITY_INSERT [Employee] OFF; ";

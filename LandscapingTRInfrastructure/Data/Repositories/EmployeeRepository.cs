@@ -51,6 +51,7 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
             else
             {
                 // New employee - add it to the context
+                employee.CreatedDate = DateTime.Now;
                 DataContext.Employees.Add(employee);
             }
 

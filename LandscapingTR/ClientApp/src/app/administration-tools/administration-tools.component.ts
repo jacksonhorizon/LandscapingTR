@@ -1,0 +1,77 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { EmployeeModel } from '../core/models/company-resources/employee.model';
+import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
+import { TimeEntryModel } from '../core/models/time/time-entry.model';
+import { EmployeeService } from '../core/services/employee.service';
+import { LookupService } from '../core/services/lookup.service';
+
+@Component({
+  selector: 'app-administration-tools',
+  templateUrl: './administration-tools.component.html',
+  styleUrls: ['./administration-tools.component.css']
+})
+export class AdministrationToolsComponent implements OnInit {
+  loaded!: boolean;
+  // The employee Id as a number/string
+  employeeId!: number;
+  pathEmployeeId!: string;
+
+  employeeModel!: EmployeeModel;
+  lookupsModel!: LandscapingTRLookupsModel;
+  employeeTypes!: LookupItemModel[];
+
+  // General properties
+  employees: EmployeeModel[] = [];
+
+  constructor(private route: ActivatedRoute,
+    private employeeService: EmployeeService,
+    private lookupService: LookupService  ) { }
+
+  ngOnInit() {
+    // Gets the employee Id
+    const employeeIdFromUrl = this.route.snapshot.paramMap.get('id')?.slice(1);
+    if (employeeIdFromUrl == null) {
+      this.employeeId = -1;
+    } else {
+      this.employeeId = +employeeIdFromUrl;
+    }
+
+    this.pathEmployeeId = ":" + this.employeeId.toString();
+
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
+      this.lookupService.getEmployeeTypes(),
+      this.employeeService.getAllEmployees()
+    ]).subscribe({
+      next: data => {
+        // data is an array containing the results of the observables in the same order
+        this.employeeModel = data[0];
+        this.employeeTypes = data[1];
+        this.employees = data[2];
+        this.loaded = true; // Set loaded to true once all observables complete
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
+  // Is for the header
+  isExpanded = false;
+
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  // General methods
+  matchEmployeeType(employeeTypeId: number | undefined) {
+    return this.employeeTypes.find(x => x.id === employeeTypeId)?.lookupValue || "Unknown";
+  }
+}

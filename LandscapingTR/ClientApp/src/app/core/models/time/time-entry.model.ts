@@ -1,12 +1,12 @@
 export class TimeEntryModel {
-  Id?: number;
-  EmployeeId?: number
-  EntryDate?: Date;
-  EmployeeTypeId?: number;
-  JobTypeId?: number;
-  JobId?: number;
-  TotalLoggedHours?: number;
-  LastModifiedDate?: Date;
-  IsSubmitted?: boolean = false;
-  IsApproved: boolean = false;
+  id?: number;
+  employeeId?: number
+  entryDate?: Date;
+  employeeTypeId?: number;
+  jobTypeId?: number;
+  jobId?: number;
+  totalLoggedHours?: number;
+  lastModifiedDate?: Date;
+  isSubmitted?: boolean = false;
+  isApproved: boolean = false;
 }

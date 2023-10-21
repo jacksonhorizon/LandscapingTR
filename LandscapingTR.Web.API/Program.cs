@@ -11,8 +11,6 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Automapper config
 var mapperConfig = new MapperConfiguration(cfg =>
 {
@@ -103,12 +101,27 @@ using (var scope = app.Services.CreateScope())
     var dbContext = serviceProvider.GetRequiredService<LandscapingTRDbContext>();
 
     // Ensure that the database is created
-    var alreadyCreated = dbContext.Database.EnsureCreated();
+    ////dbContext.Database.
+    //var alreadyCreated = await dbContext.Database.EnsureCreatedAsync();
 
-    if (!alreadyCreated)
+    //if (!alreadyCreated)
+    //{
+    //    // Apply any pending migrations
+    //    dbContext.Database.Migrate();
+    //}
+
+    try
     {
-        // Apply any pending migrations
+        // Attempt to open a connection to the database
+        dbContext.Database.OpenConnection();
+    }
+    catch (Exception)
+    {
         dbContext.Database.Migrate();
+    }
+    finally
+    {
+        dbContext.Database.CloseConnection();
     }
 }
 

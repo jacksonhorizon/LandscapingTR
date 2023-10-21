@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { EmployeeModel } from '../models/company-resources/employee.model';
 
-const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://localhost:5028/api/Employees/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +15,12 @@ const API_URL = 'http://localhost:8080/api/test/';
 export class EmployeeService {
   constructor(private http: HttpClient) { }
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'all', { responseType: 'text' });
+  getEmployee(employeeId: number): Observable<EmployeeModel> {
+    return this.http.get(API_URL + 'GetEmployee?employeeId=' + employeeId);
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
-  }
-
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
-  }
-
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+  getAllEmployees(): Observable<EmployeeModel[]> {
+    var x = this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
+    return x;
   }
 }
