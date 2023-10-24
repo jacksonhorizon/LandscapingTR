@@ -12,8 +12,6 @@ The following items must be completed before the code can be compiled and run su
 -   Install .NET Core 6 SDK  [https://dotnet.microsoft.com/en-us/download/dotnet/6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 -   Install Node 18.16.0.
 -   Install the latest Angular Cli "npm i -g @angular/cli@latest"
--   Go to Tools | Options search for "external web" and select External Web Tools.
-    -   Add a new location to the top of the list with a path of c:\program files\nodejs.
 
 ## Database
 
@@ -46,5 +44,8 @@ The following items must be completed before the code can be compiled and run su
 3. There are a lot of problems with npm
    npm npm-check-updates -u
    npm install typescript@">=4.8.2 and <4.9.0" --save-dev
+
+4. DO NOT INSTALL ANY MORE NODE PACKAGES:
+THIS THING WORKS ON MY MACHINE AND TAKES AN HOUR TO FIX 
    
 
