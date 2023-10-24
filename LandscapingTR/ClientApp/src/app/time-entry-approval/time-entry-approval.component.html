@@ -40,32 +40,30 @@
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 <div *ngIf="loaded" class="container">
-  <h1 id="tableLabel">Employee List</h1>
+  <h1 id="tableLabel">Approve Timesheets</h1>
 
-  <p *ngIf="!employees"><em>Loading...</em></p>
+  <p *ngIf="!timeEntries"><em>Loading...</em></p>
 
-  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employees">
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timeEntries">
     <thead>
       <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Employee Type</th>
-        <th>Hire Date</th>
-        <th>Edit</th>
+        <th>Week #:</th>
+        <th>Employee #:</th>
+        <th>First Name:</th>
+        <th>Last Name:</th>
+        <th>Submitted Date:</th>
+        <th>Total Hours:</th>
+        <th>View:</th>
+        <th>Approve:</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employees">
-        <td>{{ employee.firstName }}</td>
-        <td>{{ employee.lastName }}</td>
-        <td>{{ employee.username }}</td>
-        <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
-        <td>{{ employee.createdDate }}</td>
-        <td><button class="btn btn-primary">Edit</button></td>
+      <tr *ngFor="let timeEntry of timeEntries">
+        <!--<td>{{ timeEntry.date }}</td>
+        <td>{{ timeEntry.temperatureC }}</td>
+        <td>{{ timeEntry.temperatureF }}</td>
+        <td>{{ timeEntry.summary }}</td>-->
       </tr>
     </tbody>
   </table>
-
-  <button class="btn btn-primary" >Add Employee</button>
 </div>

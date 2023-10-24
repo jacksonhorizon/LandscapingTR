@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
@@ -60,5 +61,12 @@ export class EmployeeHomeComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  // General methodss.isExpanded = !this.isExpanded;
+  // General methods
+  getAdminType() {
+    return EmployeeTypes.Administrator as number;
+  }
+
+  getSupervisorType() {
+    return EmployeeTypes.CrewSupervisor as number;
+  }
 }

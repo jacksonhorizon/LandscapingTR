@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
-import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
-import { LookupService } from '../core/services/lookup.service';
 
 @Component({
-  selector: 'app-administration-tools',
-  templateUrl: './administration-tools.component.html',
-  styleUrls: ['./administration-tools.component.css']
+  selector: 'app-time-entry-approval',
+  templateUrl: './time-entry-approval.component.html',
+  styleUrls: ['./time-entry-approval.component.css']
 })
-export class AdministrationToolsComponent implements OnInit {
+export class TimeEntryApprovalComponent implements OnInit {
   loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;
@@ -22,14 +19,12 @@ export class AdministrationToolsComponent implements OnInit {
 
   employeeModel!: EmployeeModel;
   lookupsModel!: LandscapingTRLookupsModel;
-  employeeTypes!: LookupItemModel[];
 
   // General properties
-  employees: EmployeeModel[] = [];
+  timeEntries: TimeEntryModel[] = [];
 
   constructor(private route: ActivatedRoute,
-    private employeeService: EmployeeService,
-    private lookupService: LookupService  ) { }
+    private employeeService: EmployeeService) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -42,22 +37,19 @@ export class AdministrationToolsComponent implements OnInit {
 
     this.pathEmployeeId = ":" + this.employeeId.toString();
 
-    forkJoin([
-      this.employeeService.getEmployee(this.employeeId),
-      this.lookupService.getEmployeeTypes(),
-      this.employeeService.getAllEmployees()
-    ]).subscribe({
+    // Gets employee model
+    this.employeeService.getEmployee(this.employeeId).subscribe({
       next: data => {
-        // data is an array containing the results of the observables in the same order
-        this.employeeModel = data[0];
-        this.employeeTypes = data[1];
-        this.employees = data[2];
-        this.loaded = true; // Set loaded to true once all observables complete
+
+        this.employeeModel = data;
+        console.log(this.employeeModel)
       },
       error: err => {
         console.log(err);
       }
     });
+
+    this.loaded = true;
   }
 
   // Is for the header
@@ -72,10 +64,6 @@ export class AdministrationToolsComponent implements OnInit {
   }
 
   // General methods
-  matchEmployeeType(employeeTypeId: number | undefined) {
-    return this.employeeTypes.find(x => x.id === employeeTypeId)?.lookupValue || "Unknown";
-  }
-
   getAdminType() {
     return EmployeeTypes.Administrator as number;
   }

@@ -11,6 +11,7 @@ import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component';
 import { AdministrationToolsComponent } from './administration-tools/administration-tools.component';
+import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-approval.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AdministrationToolsComponent } from './administration-tools/administrat
     LoginComponent,
     SettingsComponent,
     TimeEntryComponent,
+    TimeEntryApprovalComponent,
     EmployeeHomeComponent,
     AdministrationToolsComponent,
   ],
@@ -32,6 +34,7 @@ import { AdministrationToolsComponent } from './administration-tools/administrat
       { path: 'settings/:id', component: SettingsComponent },
       { path: 'time-entry/:id', component: TimeEntryComponent },
       { path: 'admin/:id', component: AdministrationToolsComponent },
+      { path: 'approve-time-sheets/:id', component: TimeEntryApprovalComponent },
     ])
   ],
   providers: [],

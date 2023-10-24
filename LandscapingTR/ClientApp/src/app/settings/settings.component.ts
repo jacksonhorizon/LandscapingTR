@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
@@ -19,7 +20,11 @@ export class SettingsComponent {
   lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
-  currentCount = 0;
+  form: any = {
+    username: null,
+    firstName: null,
+    lastName: null
+  };
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService) { }
@@ -40,6 +45,9 @@ export class SettingsComponent {
       next: data => {
 
         this.employeeModel = data;
+        this.form.username = this.employeeModel.username;
+        this.form.firstName = this.employeeModel.firstName;
+        this.form.lastName = this.employeeModel.lastName;
         console.log(this.employeeModel)
       },
       error: err => {
@@ -62,7 +70,18 @@ export class SettingsComponent {
   }
   
   // General methods
-  public incrementCounter() {
-    this.currentCount++;
+
+  getAdminType() {
+    return EmployeeTypes.Administrator as number;
+  }
+
+  getSupervisorType() {
+    return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  onSubmit(): void {
+    const { firstName, lastName, username } = this.form;
+
+    console.log(this.form);
   }
 }

@@ -22,13 +22,14 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time Entry</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
-          </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
           </li>
         </ul>
       </div>
@@ -42,11 +43,73 @@
 
 <div *ngIf="loaded" class="container">
 
-  <h1>Counter</h1>
+  <h1>Manage Profile</h1>
+  <form *ngIf="loaded"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
 
-  <p>This is a simple example of an Angular component.</p>
-
-  <p aria-live="polite">Current count: <strong>{{ currentCount }}</strong></p>
-
-  <button class="btn btn-primary" (click)="incrementCounter()">Increment</button>
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="firstName">First Name</label>
+        <input type="text"
+               class="form-control"
+               name="firstName"
+               id="firstName"
+               [(ngModel)]="form.firstName"
+               required
+               #firstName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="firstName.errors && f.submitted">
+          First name is required!
+        </div>
+      </div>
+      <br />
+      <div class="form-group col-md-6">
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               class="form-control"
+               name="lastName"
+               id="lastName"
+               [(ngModel)]="form.lastName"
+               required
+               #lastName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="lastName.errors && f.submitted">
+          Last name is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="username">Username</label>
+        <input type="text"
+               class="form-control"
+               name="username"
+               id="username"
+               [(ngModel)]="form.username"
+               required
+               #username="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="username.errors && f.submitted">
+          Username is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <button class="btn btn-primary btn-block">
+        Save
+      </button>
+      &nbsp;
+      <button class="btn btn-secondary btn-block">
+        Cancel
+      </button>
+    </div>
+  </form>
 </div>

@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { EmployeeTypes } from '../core/enums/employee-types.enum';
 
 @Component({
   selector: 'app-time-entry',
@@ -24,7 +25,8 @@ export class TimeEntryComponent {
   timeEntries: TimeEntryModel[] = [];
 
   constructor(private route: ActivatedRoute,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private router: Router) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -64,4 +66,15 @@ export class TimeEntryComponent {
   }
 
   // General methods
+  getAdminType() {
+    return EmployeeTypes.Administrator as number;
+  }
+
+  getSupervisorType() {
+    return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  rerouteToApprovalPage(data: EmployeeModel): void {
+    this.router.navigate(["approve-time-sheets/:" + data.id])
+  }
 }
