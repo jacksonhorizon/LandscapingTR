@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +30,8 @@ import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-app
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'employee-home/:id', component: EmployeeHomeComponent },

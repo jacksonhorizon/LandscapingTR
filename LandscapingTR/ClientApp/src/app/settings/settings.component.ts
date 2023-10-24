@@ -4,6 +4,7 @@ import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-settings-component',
@@ -28,7 +29,8 @@ export class SettingsComponent {
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService,  ) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -49,6 +51,8 @@ export class SettingsComponent {
         this.form.username = this.employeeModel.username;
         this.form.firstName = this.employeeModel.firstName;
         this.form.lastName = this.employeeModel.lastName;
+
+        // has a password bug, need to fix
         console.log(this.employeeModel)
       },
       error: err => {
@@ -93,6 +97,7 @@ export class SettingsComponent {
         this.form.firstName = this.employeeModel.firstName;
         this.form.lastName = this.employeeModel.lastName;
         console.log(this.employeeModel)
+        this.toastr.success('Save Employee:', 'Employee was saved successfully!');
       },
       error: err => {
         console.log(err);
