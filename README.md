@@ -43,4 +43,8 @@ The following items must be completed before the code can be compiled and run su
     NOTE: If needed From the   LandscapingTRWeb/ClientApp folder run the following
     -   `npm install --force`
     -   NOTE: Run  `ng build`  to view and correct any compilation errors.
+3. There are a lot of problems with npm
+   npm npm-check-updates -u
+   npm install typescript@">=4.8.2 and <4.9.0" --save-dev
+   
 
