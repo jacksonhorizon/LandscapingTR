@@ -27,4 +27,8 @@ export class EmployeeService {
   saveNewEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
     return this.http.post(API_URL + 'Employee', employeeModel, httpOptions);
   }
+
+  updateEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
+    return this.http.put(API_URL + 'Employee', employeeModel, httpOptions);
+  }
 }

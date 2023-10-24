@@ -82,7 +82,22 @@ export class SettingsComponent {
 
   onSubmit(): void {
     const { firstName, lastName, username } = this.form;
+    this.employeeModel.username = username;
+    this.employeeModel.firstName = firstName;
+    this.employeeModel.lastName = lastName;
 
+    this.employeeService.updateEmployee(this.employeeModel).subscribe({
+      next: data => {
+        this.employeeModel = data;
+        this.form.username = this.employeeModel.username;
+        this.form.firstName = this.employeeModel.firstName;
+        this.form.lastName = this.employeeModel.lastName;
+        console.log(this.employeeModel)
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
     console.log(this.form);
   }
 
