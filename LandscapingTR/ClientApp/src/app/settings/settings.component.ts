@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
@@ -27,7 +27,8 @@ export class SettingsComponent {
   };
 
   constructor(private route: ActivatedRoute,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private router: Router) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -83,5 +84,9 @@ export class SettingsComponent {
     const { firstName, lastName, username } = this.form;
 
     console.log(this.form);
+  }
+
+  onCancel(data: EmployeeModel): void {
+    this.router.navigate(["employee-home/:" + data.id])
   }
 }

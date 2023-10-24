@@ -46,7 +46,6 @@
   <h1>Manage Profile</h1>
   <form *ngIf="loaded"
         name="form"
-        (ngSubmit)="f.form.valid && onSubmit()"
         #f="ngForm"
         novalidate>
 
@@ -102,14 +101,12 @@
       </div>
     </div>
     <br />
-    <div class="form-group">
-      <button class="btn btn-primary btn-block">
-        Save
-      </button>
-      &nbsp;
-      <button class="btn btn-secondary btn-block">
-        Cancel
-      </button>
-    </div>
+    <button class="btn btn-primary btn-block" (click)="onSubmit()">
+      Save
+    </button>
+    &nbsp;
+    <button class="btn btn-secondary btn-block" (click)="onCancel(employeeModel)">
+      Cancel
+    </button>
   </form>
 </div>
