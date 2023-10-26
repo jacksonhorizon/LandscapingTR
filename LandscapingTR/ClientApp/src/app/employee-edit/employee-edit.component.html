@@ -1,1 +1,140 @@
-<p>employee-edit works!</p>
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand">LandscapingTR</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+           [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time Entry</a>
+          </li>
+
+          <!-- Make this only if the employee is of type admin, must use enums that match c#-->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
+
+
+
+<div *ngIf="loaded" class="container">
+
+  <h1>Edit Employee:</h1>
+  <form *ngIf="loaded"
+        name="form"
+        #f="ngForm"
+        novalidate>
+
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="firstName">First Name</label>
+        <input type="text"
+               class="form-control"
+               name="firstName"
+               id="firstName"
+               [(ngModel)]="form.firstName"
+               required
+               #firstName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="firstName.errors && f.submitted">
+          First name is required!
+        </div>
+      </div>
+      <br />
+      <div class="form-group col-md-6">
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               class="form-control"
+               name="lastName"
+               id="lastName"
+               [(ngModel)]="form.lastName"
+               required
+               #lastName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="lastName.errors && f.submitted">
+          Last name is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="username">Username</label>
+        <input type="text"
+               class="form-control"
+               name="username"
+               id="username"
+               [(ngModel)]="form.username"
+               required
+               #username="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="username.errors && f.submitted">
+          Username is required!
+        </div>
+      </div>
+      <br />
+      <div class="form-group col-md-6">
+        <label for="password">Password</label>
+        <input type="text"
+               class="form-control"
+               name="password"
+               id="password"
+               [(ngModel)]="form.password"
+               required
+               minlength="3"
+               #password="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors['required']">Password is required</div>
+          <div *ngIf="password.errors['minlength']">
+            Password must be at least 3 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        EmployeeTypeId
+      </div>
+    </div>
+    <br />
+    <button class="btn btn-primary btn-block" (click)="onSubmit()">
+      Save
+    </button>
+    &nbsp;
+    <button class="btn btn-secondary btn-block" (click)="onCancel(employeeModel)">
+      Cancel
+    </button>
+    <br />
+    <br />
+    <hr />
+  </form>
+</div>

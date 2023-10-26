@@ -15,6 +15,7 @@ import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component
 import { AdministrationToolsComponent } from './administration-tools/administration-tools.component';
 import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-approval.component';
 import { EmployeeAddComponent } from './employee-add/employee-add.component';
+import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EmployeeAddComponent } from './employee-add/employee-add.component';
     EmployeeHomeComponent,
     AdministrationToolsComponent,
     EmployeeAddComponent,
+    EmployeeEditComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,6 +40,7 @@ import { EmployeeAddComponent } from './employee-add/employee-add.component';
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'employee-home/:id', component: EmployeeHomeComponent },
       { path: 'employee-add/:id', component: EmployeeAddComponent },
+      { path: 'employee-edit/:id/:employeeToEditId', component: EmployeeEditComponent },
       { path: 'settings/:id', component: SettingsComponent },
       { path: 'time-entry/:id', component: TimeEntryComponent },
       { path: 'admin/:id', component: AdministrationToolsComponent },

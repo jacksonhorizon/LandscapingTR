@@ -67,7 +67,7 @@
         <td>{{ employee.username }}</td>
         <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
         <td>{{ employee.createdDate }}</td>
-        <td><button class="btn btn-primary">Edit</button></td>
+        <td><button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">Edit</button></td>
       </tr>
     </tbody>
   </table>

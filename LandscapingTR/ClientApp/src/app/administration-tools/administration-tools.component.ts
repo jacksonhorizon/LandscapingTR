@@ -89,4 +89,8 @@ export class AdministrationToolsComponent implements OnInit {
   rerouteToAddEmployeePage(data: EmployeeModel): void {
     this.router.navigate(["employee-add/:" + data.id])
   }
+
+  rerouteToEditEmployeePage(data: EmployeeModel, employeeClicked: EmployeeModel): void {
+    this.router.navigate(["employee-edit/:" + data.id + "/:" + employeeClicked.id])
+  }
 }

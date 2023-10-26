@@ -22,6 +22,7 @@ export class SettingsComponent {
 
   // General properties
   form: any = {
+    id: null,
     username: null,
     firstName: null,
     lastName: null
@@ -48,6 +49,7 @@ export class SettingsComponent {
       next: data => {
 
         this.employeeModel = data;
+        this.form.id = this.employeeModel.id;
         this.form.username = this.employeeModel.username;
         this.form.firstName = this.employeeModel.firstName;
         this.form.lastName = this.employeeModel.lastName;
@@ -93,7 +95,7 @@ export class SettingsComponent {
         this.form.username = this.employeeModel.username;
         this.form.firstName = this.employeeModel.firstName;
         this.form.lastName = this.employeeModel.lastName;
-        this.toastr.success('Save Employee:', 'Employee was saved successfully!');
+        this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
         this.router.navigate(["employee-home/:" + data.id])
       },
       error: err => {

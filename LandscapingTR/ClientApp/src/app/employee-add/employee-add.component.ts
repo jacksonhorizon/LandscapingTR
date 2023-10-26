@@ -108,7 +108,7 @@ export class EmployeeAddComponent {
         this.form.lastName = newEmployeeModel.lastName;
         this.form.password = newEmployeeModel.password;
         this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
-        this.toastr.success('Save Employee:', 'Employee was saved successfully!');
+        this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
