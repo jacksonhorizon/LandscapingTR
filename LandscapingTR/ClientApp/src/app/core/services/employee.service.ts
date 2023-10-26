@@ -20,7 +20,14 @@ export class EmployeeService {
   }
 
   getAllEmployees(): Observable<EmployeeModel[]> {
-    var x = this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
-    return x;
+    return this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
+  }
+
+  saveNewEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
+    return this.http.post(API_URL + 'Employee', employeeModel, httpOptions);
+  }
+
+  updateEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
+    return this.http.put(API_URL + 'Employee', employeeModel, httpOptions);
   }
 }

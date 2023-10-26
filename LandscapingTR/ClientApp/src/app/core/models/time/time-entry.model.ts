@@ -8,5 +8,5 @@ export class TimeEntryModel {
   totalLoggedHours?: number;
   lastModifiedDate?: Date;
   isSubmitted?: boolean = false;
-  isApproved: boolean = false;
+  isApproved = false;
 }

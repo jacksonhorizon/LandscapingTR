@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
+import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
-import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { LookupService } from '../core/services/lookup.service';
 
@@ -28,7 +29,9 @@ export class AdministrationToolsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private lookupService: LookupService  ) { }
+    private lookupService: LookupService,
+    private router: Router,
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -73,5 +76,21 @@ export class AdministrationToolsComponent implements OnInit {
   // General methods
   matchEmployeeType(employeeTypeId: number | undefined) {
     return this.employeeTypes.find(x => x.id === employeeTypeId)?.lookupValue || "Unknown";
+  }
+
+  getAdminType() {
+    return EmployeeTypes.Administrator as number;
+  }
+
+  getSupervisorType() {
+    return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  rerouteToAddEmployeePage(data: EmployeeModel): void {
+    this.router.navigate(["employee-add/:" + data.id])
+  }
+
+  rerouteToEditEmployeePage(data: EmployeeModel, employeeClicked: EmployeeModel): void {
+    this.router.navigate(["employee-edit/:" + data.id + "/:" + employeeClicked.id])
   }
 }

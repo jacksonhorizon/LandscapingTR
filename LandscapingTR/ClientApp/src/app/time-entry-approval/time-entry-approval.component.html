@@ -1,0 +1,69 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand">LandscapingTR</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+           [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time Entry</a>
+          </li>
+
+          <!-- Make this only if the employee is of type admin, must use enums that match c#-->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
+
+<div *ngIf="loaded" class="container">
+  <h1 id="tableLabel">Approve Timesheets</h1>
+
+  <p *ngIf="!timeEntries"><em>Loading...</em></p>
+
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timeEntries">
+    <thead>
+      <tr>
+        <th>Week #:</th>
+        <th>Employee #:</th>
+        <th>First Name:</th>
+        <th>Last Name:</th>
+        <th>Submitted Date:</th>
+        <th>Total Hours:</th>
+        <th>View:</th>
+        <th>Approve:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let timeEntry of timeEntries">
+        <!--<td>{{ timeEntry.date }}</td>
+        <td>{{ timeEntry.temperatureC }}</td>
+        <td>{{ timeEntry.temperatureF }}</td>
+        <td>{{ timeEntry.summary }}</td>-->
+      </tr>
+    </tbody>
+  </table>
+</div>

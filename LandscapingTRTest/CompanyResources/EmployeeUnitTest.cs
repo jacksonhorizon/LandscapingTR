@@ -164,8 +164,8 @@ namespace LandscapingTR.Test.Lookups
             var savedEmployeeModels = await EmployeeService.GetEmployeesAsync();
             Assert.IsNotNull(savedEmployeeModels);
 
-            // Includes admin, base user, and test user
-            Assert.AreEqual(8, savedEmployeeModels.Count);
+            // Includes admin, and test user
+            Assert.AreEqual(7, savedEmployeeModels.Count);
         }
 
         [TestMethod]
@@ -277,6 +277,93 @@ namespace LandscapingTR.Test.Lookups
             catch (Exception e)
             {
                 Assert.IsTrue(false);
+            }
+        }
+
+        [TestMethod]
+        public async Task Employee_Login_ChangePassword_Succeeds()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "LoginSucceed",
+                LastName = "Test Last Name",
+                Username = "potato",
+                Password = "I am not sure what to put as the password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            savedEmployeeModel.Password = "This is the password now";
+
+            newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(savedEmployeeModel);
+
+            savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            try
+            {
+                var username = "potato";
+                var password = "I am not sure what to put as the password";
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
+                Assert.IsTrue(false);
+            }
+            catch (Exception e)
+            {
+            }
+
+            try
+            {
+                var username = "potato";
+                var password = "This is the password now";
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);   
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(false);
+            }
+        }
+
+        [TestMethod]
+        public async Task Employee_Login_ChangePassword_Fails()
+        {
+            // Add a new employee.
+            var newEmployee = new Employee()
+            {
+                FirstName = "LoginSucceed",
+                LastName = "Test Last Name",
+                Username = "potato",
+                Password = "I am not sure what to put as the password",
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+            };
+            var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
+
+            var newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(newEmployeeModel);
+
+            var savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            savedEmployeeModel.Password = "This is the password now";
+
+            newSavedEmployeeModel = await EmployeeService.SaveEmployeeAsync(savedEmployeeModel);
+
+            savedEmployeeModel = await EmployeeService.GetEmployeeAsync(newSavedEmployeeModel.Id.Value);
+            Assert.IsNotNull(savedEmployeeModel);
+
+            try
+            {
+                var username = "potato";
+                var password = "I am not sure what to put as the password";
+                var loggedInEmployeeModel = await EmployeeService.Login(username, password);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(true);
             }
         }
     }
