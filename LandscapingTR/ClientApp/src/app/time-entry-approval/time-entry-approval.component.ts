@@ -42,7 +42,6 @@ export class TimeEntryApprovalComponent implements OnInit {
       next: data => {
 
         this.employeeModel = data;
-        console.log(this.employeeModel)
       },
       error: err => {
         console.log(err);

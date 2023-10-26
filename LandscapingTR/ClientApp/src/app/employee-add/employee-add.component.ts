@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-settings-component',
-  styleUrls: ['./settings.component.css'],
-  templateUrl: './settings.component.html'
+  selector: 'app-employee-add',
+  templateUrl: './employee-add.component.html',
+  styleUrls: ['./employee-add.component.css']
 })
-export class SettingsComponent {
+export class EmployeeAddComponent {
   loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;
@@ -24,13 +24,15 @@ export class SettingsComponent {
   form: any = {
     username: null,
     firstName: null,
-    lastName: null
+    lastName: null,
+    password: null,
+    employeeTypeId: 1,
   };
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
     private router: Router,
-    private toastr: ToastrService,  ) { }
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -48,9 +50,6 @@ export class SettingsComponent {
       next: data => {
 
         this.employeeModel = data;
-        this.form.username = this.employeeModel.username;
-        this.form.firstName = this.employeeModel.firstName;
-        this.form.lastName = this.employeeModel.lastName;
       },
       error: err => {
         console.log(err);
@@ -70,7 +69,7 @@ export class SettingsComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
-  
+
   // General methods
 
   getAdminType() {
@@ -82,19 +81,35 @@ export class SettingsComponent {
   }
 
   onSubmit(): void {
-    const { firstName, lastName, username } = this.form;
-    this.employeeModel.username = username;
-    this.employeeModel.firstName = firstName;
-    this.employeeModel.lastName = lastName;
+    const { firstName, lastName, username, password, employeeTypeId } = this.form;
 
-    this.employeeService.updateEmployee(this.employeeModel).subscribe({
+    if (firstName == null || lastName == null || username == null || password == null || employeeTypeId == null) {
+      return; 
+    }
+
+    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeTypeId === '') {
+      return;
+    }
+
+    // code add employee method in service
+    var newEmployeeModel = new EmployeeModel();
+
+    newEmployeeModel.username = username;
+    newEmployeeModel.firstName = firstName;
+    newEmployeeModel.lastName = lastName;
+    newEmployeeModel.password = password;
+    newEmployeeModel.employeeTypeId = employeeTypeId;
+
+    this.employeeService.saveNewEmployee(newEmployeeModel).subscribe({
       next: data => {
-        this.employeeModel = data;
-        this.form.username = this.employeeModel.username;
-        this.form.firstName = this.employeeModel.firstName;
-        this.form.lastName = this.employeeModel.lastName;
+        newEmployeeModel = data;
+        this.form.username = newEmployeeModel.username;
+        this.form.firstName = newEmployeeModel.firstName;
+        this.form.lastName = newEmployeeModel.lastName;
+        this.form.password = newEmployeeModel.password;
+        this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
         this.toastr.success('Save Employee:', 'Employee was saved successfully!');
-        this.router.navigate(["employee-home/:" + data.id])
+        this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
         console.log(err);
@@ -103,10 +118,6 @@ export class SettingsComponent {
   }
 
   onCancel(data: EmployeeModel): void {
-    this.router.navigate(["employee-home/:" + data.id]);
-  }
-
-  logOut(): void {
-    this.router.navigate([""]);
+    this.router.navigate(["admin/:" + data.id])
   }
 }

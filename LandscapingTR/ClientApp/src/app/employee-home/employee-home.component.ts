@@ -39,7 +39,6 @@ export class EmployeeHomeComponent {
     this.employeeService.getEmployee(this.employeeId).subscribe({
       next: data => {
         this.employeeModel = data;
-        console.log(this.employeeModel);
 
         this.loaded = true;
       },

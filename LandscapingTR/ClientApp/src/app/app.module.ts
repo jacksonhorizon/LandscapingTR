@@ -14,6 +14,7 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component';
 import { AdministrationToolsComponent } from './administration-tools/administration-tools.component';
 import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-approval.component';
+import { EmployeeAddComponent } from './employee-add/employee-add.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-app
     TimeEntryApprovalComponent,
     EmployeeHomeComponent,
     AdministrationToolsComponent,
+    EmployeeAddComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,6 +37,7 @@ import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-app
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'employee-home/:id', component: EmployeeHomeComponent },
+      { path: 'employee-add/:id', component: EmployeeAddComponent },
       { path: 'settings/:id', component: SettingsComponent },
       { path: 'time-entry/:id', component: TimeEntryComponent },
       { path: 'admin/:id', component: AdministrationToolsComponent },

@@ -29,7 +29,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css" // try adding '../' if you're using angular cli before 6
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -126,8 +126,22 @@
               "vendorChunk": false
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

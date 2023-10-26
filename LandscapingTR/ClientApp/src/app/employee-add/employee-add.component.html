@@ -43,7 +43,7 @@
 
 <div *ngIf="loaded" class="container">
 
-  <h1>Manage Profile</h1>
+  <h1>Add Employee</h1>
   <form *ngIf="loaded"
         name="form"
         #f="ngForm"
@@ -99,6 +99,31 @@
           Username is required!
         </div>
       </div>
+      <br />
+      <div class="form-group col-md-6">
+        <label for="password">Password</label>
+        <input type="text"
+               class="form-control"
+               name="password"
+               id="password"
+               [(ngModel)]="form.password"
+               required
+               minlength="3"
+               #password="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors['required']">Password is required</div>
+          <div *ngIf="password.errors['minlength']">
+            Password must be at least 3 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        EmployeeTypeId
+      </div>
     </div>
     <br />
     <button class="btn btn-primary btn-block" (click)="onSubmit()">
@@ -111,8 +136,5 @@
     <br />
     <br />
     <hr />
-    <button class="btn btn-secondary btn-block" (click)="logOut()">
-      Logout
-    </button>
   </form>
 </div>

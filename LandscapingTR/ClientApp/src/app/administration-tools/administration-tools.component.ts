@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
@@ -29,7 +30,9 @@ export class AdministrationToolsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private lookupService: LookupService  ) { }
+    private lookupService: LookupService,
+    private router: Router,
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -82,5 +85,9 @@ export class AdministrationToolsComponent implements OnInit {
 
   getSupervisorType() {
     return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  rerouteToAddEmployeePage(data: EmployeeModel): void {
+    this.router.navigate(["employee-add/:" + data.id])
   }
 }
