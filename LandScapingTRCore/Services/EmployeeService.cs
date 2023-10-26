@@ -50,10 +50,15 @@ namespace LandscapingTR.Core.Services
             if (employeeModel.Id != null)
             {
                 var existingEntity = await this.EmployeeRepository.GetEmployeeAsync(employeeModel.Id.Value);
+                var oldPassword = existingEntity.Password;
 
                 this.Mapper.Map(employeeModel, existingEntity);
 
-                existingEntity.Password = Cryptography.Encrypt(existingEntity.Password);
+                // handles passwor update
+                if (Cryptography.Encrypt(oldPassword) != Cryptography.Encrypt(employeeModel.Password))
+                {
+                    existingEntity.Password = Cryptography.Encrypt(employeeModel.Password);
+                } 
 
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(existingEntity);
 
@@ -82,7 +87,7 @@ namespace LandscapingTR.Core.Services
             var employees = await this.EmployeeRepository.GetEmployeesAsync();
 
             var encryptedPassword = "";
-            if (!username.Equals("admin"))
+            if (!username.ToLower().Equals("admin"))
             {
                 encryptedPassword = Cryptography.Encrypt(password);
             } else
