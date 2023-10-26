@@ -6,7 +6,6 @@ import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
-import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { LookupService } from '../core/services/lookup.service';
 

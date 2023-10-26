@@ -20,8 +20,7 @@ export class EmployeeService {
   }
 
   getAllEmployees(): Observable<EmployeeModel[]> {
-    var x = this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
-    return x;
+    return this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
   }
 
   saveNewEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {

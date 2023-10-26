@@ -92,7 +92,7 @@ export class EmployeeAddComponent {
     }
 
     // code add employee method in service
-    var newEmployeeModel = new EmployeeModel();
+    let newEmployeeModel = new EmployeeModel();
 
     newEmployeeModel.username = username;
     newEmployeeModel.firstName = firstName;
