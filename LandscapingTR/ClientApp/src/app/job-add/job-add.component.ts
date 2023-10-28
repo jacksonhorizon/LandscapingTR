@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
-import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { JobModel } from '../core/models/domain/job.model';
 import { EmployeeService } from '../core/services/employee.service';
 
 @Component({
@@ -18,12 +18,29 @@ export class JobAddComponent {
   pathEmployeeId!: string;
 
   employeeModel!: EmployeeModel;
-  lookupsModel!: LandscapingTRLookupsModel;
-  // General properties
 
+  // General properties
+  form: any = {
+    jobName: null,
+    jobTypeId: null,
+    jobDate: null,
+    locationId: null,
+    firstCrewMemberId: null,
+    secondCrewMemberId: null,
+    thirdCrewMemberId: null,
+    fourthCrewMemberId: null,
+    crewSupervisorId: null,
+    landscapeDesignerId: null,
+    equipmentAndSafetyOfficerId: null,
+    estimatedTotalHours: null,
+    totalLoggedHours: null,
+    isCompleted: null,
+  };
 
   constructor(private route: ActivatedRoute,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private router: Router,
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -68,5 +85,46 @@ export class JobAddComponent {
 
   getSupervisorType() {
     return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  onSubmit(): void {
+    const { firstName, lastName, username, password, employeeTypeId } = this.form;
+
+    if (firstName == null || lastName == null || username == null || password == null || employeeTypeId == null) {
+      return;
+    }
+
+    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeTypeId === '') {
+      return;
+    }
+
+    //// code add employee method in service
+    //let newEmployeeModel = new EmployeeModel();
+
+    //newEmployeeModel.username = username;
+    //newEmployeeModel.firstName = firstName;
+    //newEmployeeModel.lastName = lastName;
+    //newEmployeeModel.password = password;
+    //newEmployeeModel.employeeTypeId = employeeTypeId;
+
+    //this.employeeService.saveNewEmployee(newEmployeeModel).subscribe({
+    //  next: data => {
+    //    newEmployeeModel = data;
+    //    this.form.username = newEmployeeModel.username;
+    //    this.form.firstName = newEmployeeModel.firstName;
+    //    this.form.lastName = newEmployeeModel.lastName;
+    //    this.form.password = newEmployeeModel.password;
+    //    this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
+    //    this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
+    //    this.router.navigate(["admin/:" + this.employeeModel.id])
+    //  },
+    //  error: err => {
+    //    console.log(err);
+    //  }
+    //});
+  }
+
+  onCancel(data: EmployeeModel): void {
+    this.router.navigate(["job-management/:" + data.id])
   }
 }

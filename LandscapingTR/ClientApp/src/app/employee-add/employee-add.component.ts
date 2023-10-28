@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
-import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
+import { LookupService } from '../core/services/lookup.service';
 
 @Component({
   selector: 'app-employee-add',
@@ -18,9 +20,9 @@ export class EmployeeAddComponent {
   pathEmployeeId!: string;
 
   employeeModel!: EmployeeModel;
-  lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
+  employeeTypes!: LookupItemModel[];
   form: any = {
     username: null,
     firstName: null,
@@ -31,6 +33,7 @@ export class EmployeeAddComponent {
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
+    private lookupService: LookupService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -51,6 +54,21 @@ export class EmployeeAddComponent {
 
         this.employeeModel = data;
         this.loaded = true;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
+      this.lookupService.getEmployeeTypes()
+    ]).subscribe({
+      next: data => {
+        this.employeeModel = data[0];
+        this.employeeTypes = data[1];
+
+        this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
         console.log(err);

@@ -44,4 +44,41 @@
 
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
-<p>job-add works!</p>
+<div *ngIf="loaded" class="container">
+
+  <h1>Add Job</h1>
+  <form *ngIf="loaded"
+        name="form"
+        #f="ngForm"
+        novalidate>
+
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="jobName">Job Name</label>
+        <input type="text"
+               class="form-control"
+               name="jobName"
+               id="jobName"
+               [(ngModel)]="form.jobName"
+               required
+               #jobName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="jobName.errors && f.submitted">
+          Job name is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <button class="btn btn-primary btn-block" (click)="onSubmit()">
+      Save
+    </button>
+    &nbsp;
+    <button class="btn btn-secondary btn-block" (click)="onCancel(employeeModel)">
+      Cancel
+    </button>
+    <br />
+    <br />
+    <hr />
+  </form>
+</div>

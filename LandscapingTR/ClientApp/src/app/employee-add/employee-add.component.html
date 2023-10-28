@@ -125,11 +125,21 @@
         </div>
       </div>
     </div>
+    <br />
     <div class="col-md-12">
       <div class="form-group col-md-6">
-        EmployeeTypeId
+        <label for="employeeType">Employee Type</label>
+        <select [(ngModel)]="form.employeeType"
+                name="employeeType"
+                id="employeeType"
+                #employeeType="ngModel"
+                class="form-control">
+          <option disabled>Select Employee Type</option>
+          <option *ngFor="let employeeType of employeeTypes">{{employeeType.lookupValue}}</option>
+        </select>
       </div>
     </div>
+    <br />
     <br />
     <button class="btn btn-primary btn-block" (click)="onSubmit()">
       Save
