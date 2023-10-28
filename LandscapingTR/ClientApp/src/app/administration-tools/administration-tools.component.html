@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand">LandscapingTR</a>
+      <a class="navbar-brand" [routerLink]="['/employee-home', pathEmployeeId]">LandscapingTR</a>
       <button class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -24,7 +24,7 @@
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="employeeModel.employeeTypeId === getAdminType()"class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
           </li>
 

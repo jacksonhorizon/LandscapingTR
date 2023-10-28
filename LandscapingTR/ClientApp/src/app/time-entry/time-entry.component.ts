@@ -6,6 +6,7 @@ import { EmployeeService } from '../core/services/employee.service';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
+import { JobModel } from '../core/models/domain/job.model';
 
 @Component({
   selector: 'app-time-entry',
@@ -22,7 +23,16 @@ export class TimeEntryComponent {
   lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
-  timeEntries: TimeEntryModel[] = [];
+  jobs: JobModel[] = [new JobModel(), new JobModel(), new JobModel()]
+  form: any = {
+    sunday: null,
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: null,
+  };
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
