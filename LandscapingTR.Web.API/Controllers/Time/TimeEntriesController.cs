@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LandscapingTR.Core.Interfaces;
+using LandscapingTR.Core.Models.Time;
 
 namespace LandscapingTR.Web.API.Controllers.Time
 {
@@ -86,6 +87,62 @@ namespace LandscapingTR.Web.API.Controllers.Time
             }
 
             return Ok(timeEntryModels);
+        }
+
+        [HttpPost]
+        [Route("SaveTimeEntry")]
+        public async Task<IActionResult> SaveTimeEntry(TimeEntryModel timeEntryModel)
+        {
+            var savedTimeEntryModel = await this.TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            if (savedTimeEntryModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedTimeEntryModel);
+        }
+
+        [HttpPut]
+        [Route("SaveTimeEntry")]
+        public async Task<IActionResult> UpdateTimeEntry(TimeEntryModel timeEntryModel)
+        {
+            var savedTimeEntryModel = await this.TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            if (savedTimeEntryModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedTimeEntryModel);
+        }
+
+        [HttpPost]
+        [Route("SaveTimeEntries")]
+        public async Task<IActionResult> SaveTimeEntries(List<TimeEntryModel> timeEntryModels)
+        {
+            var savedTimeEntryModels = await this.TimeEntryService.SaveTimeEntryRangeAsync(timeEntryModels);
+
+            if (savedTimeEntryModels == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedTimeEntryModels);
+        }
+
+        [HttpPut]
+        [Route("SaveTimeEntries")]
+        public async Task<IActionResult> UpdateTimeEntries(List<TimeEntryModel> timeEntryModels)
+        {
+            var savedTimeEntryModels = await this.TimeEntryService.SaveTimeEntryRangeAsync(timeEntryModels);
+
+            if (savedTimeEntryModels == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedTimeEntryModels);
         }
     }
 }

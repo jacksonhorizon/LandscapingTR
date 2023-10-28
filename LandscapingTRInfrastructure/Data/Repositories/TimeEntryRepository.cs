@@ -90,7 +90,19 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<TimeEntry> SaveTimeEntryAsync(TimeEntry timeEntry)
         {
-            await SaveAsync(timeEntry);
+            if (DataContext.TimeEntries.FirstOrDefault(x => x.Id == timeEntry.Id) != null)
+            {
+                // Existing employee - update it in the context
+                DataContext.TimeEntries.Update(timeEntry);
+            }
+            else
+            {
+                // New employee - add it to the context
+                timeEntry.CreatedDate = DateTime.Now;
+                DataContext.TimeEntries.Add(timeEntry);
+            }
+
+            await DataContext.SaveChangesAsync();
 
             return timeEntry;
         }
@@ -102,7 +114,10 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<List<TimeEntry>> SaveTimeEntryRangeAsync(List<TimeEntry> timeEntries)
         {
-            await SaveRangeAsync(timeEntries);
+            foreach (var timeEntry in timeEntries)
+            {
+               await this.SaveTimeEntryAsync(timeEntry);
+            }
 
             return timeEntries;
         }

@@ -9,6 +9,7 @@ import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { JobModel } from '../core/models/domain/job.model';
 import { TimeEntryWeekModel } from '../core/models/time/week-entry-week.model';
 import { JobTypes } from '../core/enums/job-types.enum';
+import { TimeEntryService } from '../core/services/time-entry.service';
 
 @Component({
   selector: 'app-time-entry',
@@ -30,6 +31,7 @@ export class TimeEntryComponent {
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
+    private timeEntryService: TimeEntryService,
     private router: Router) { }
 
   ngOnInit() {
@@ -82,7 +84,7 @@ export class TimeEntryComponent {
 
   // General methods
 
-  private generateWeeklyTimeEntryModel(employeeId: number, jobId: number | undefined, employeeTypeId: number | undefined, jobTypeId: number | undefined) {
+  private generateWeeklyTimeEntryModel(employeeId: number, employeeTypeId: number | undefined, jobId: number | undefined, jobTypeId: number | undefined) {
     const timeEntryWeek: TimeEntryWeekModel = {
       sunday: null,
       monday: null,
@@ -138,12 +140,27 @@ export class TimeEntryComponent {
     this.forms.forEach(form => {
       var timeEntries = this.createTimeEntries(form);
 
-      console.log(timeEntries);
       timeEntries.forEach(entry => allTimeEntries.push(entry));
     });
 
     console.log("all");
     console.log(allTimeEntries);
+
+    var newTimeEntries = allTimeEntries.filter(x => x.id == null);
+
+    var updateTimeEntries = allTimeEntries.filter(x => x.id != null);
+
+    this.timeEntryService.saveNewTimeEntries(newTimeEntries).subscribe({
+      next: data => {
+
+        console.log(data);
+
+        this.loaded = true;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
 
