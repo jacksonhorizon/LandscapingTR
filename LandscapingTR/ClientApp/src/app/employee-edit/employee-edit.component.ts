@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
+import { LookupService } from '../core/services/lookup.service';
 
 @Component({
   selector: 'app-employee-edit',
@@ -21,21 +24,22 @@ export class EmployeeEditComponent {
   pathEmployeeToEditId!: string;
 
   employeeModel!: EmployeeModel;
-  employeeToEditModel!: EmployeeModel;
-  lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
+  employeeToEditModel!: EmployeeModel;
+  employeeTypes!: LookupItemModel[];
   form: any = {
     id: null,
     username: null,
     firstName: null,
     lastName: null,
     password: null,
-    employeeTypeId: null,
+    employeeType: null,
   };
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
+    private lookupService: LookupService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -72,25 +76,32 @@ export class EmployeeEditComponent {
 
     this.pathEmployeeToEditId = ":" + this.employeeToEditId.toString();
 
-    // Gets employee to edit model
-    this.employeeService.getEmployee(this.employeeToEditId).subscribe({
-      next: data => {
 
-        this.employeeToEditModel = data;
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeToEditId),
+      this.lookupService.getEmployeeTypes()
+    ]).subscribe({
+      next: data => {
+        this.employeeToEditModel = data[0];
+
         this.form.id = this.employeeToEditModel.id;
         this.form.username = this.employeeToEditModel.username;
         this.form.firstName = this.employeeToEditModel.firstName;
         this.form.lastName = this.employeeToEditModel.lastName;
         this.form.password = this.employeeToEditModel.password;
-        this.form.employeeTypeId = this.employeeToEditModel.employeeTypeId;
 
-        this.loaded = true;
+        this.employeeTypes = data[1];
+
+        var employeeType = this.employeeTypes.find(x => x.id === this.employeeToEditModel.employeeTypeId)?.lookupValue || "";
+        this.form.employeeType = employeeType;
+
+
+        this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
         console.log(err);
       }
     });
-
   }
 
   // Is for the header
@@ -115,13 +126,13 @@ export class EmployeeEditComponent {
   }
 
   onSubmit(): void {
-    const { id, firstName, lastName, username, password, employeeTypeId } = this.form;
+    const { id, firstName, lastName, username, password, employeeType } = this.form;
 
-    if (firstName == null || lastName == null || username == null || password == null || employeeTypeId == null) {
+    if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return;
     }
 
-    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeTypeId === '') {
+    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeType === '') {
       return;
     }
 
@@ -133,7 +144,11 @@ export class EmployeeEditComponent {
     newEmployeeModel.firstName = firstName;
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
+
+    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
+
+
 
     this.employeeService.updateEmployee(newEmployeeModel).subscribe({
       next: data => {
