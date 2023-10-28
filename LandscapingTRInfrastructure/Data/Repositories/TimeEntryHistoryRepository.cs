@@ -88,11 +88,23 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// </summary>
         /// <param name="TimeEntryHistory">The time entry.</param>
         /// <returns>The saved time entry.</returns>
-        public async Task<TimeEntryHistory> SaveTimeEntryHistoryAsync(TimeEntryHistory TimeEntryHistory)
+        public async Task<TimeEntryHistory> SaveTimeEntryHistoryAsync(TimeEntryHistory timeEntryHistory)
         {
-            await SaveAsync(TimeEntryHistory);
+            if (DataContext.TimeEntryHistories.FirstOrDefault(x => x.Id == timeEntryHistory.Id) != null)
+            {
+                // Existing employee - update it in the context
+                DataContext.TimeEntryHistories.Update(timeEntryHistory);
+            }
+            else
+            {
+                // New employee - add it to the context
+                timeEntryHistory.CreatedDate = DateTime.Now;
+                DataContext.TimeEntryHistories.Add(timeEntryHistory);
+            }
 
-            return TimeEntryHistory;
+            await DataContext.SaveChangesAsync();
+
+            return timeEntryHistory;
         }
 
         /// <summary>

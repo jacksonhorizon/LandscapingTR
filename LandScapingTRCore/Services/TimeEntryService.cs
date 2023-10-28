@@ -133,28 +133,68 @@ namespace LandscapingTR.Core.Services
         /// <returns>The saved time entry.</returns>
         public async Task<TimeEntryModel> SaveTimeEntryAsync(TimeEntryModel timeEntryModel)
         {
-            var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
-            var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
-
             if (timeEntryModel.IsSubmitted)
             {
-                var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId.Value);
-                job.TotalLoggedHours += timeEntry.TotalLoggedHours;
+                if (timeEntryModel.Id != null)
+                {
+                    var existingTimeEntry = await this.TimeEntryRepository.GetTimeEntryByIdAsync(timeEntryModel.Id.Value);
 
-                await this.JobRepository.SaveJobAsync(job);
-                var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
-                var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    // fixes job hours
+                    var job = await this.JobRepository.GetJobByIdAsync(existingTimeEntry.JobId.Value);
+                    job.TotalLoggedHours -= existingTimeEntry.TotalLoggedHours;
 
-                return Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                    this.Mapper.Map(timeEntryModel, existingTimeEntry);
+
+                    job.TotalLoggedHours += existingTimeEntry.TotalLoggedHours;
+
+                    var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
+
+                    var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(existingTimeEntry);
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    return this.Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                }
+                else
+                {
+                    // New submitted time entry
+                    var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
+                    timeEntry.IsSubmitted = true;
+
+                    var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
+
+                    var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId.Value);
+                    job.TotalLoggedHours += timeEntry.TotalLoggedHours;
+
+                    await this.JobRepository.SaveJobAsync(job);
+                    var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    return this.Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                }
             }
             else
             {
-                var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
-                var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                if (timeEntryModel.Id != null)
+                {
+                    var existingTimeEntry = await this.TimeEntryRepository.GetTimeEntryByIdAsync(timeEntryModel.Id.Value);
 
-                return Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                    this.Mapper.Map(timeEntryModel, existingTimeEntry);
+                    var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
+
+                    var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(existingTimeEntry);
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    return this.Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                }
+                else
+                {
+                    // New not submitted time entry
+                    var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
+                    var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
+
+                    var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    return this.Mapper.Map<TimeEntryModel>(savedTimeEntry);
+                }
             }
-            
+
         }
 
 
@@ -174,7 +214,15 @@ namespace LandscapingTR.Core.Services
                     {
                         var existingTimeEntry = await this.TimeEntryRepository.GetTimeEntryByIdAsync(timeEntryModel.Id.Value);
 
+                        // fixes job hours
+                        var job = await this.JobRepository.GetJobByIdAsync(existingTimeEntry.JobId.Value);
+                        job.TotalLoggedHours -= existingTimeEntry.TotalLoggedHours;
+
+
                         this.Mapper.Map(timeEntryModel, existingTimeEntry);
+
+                        job.TotalLoggedHours += existingTimeEntry.TotalLoggedHours;
+
                         existingTimeEntry.IsSubmitted = true;
 
                         var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
