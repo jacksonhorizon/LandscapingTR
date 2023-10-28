@@ -20,12 +20,17 @@
             <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time Entry</a>
+            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time</a>
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
-          <li *ngIf="employeeModel.employeeTypeId === getAdminType()"class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
+          <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Employees</a>
+          </li>
+
+          <!-- Make this only if the employee is of type admin, must use enums that match c#-->
+          <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/job-management', pathEmployeeId]">Jobs</a>
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']">
