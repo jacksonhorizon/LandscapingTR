@@ -42,13 +42,13 @@ export class TimeEntryApprovalComponent implements OnInit {
       next: data => {
 
         this.employeeModel = data;
+        this.loaded = true;
       },
       error: err => {
         console.log(err);
       }
     });
 
-    this.loaded = true;
   }
 
   // Is for the header

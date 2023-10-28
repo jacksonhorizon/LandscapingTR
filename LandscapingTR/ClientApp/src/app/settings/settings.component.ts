@@ -53,13 +53,12 @@ export class SettingsComponent {
         this.form.username = this.employeeModel.username;
         this.form.firstName = this.employeeModel.firstName;
         this.form.lastName = this.employeeModel.lastName;
+        this.loaded = true;
       },
       error: err => {
         console.log(err);
       }
     });
-
-    this.loaded = true;
   }
 
   // Is for the header

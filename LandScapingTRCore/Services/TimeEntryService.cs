@@ -143,12 +143,14 @@ namespace LandscapingTR.Core.Services
 
                 await this.JobRepository.SaveJobAsync(job);
                 var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
 
                 return Mapper.Map<TimeEntryModel>(savedTimeEntry);
             }
             else
             {
-                var savedTimeEntry = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
 
                 return Mapper.Map<TimeEntryModel>(savedTimeEntry);
             }
@@ -161,8 +163,9 @@ namespace LandscapingTR.Core.Services
         /// </summary>
         /// <param name="timeEntryModels">The time entries.</param>
         /// <returns>The saved time entry.</returns>
-        public async Task SaveTimeEntryRangeAsync(List<TimeEntryModel> timeEntryModels)
+        public async Task<List<TimeEntryModel>> SaveTimeEntryRangeAsync(List<TimeEntryModel> timeEntryModels)
         {
+            var savedTimeEntryModels = new List<TimeEntryModel>();
             foreach (var timeEntryModel in timeEntryModels)
             {
                 var timeEntry = this.Mapper.Map<TimeEntry>(timeEntryModel);
@@ -175,12 +178,18 @@ namespace LandscapingTR.Core.Services
 
                     await this.JobRepository.SaveJobAsync(job);
                     var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                    savedTimeEntryModels.Add(this.Mapper.Map<TimeEntryModel>(savedTimeEntry));
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
                 }
                 else
                 {
-                    var savedTimeEntry = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
+                    var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);
+                    savedTimeEntryModels.Add(this.Mapper.Map<TimeEntryModel>(savedTimeEntry));
+                    var savedTimeEntryHistory = await this.TimeEntryHistoryRepository.SaveTimeEntryHistoryAsync(timeEntryHistory);
                 }
             }
+
+            return timeEntryModels;
         }
     }
 }

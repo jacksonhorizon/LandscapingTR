@@ -1,7 +1,7 @@
-<header>
+<header *ngIf="loaded">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand">LandscapingTR</a>
+      <a class="navbar-brand" [routerLink]="['/employee-home', pathEmployeeId]">LandscapingTR</a>
       <button class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -24,7 +24,7 @@
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Admin</a>
           </li>
 
@@ -42,37 +42,121 @@
 <div *ngIf="loaded" class="container">
   <h1 id="tableLabel">Weekly Timesheet</h1>
 
-  <p *ngIf="!timeEntries"><em>Loading...</em></p>
+  <p *ngIf="!jobs"><em>Loading...</em></p>
 
   <br />
   <div *ngIf="employeeModel.employeeTypeId === getAdminType() || employeeModel.employeeTypeId === getSupervisorType()" class="nav-item">
-    <button class="btn btn-primary" (click)="rerouteToApprovalPage(employeeModel)">Approve Timesheets</button>
+    <button class="btn btn-save" (click)="rerouteToApprovalPage(employeeModel)">Approve Timesheets</button>
 
   </div>
   <br />
-
-  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timeEntries">
-    <thead>
-      <tr>
-        <th>Week #:</th>
-        <th>Monday:</th>
-        <th>Tuesday:</th>
-        <th>Wednesday:</th>
-        <th>Thursday:</th>
-        <th>Friday:</th>
-        <th>Saturday:</th>
-        <th>Sunday:</th>
-        <th>Total Hours:</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let timeEntry of timeEntries">
-        <!--<td>{{ timeEntry.date }}</td>
-        <td>{{ timeEntry.temperatureC }}</td>
-        <td>{{ timeEntry.temperatureF }}</td>
-        <td>{{ timeEntry.summary }}</td>-->
-      </tr>
-    </tbody>
-  </table>
-  <button class="btn btn-primary">Submit</button>
+  <b><h2>Week #25: 10/29 - 11/04</h2></b>
+  <hr />
+  <form *ngIf="loaded"
+        name="form"
+        #f="ngForm"
+        novalidate>
+    <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="jobs">
+      <thead>
+        <tr>
+          <th>Job:</th>
+          <th>Sunday:</th>
+          <th>Monday:</th>
+          <th>Tuesday:</th>
+          <th>Wednesday:</th>
+          <th>Thursday:</th>
+          <th>Friday:</th>
+          <th>Saturday:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of jobs; let i = index;" class="">
+          <td>
+            Job # {{i + 1}}:
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="sunday{{i}}"
+                   id="sunday{{i}}"
+                   [(ngModel)]="forms[i].sunday"
+                   required
+                   #sunday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="monday{{i}}"
+                   id="monday{{i}}"
+                   [(ngModel)]="forms[i].monday"
+                   required
+                   #monday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="tuesday{{i}}"
+                   id="tuesday{{i}}"
+                   [(ngModel)]="forms[i].tuesday"
+                   required
+                   #tuesday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="wednesday{{i}}"
+                   id="wednesday{{i}}"
+                   [(ngModel)]="forms[i].wednesday"
+                   required
+                   #wednesday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="thursday{{i}}"
+                   id="thursday{{i}}"
+                   [(ngModel)]="forms[i].thursday"
+                   required
+                   #thursday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="friday{{i}}"
+                   id="friday{{i}}"
+                   [(ngModel)]="forms[i].friday"
+                   required
+                   #friday{{i}}="ngModel" />
+          </td>
+          <td>
+            <input type="number"
+                   min="0"
+                   max="24"
+                   class="form-control"
+                   name="saturday{{i}}"
+                   id="saturday{{i}}"
+                   [(ngModel)]="forms[i].saturday"
+                   required
+                   #saturday{{i}}="ngModel" />
+          </td>
+          <br />
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-save">Submit</button>
+    &nbsp;
+    <button class="btn btn-primary" (click)="saveTimesheet()">Save</button>
+  </form>
 </div>
