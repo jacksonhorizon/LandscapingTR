@@ -16,6 +16,9 @@ import { AdministrationToolsComponent } from './administration-tools/administrat
 import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-approval.component';
 import { EmployeeAddComponent } from './employee-add/employee-add.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
+import { JobAddComponent } from './job-add/job-add.component';
+import { JobManagementComponent } from './job-management/job-management.component';
+import { JobEditComponent } from './job-edit/job-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
     AdministrationToolsComponent,
     EmployeeAddComponent,
     EmployeeEditComponent,
+    JobAddComponent,
+    JobEditComponent,
+    JobManagementComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,6 +51,9 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
       { path: 'time-entry/:id', component: TimeEntryComponent },
       { path: 'admin/:id', component: AdministrationToolsComponent },
       { path: 'approve-time-sheets/:id', component: TimeEntryApprovalComponent },
+      { path: 'job-management/:id', component: JobManagementComponent },
+      { path: 'job-add/:id', component: JobAddComponent },
+      { path: 'job-edit/:id/:jobToEditId', component: JobEditComponent },
     ])
   ],
   providers: [],
