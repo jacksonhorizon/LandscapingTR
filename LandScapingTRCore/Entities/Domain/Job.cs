@@ -6,6 +6,12 @@ namespace LandscapingTR.Core.Entities.Domain
 {
     public class Job: BaseEntity<int?>
     {
+     
+        /// <summary>
+        /// Gets or sets the job name.
+        /// </summary>
+        public string JobName { get; set; }
+
         /// <summary>
         /// Gets or sets the job type id.
         /// </summary>

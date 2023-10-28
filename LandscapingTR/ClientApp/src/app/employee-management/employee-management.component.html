@@ -57,12 +57,12 @@
   <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employees">
     <thead>
       <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Employee Type</th>
-        <th>Hire Date</th>
-        <th>Edit</th>
+        <th>First Name:</th>
+        <th>Last Name:</th>
+        <th>Username:</th>
+        <th>Employee Type:</th>
+        <th>Hire Date:</th>
+        <th>Action:</th>
       </tr>
     </thead>
     <tbody>
@@ -71,7 +71,7 @@
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.username }}</td>
         <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
-        <td>{{ employee.createdDate }}</td>
+        <td>{{ getFormattedDate(employee.createdDate) }}</td>
         <td><button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">Edit</button></td>
       </tr>
     </tbody>

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,11 +22,10 @@ export class EmployeeManagementComponent implements OnInit {
   pathEmployeeId!: string;
 
   employeeModel!: EmployeeModel;
-  lookupsModel!: LandscapingTRLookupsModel;
-  employeeTypes!: LookupItemModel[];
 
   // General properties
   employees: EmployeeModel[] = [];
+  employeeTypes!: LookupItemModel[];
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
@@ -84,6 +84,15 @@ export class EmployeeManagementComponent implements OnInit {
 
   getSupervisorType() {
     return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  getFormattedDate(dateToFormat: Date | undefined) {
+    if (dateToFormat != undefined) {
+
+      return formatDate(dateToFormat, "yyy-MM-dd", 'en-US');
+    }
+
+    return dateToFormat;
   }
 
   rerouteToAddEmployeePage(data: EmployeeModel): void {

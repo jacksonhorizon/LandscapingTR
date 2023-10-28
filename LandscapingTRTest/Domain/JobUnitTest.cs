@@ -133,6 +133,7 @@ namespace LandscapingTR.Test.Time
             // Add a new job.
             var newJobModel = new JobModel()
             {
+                JobName = "Test Name",
                 JobTypeId = jobTypeId,
                 EstimatedTotalHours = 8,
                 TotalLoggedHours = 0,

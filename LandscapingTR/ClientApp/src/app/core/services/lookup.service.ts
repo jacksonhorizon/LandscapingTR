@@ -14,4 +14,12 @@ export class LookupService {
   getEmployeeTypes(): Observable<LookupItemModel[]> {
     return this.http.get<LookupItemModel[]>(API_URL + 'GetEmployeeTypes');
   }
+
+  getJobTypes(): Observable<LookupItemModel[]> {
+    return this.http.get<LookupItemModel[]>(API_URL + 'GetJobTypes');
+  }
+
+  getLocationTypes(): Observable<LookupItemModel[]> {
+    return this.http.get<LookupItemModel[]>(API_URL + 'GetLocationTypes');
+  }
 }
