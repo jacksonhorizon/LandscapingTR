@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="loaded">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/employee-home', pathEmployeeId]">LandscapingTR</a>
@@ -79,77 +79,77 @@
                    min="0"
                    max="24"
                    class="form-control"
-                   name="sunday"
-                   id="sunday"
-                   [(ngModel)]="form.sunday"
+                   name="sunday{{i}}"
+                   id="sunday{{i}}"
+                   [(ngModel)]="forms[i].sunday"
                    required
-                   #sunday="ngModel" />
+                   #sunday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="monday"
-                   id="monday"
-                   [(ngModel)]="form.monday"
+                   name="monday{{i}}"
+                   id="monday{{i}}"
+                   [(ngModel)]="forms[i].monday"
                    required
-                   #monday="ngModel" />
+                   #monday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="tuesday"
-                   id="tuesday"
-                   [(ngModel)]="form.tuesday"
+                   name="tuesday{{i}}"
+                   id="tuesday{{i}}"
+                   [(ngModel)]="forms[i].tuesday"
                    required
-                   #tuesday="ngModel" />
+                   #tuesday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="wednesday"
-                   id="wednesday"
-                   [(ngModel)]="form.wednesday"
+                   name="wednesday{{i}}"
+                   id="wednesday{{i}}"
+                   [(ngModel)]="forms[i].wednesday"
                    required
-                   #wednesday="ngModel" />
+                   #wednesday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="thursday"
-                   id="thursday"
-                   [(ngModel)]="form.thursday"
+                   name="thursday{{i}}"
+                   id="thursday{{i}}"
+                   [(ngModel)]="forms[i].thursday"
                    required
-                   #thursday="ngModel" />
+                   #thursday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="friday"
-                   id="friday"
-                   [(ngModel)]="form.friday"
+                   name="friday{{i}}"
+                   id="friday{{i}}"
+                   [(ngModel)]="forms[i].friday"
                    required
-                   #friday="ngModel" />
+                   #friday{{i}}="ngModel" />
           </td>
           <td>
             <input type="number"
                    min="0"
                    max="24"
                    class="form-control"
-                   name="saturday"
-                   id="saturday"
-                   [(ngModel)]="form.saturday"
+                   name="saturday{{i}}"
+                   id="saturday{{i}}"
+                   [(ngModel)]="forms[i].saturday"
                    required
-                   #saturday="ngModel" />
+                   #saturday{{i}}="ngModel" />
           </td>
           <br />
         </tr>
@@ -157,6 +157,6 @@
     </table>
     <button class="btn btn-save">Submit</button>
     &nbsp;
-    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary" (click)="saveTimesheet()">Save</button>
   </form>
 </div>

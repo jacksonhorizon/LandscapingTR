@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { EmployeeModel } from '../models/company-resources/employee.model';
 
 const API_URL = 'http://localhost:5028/api/Employees/';
@@ -16,7 +16,9 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   getEmployee(employeeId: number): Observable<EmployeeModel> {
-    return this.http.get(API_URL + 'GetEmployee?employeeId=' + employeeId);
+    return this.http.get(API_URL + 'GetEmployee?employeeId=' + employeeId).pipe(
+      map((employee: EmployeeModel) => this.convertDates(employee))
+    );
   }
 
   getAllEmployees(): Observable<EmployeeModel[]> {
@@ -29,5 +31,28 @@ export class EmployeeService {
 
   updateEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
     return this.http.put(API_URL + 'Employee', employeeModel, httpOptions);
+  }
+
+  private convertDates(employee: EmployeeModel): EmployeeModel {
+    if (employee.createdDate == null) {
+      employee.createdDate = new Date();
+    }
+
+    employee.createdDate = new Date(employee.createdDate);
+
+    return employee;
+  }
+
+  private convertDatesMultipleEmployees(employees: EmployeeModel[]): EmployeeModel[] {
+
+    employees.forEach(employee => {
+      if (employee.createdDate == null) {
+        employee.createdDate = new Date();
+      }
+
+      employee.createdDate = new Date(employee.createdDate);
+    });
+
+    return employees;
   }
 }

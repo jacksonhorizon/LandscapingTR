@@ -83,13 +83,14 @@ export class EmployeeEditComponent {
         this.form.lastName = this.employeeToEditModel.lastName;
         this.form.password = this.employeeToEditModel.password;
         this.form.employeeTypeId = this.employeeToEditModel.employeeTypeId;
+
+        this.loaded = true;
       },
       error: err => {
         console.log(err);
       }
     });
 
-    this.loaded = true;
   }
 
   // Is for the header
