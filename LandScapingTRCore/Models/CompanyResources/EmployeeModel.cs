@@ -31,5 +31,10 @@
         /// Gets or sets the employee type id.
         /// </summary>
         public int EmployeeTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee created date.
+        /// </summary>
+        public DateTime? CreatedDate { get; set; }
     }
 }

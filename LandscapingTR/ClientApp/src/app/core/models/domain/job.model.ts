@@ -1,5 +1,6 @@
 export class JobModel{
   id?: number;
+  jobName?: string;
   jobTypeId?: number;
   jobDate?: Date;
   locationId?: number;

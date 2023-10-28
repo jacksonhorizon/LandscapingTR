@@ -22,7 +22,9 @@ export class EmployeeService {
   }
 
   getAllEmployees(): Observable<EmployeeModel[]> {
-    return this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees');
+    return this.http.get<EmployeeModel[]>(API_URL + 'GetAllEmployees').pipe(
+      map(employees => employees.map(employee => this.convertDates(employee)))
+    );
   }
 
   saveNewEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {

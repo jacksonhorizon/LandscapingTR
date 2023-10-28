@@ -45,4 +45,42 @@
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 
-<p>job-management works!</p>
+<div *ngIf="loaded" class="container">
+  <h1 id="tableLabel">Job List</h1>
+
+  <p *ngIf="!jobs"><em>Loading...</em></p>
+  <br />
+  <button class="btn btn-primary" (click)="rerouteToAddJobPage(employeeModel)">Add Job</button>
+  &nbsp;
+  <button class="btn btn-secondary">Delete Job</button>
+  <br />
+  <hr />
+  <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="jobs">
+    <thead>
+      <tr>
+        <th>Name:</th>
+        <th>Job Type:</th>
+        <th>Date:</th>
+        <th>Primary Crew Member:</th>
+        <th>Supervisor:</th>
+        <th>Estimated Time:</th>
+        <th>Logged Time:</th>
+        <th>Status:</th>
+        <th>Action:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of jobs">
+        <td>{{ job.jobName }}</td>
+        <td>{{ matchJobType(job.jobTypeId) }}</td>
+        <td>{{ getFormattedDate(job.jobDate)}}</td>
+        <td>{{ job.firstCrewMemberId }}</td>
+        <td>{{ job.crewSupervisorId }}</td>
+        <td>{{ job.estimatedTotalHours }} hours</td>
+        <td>{{ job.totalLoggedHours }} hours</td>
+        <td>{{ getJobStatus(job.isCompleted) }}</td>
+        <td><button class="btn btn-primary" (click)="rerouteToEditJobPage(employeeModel, job)">View</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
