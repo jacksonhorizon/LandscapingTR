@@ -11,6 +11,19 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
+        /// Gets the time entries by the id.
+        /// </summary>
+        /// <param name="timeEntryId">The time entry id.</param>
+        /// <returns>The time entries.</returns>
+        public async Task<TimeEntry> GetTimeEntryByIdAsync(int timeEntryId)
+        {
+            return await this.DataContext.TimeEntries
+                .Include(x => x.Job)
+                .Where(x => x.Id == timeEntryId)
+                .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// Gets the time entries by employee id.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>

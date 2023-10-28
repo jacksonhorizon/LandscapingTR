@@ -5,6 +5,13 @@ namespace LandscapingTR.Core.Interfaces
     public interface ITimeEntryRepository : IRepository<TimeEntry, int?>
     {
         /// <summary>
+        /// Gets the time entries by the id.
+        /// </summary>
+        /// <param name="timeEntryId">The time entry id.</param>
+        /// <returns>The time entries.</returns>
+        Task<TimeEntry> GetTimeEntryByIdAsync(int timeEntryId);
+
+        /// <summary>
         /// Gets the time entries by employee id.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>
