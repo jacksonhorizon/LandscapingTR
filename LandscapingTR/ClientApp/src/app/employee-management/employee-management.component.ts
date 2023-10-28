@@ -10,11 +10,11 @@ import { EmployeeService } from '../core/services/employee.service';
 import { LookupService } from '../core/services/lookup.service';
 
 @Component({
-  selector: 'app-administration-tools',
-  templateUrl: './administration-tools.component.html',
-  styleUrls: ['./administration-tools.component.css']
+  selector: 'app-employee',
+  templateUrl: './employee-management.component.html',
+  styleUrls: ['./employee-management.component.css']
 })
-export class AdministrationToolsComponent implements OnInit {
+export class EmployeeManagementComponent implements OnInit {
   loaded!: boolean;
   // The employee Id as a number/string
   employeeId!: number;

@@ -12,7 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { TimeEntryComponent } from './time-entry/time-entry.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { LoginNavMenuComponent } from './nav-login-menu/nav-login-menu.component';
-import { AdministrationToolsComponent } from './administration-tools/administration-tools.component';
+import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { TimeEntryApprovalComponent } from './time-entry-approval/time-entry-approval.component';
 import { EmployeeAddComponent } from './employee-add/employee-add.component';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
@@ -29,7 +29,7 @@ import { JobEditComponent } from './job-edit/job-edit.component';
     TimeEntryComponent,
     TimeEntryApprovalComponent,
     EmployeeHomeComponent,
-    AdministrationToolsComponent,
+    EmployeeManagementComponent,
     EmployeeAddComponent,
     EmployeeEditComponent,
     JobAddComponent,
@@ -49,7 +49,7 @@ import { JobEditComponent } from './job-edit/job-edit.component';
       { path: 'employee-edit/:id/:employeeToEditId', component: EmployeeEditComponent },
       { path: 'settings/:id', component: SettingsComponent },
       { path: 'time-entry/:id', component: TimeEntryComponent },
-      { path: 'admin/:id', component: AdministrationToolsComponent },
+      { path: 'admin/:id', component: EmployeeManagementComponent },
       { path: 'approve-time-sheets/:id', component: TimeEntryApprovalComponent },
       { path: 'job-management/:id', component: JobManagementComponent },
       { path: 'job-add/:id', component: JobAddComponent },
