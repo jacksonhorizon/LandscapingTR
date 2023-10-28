@@ -29,7 +29,9 @@ namespace LandscapingTR.Core
             CreateMap<TimeEntry, TimeEntryModel>()
                 .ReverseMap();
             CreateMap<TimeEntryHistory, TimeEntryModel>()
-                .ReverseMap();
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Employee, EmployeeModel>()
                .ReverseMap();
             CreateMap<Job, JobModel>()

@@ -179,13 +179,11 @@ namespace LandscapingTR.Test.Time
             
             var savedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
 
-            var savedTimeEntryHistory = (await TimeEntryHistoryService.GetTimeEntriesByEmployeeIdAsync(savedEmployeeModel.Id.Value)).FirstOrDefault();
-
             var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
             Assert.AreEqual(0, updatedJob.TotalLoggedHours);
-            Assert.IsNotNull(savedTimeEntryHistory);
-            Assert.AreEqual(timeEntryModel.EntryDate, savedTimeEntryHistory.EntryDate);
+            Assert.IsNotNull(savedTimeEntryModel);
+            Assert.AreEqual(8, savedTimeEntryModel.TotalLoggedHours);
         }
 
         [TestMethod]
@@ -205,7 +203,7 @@ namespace LandscapingTR.Test.Time
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
                 JobTypeId = (int)JobTypes.TreeCare,
                 JobId = savedJobModel.Id.Value,
-                TotalLoggedHours = 8,
+                TotalLoggedHours = 3,
                 LastModifiedDate = DateTime.Now,
                 IsSubmitted = true,
                 IsApproved = false
@@ -217,9 +215,92 @@ namespace LandscapingTR.Test.Time
 
             var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
-            Assert.AreEqual(8, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(3, updatedJob.TotalLoggedHours);
             Assert.IsNotNull(savedTimeEntry);
             Assert.AreEqual(timeEntryModel.EntryDate, savedTimeEntry.EntryDate);
+        }
+
+
+        [TestMethod]
+        public async Task TimeEntry_UpdateTimeEntry_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployeeAsync();
+
+            // Add a new job.
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+
+            // Save time Entry for added employee.
+            var timeEntryModel = new TimeEntryModel()
+            {
+                EmployeeId = savedEmployeeModel.Id.Value,
+                EntryDate = DateTime.Now,
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
+                JobTypeId = (int)JobTypes.TreeCare,
+                JobId = savedJobModel.Id.Value,
+                TotalLoggedHours = 3,
+                LastModifiedDate = DateTime.Now,
+                IsSubmitted = false,
+                IsApproved = false
+            };
+
+            var savedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+
+            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(3, savedTimeEntryModel.TotalLoggedHours);
+
+            savedTimeEntryModel.TotalLoggedHours = 4;
+
+            var updatedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+
+            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.IsNotNull(savedTimeEntryModel);
+            Assert.AreEqual(4, savedTimeEntryModel.TotalLoggedHours);
+        }
+
+        [TestMethod]
+        public async Task TimeEntry_UpdateSubmittedTimeEntry_Succeeds()
+        {
+            // Add a new employee.
+            var savedEmployeeModel = await AddNewEmployeeAsync();
+
+            // Add a new job.
+            var savedJobModel = await AddNewJobModelAsync((int)JobTypes.TreeCare);
+
+            // Save time Entry for added employee.
+            var timeEntryModel = new TimeEntryModel()
+            {
+                EmployeeId = savedEmployeeModel.Id.Value,
+                EntryDate = DateTime.Now,
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
+                JobTypeId = (int)JobTypes.TreeCare,
+                JobId = savedJobModel.Id.Value,
+                TotalLoggedHours = 3,
+                LastModifiedDate = DateTime.Now,
+                IsSubmitted = true,
+                IsApproved = false
+            };
+
+            var savedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+
+            var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+
+            Assert.AreEqual(3, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(3, savedTimeEntryModel.TotalLoggedHours);
+
+            savedTimeEntryModel.TotalLoggedHours = 4;
+
+            var updatedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(savedTimeEntryModel);
+
+            updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
+
+            Assert.AreEqual(4, updatedJob.TotalLoggedHours);
+            Assert.IsNotNull(updatedTimeEntryModel);
+            Assert.AreEqual(4, updatedTimeEntryModel.TotalLoggedHours);
         }
     }
 }
