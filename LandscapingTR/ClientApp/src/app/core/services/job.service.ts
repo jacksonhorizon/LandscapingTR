@@ -20,6 +20,10 @@ export class JobService {
     return this.http.get<JobModel[]>(API_URL + 'GetAllJobs');
   }
 
+  getJobById(jobId: number): Observable<JobModel> {
+    return this.http.get<JobModel>(API_URL + 'Job?jobId=' + jobId);
+  }
+
   saveNewJob(jobModel: JobModel): Observable<JobModel> {
     return this.http.post<JobModel>(API_URL + 'Job', jobModel, httpOptions);
   }
@@ -28,11 +32,5 @@ export class JobService {
     return this.http.put<JobModel>(API_URL + 'Job', jobModel, httpOptions);
   }
 
-  //saveNewTimeEntries(timeEntryModel: TimeEntryModel[]): Observable<TimeEntryModel[]> {
-  //  return this.http.post<TimeEntryModel[]>(API_URL + 'SaveTimeEntries', timeEntryModel, httpOptions);
-  //}
-
-  //updateTimeEntries(timeEntryModel: TimeEntryModel[]): Observable<TimeEntryModel[]> {
-  //  return this.http.put<TimeEntryModel[]>(API_URL + 'SaveTimeEntries', timeEntryModel, httpOptions);
-  //}
+  
 }

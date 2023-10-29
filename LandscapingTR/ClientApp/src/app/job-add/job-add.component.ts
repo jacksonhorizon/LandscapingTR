@@ -154,6 +154,7 @@ export class JobAddComponent {
         this.router.navigate(["job-management/:" + this.employeeModel.id])
       },
       error: err => {
+        this.toastr.error("There was a probelm saving.", 'Error: ');
         console.log(err);
       }
     });

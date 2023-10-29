@@ -128,6 +128,7 @@ export class EmployeeAddComponent {
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
+        this.toastr.error("There was a probelm saving.", 'Error: ');
         console.log(err);
       }
     });

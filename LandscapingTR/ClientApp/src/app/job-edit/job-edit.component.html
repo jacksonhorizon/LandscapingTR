@@ -44,4 +44,162 @@
 
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
-<p>job-edit works!</p>
+<div *ngIf="loaded" class="container">
+
+  <h1>Add Job</h1>
+  <form *ngIf="loaded"
+        name="form"
+        #f="ngForm"
+        novalidate>
+
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="jobName">Job Name</label>
+        <input type="text"
+               class="form-control"
+               name="jobName"
+               id="jobName"
+               [(ngModel)]="form.jobName"
+               required
+               #jobName="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="jobName.errors && f.submitted">
+          Job name is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="jobType">Job Type</label>
+        <select [(ngModel)]="form.jobType"
+                name="jobType"
+                id="jobType"
+                #jobType="ngModel"
+                class="form-control">
+          <option disabled>Select Job Type</option>
+          <option *ngFor="let jobType of jobTypes">{{jobType.lookupValue}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="jobDate">Job Date</label>
+        <input [(ngModel)]="form.jobDate"
+               type="date"
+               name="jobDate"
+               id="jobDate"
+               required
+               #jobDate="ngModel"
+               class="form-control" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="jobDate.errors && f.submitted">
+          Job date is required!
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="firstCrewMember">Primary Crew Member</label>
+        <select [(ngModel)]="form.firstCrewMember"
+                name="firstCrewMember"
+                id="firstCrewMember"
+                #firstCrewMember="ngModel"
+                class="form-control">
+          <option disabled>Select Employee</option>
+          <option></option>
+          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="secondCrewMember">Second Crew Member</label>
+        <select [(ngModel)]="form.secondCrewMember"
+                name="secondCrewMember"
+                id="secondCrewMember"
+                #secondCrewMember="ngModel"
+                class="form-control">
+          <option disabled>Select Employee</option>
+          <option></option>
+          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="thirdCrewMember">Third Crew Member</label>
+        <select [(ngModel)]="form.thirdCrewMember"
+                name="thirdCrewMember"
+                id="thirdCrewMember"
+                #thirdCrewMember="ngModel"
+                class="form-control">
+          <option disabled>Select Employee</option>
+          <option></option>
+          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="fourthCrewMember">Fourth Crew Member</label>
+        <select [(ngModel)]="form.fourthCrewMember"
+                name="fourthCrewMember"
+                id="fourthCrewMember"
+                #fourthCrewMember="ngModel"
+                class="form-control">
+          <option disabled>Select Employee</option>
+          <option></option>
+          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="crewSupervisor">Crew Supervisor</label>
+        <select [(ngModel)]="form.crewSupervisor"
+                name="crewSupervisor"
+                id="crewSupervisor"
+                #crewSupervisor="ngModel"
+                class="form-control">
+          <option disabled>Select Employee</option>
+          <option></option>
+          <option *ngFor="let employee of getSupervisors()">{{employee.lastName}}, {{employee.firstName}}</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="estimatedTotalHours">Estimated Total Hours</label>
+        <input type="number"
+               class="form-control"
+               name="estimatedTotalHours"
+               id="estimatedTotalHours"
+               min="0"
+               [(ngModel)]="form.estimatedTotalHours"
+               required
+               #estimatedTotalHours="ngModel" />
+      </div>
+    </div>
+    <br />
+    <button class="btn btn-primary btn-block" (click)="onSubmit()">
+      Save
+    </button>
+    &nbsp;
+    <button class="btn btn-secondary btn-block" (click)="onCancel(employeeModel)">
+      Cancel
+    </button>
+    <br />
+    <br />
+    <hr />
+  </form>
+</div>

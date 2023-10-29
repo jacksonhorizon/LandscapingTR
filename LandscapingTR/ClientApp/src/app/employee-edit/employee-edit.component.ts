@@ -54,18 +54,6 @@ export class EmployeeEditComponent {
 
     this.pathEmployeeId = ":" + this.employeeId.toString();
 
-    // Gets employee model
-    this.employeeService.getEmployee(this.employeeId).subscribe({
-      next: data => {
-
-        this.employeeModel = data;
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
-
-
     // Gets the employee to edit Id
     const employeeToEditIdFromUrl = this.route.snapshot.paramMap.get('employeeToEditId')?.slice(1);
     if (employeeToEditIdFromUrl == null) {
@@ -78,11 +66,13 @@ export class EmployeeEditComponent {
 
 
     forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
       this.employeeService.getEmployee(this.employeeToEditId),
       this.lookupService.getEmployeeTypes()
     ]).subscribe({
       next: data => {
-        this.employeeToEditModel = data[0];
+        this.employeeModel = data[0];
+        this.employeeToEditModel = data[1];
 
         this.form.id = this.employeeToEditModel.id;
         this.form.username = this.employeeToEditModel.username;
@@ -90,7 +80,7 @@ export class EmployeeEditComponent {
         this.form.lastName = this.employeeToEditModel.lastName;
         this.form.password = this.employeeToEditModel.password;
 
-        this.employeeTypes = data[1];
+        this.employeeTypes = data[2];
 
         var employeeType = this.employeeTypes.find(x => x.id === this.employeeToEditModel.employeeTypeId)?.lookupValue || "";
         this.form.employeeType = employeeType;
@@ -153,16 +143,12 @@ export class EmployeeEditComponent {
     this.employeeService.updateEmployee(newEmployeeModel).subscribe({
       next: data => {
         newEmployeeModel = data;
-        this.form.id = newEmployeeModel.id;
-        this.form.username = newEmployeeModel.username;
-        this.form.firstName = newEmployeeModel.firstName;
-        this.form.lastName = newEmployeeModel.lastName;
-        this.form.password = newEmployeeModel.password;
-        this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
+
         this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
+        this.toastr.error("There was a probelm saving.", 'Error: ');
         console.log(err);
       }
     });
