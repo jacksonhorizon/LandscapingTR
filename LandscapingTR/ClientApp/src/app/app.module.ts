@@ -19,6 +19,8 @@ import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { JobAddComponent } from './job-add/job-add.component';
 import { JobManagementComponent } from './job-management/job-management.component';
 import { JobEditComponent } from './job-edit/job-edit.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TrashCanComponent } from './core/components/trash-can/trash-can.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { JobEditComponent } from './job-edit/job-edit.component';
     JobAddComponent,
     JobEditComponent,
     JobManagementComponent,
+    TrashCanComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -54,7 +57,8 @@ import { JobEditComponent } from './job-edit/job-edit.component';
       { path: 'job-management/:id', component: JobManagementComponent },
       { path: 'job-add/:id', component: JobAddComponent },
       { path: 'job-edit/:id/:jobToEditId', component: JobEditComponent },
-    ])
+    ]),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,6 +10,7 @@ import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { JobService } from '../core/services/job.service';
 import { LookupService } from '../core/services/lookup.service';
+import { ConfirmationDialogService } from '../core/components/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-job-management',
@@ -34,6 +35,7 @@ export class JobManagementComponent {
     private employeeService: EmployeeService,
     private lookupService: LookupService,
     private jobService: JobService,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -138,6 +140,15 @@ export class JobManagementComponent {
   }
 
   rerouteToEditJobPage(data: EmployeeModel, jobClicked: JobModel): void {
-    this.router.navigate(["job-edit/:" + data.id + "/:" + jobClicked.id])
+    this.router.navigate(["job-edit/:" + data.id + "/:" + jobClicked.id]);
+  }
+
+  deleteJob(jobClicked: JobModel) {
+    this.confirmationDialogService.confirm('Please confirm:', 'Are you sure you want to delete this job?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed)
+        // do the delete
+      })
+      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 }
