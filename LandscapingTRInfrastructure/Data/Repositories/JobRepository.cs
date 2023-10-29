@@ -85,7 +85,20 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         /// <returns>The saved time entry.</returns>
         public async Task<Job> SaveJobAsync(Job job)
         {
-            await this.SaveAsync(job);
+            if (DataContext.Jobs.FirstOrDefault(x => x.Id == job.Id) != null)
+            {
+                // Existing employee - update it in the context
+                DataContext.Jobs.Update(job);
+            }
+            else
+            {
+                // New employee - add it to the context
+                job.CreatedDate = DateTime.Now;
+                DataContext.Jobs.Add(job);
+            }
+
+            await DataContext.SaveChangesAsync();
+
             return job;
         }
 

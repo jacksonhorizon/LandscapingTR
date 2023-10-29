@@ -28,7 +28,7 @@ export class EmployeeAddComponent {
     firstName: null,
     lastName: null,
     password: null,
-    employeeTypeId: 1,
+    employeeType: "Field Crew Worker",
   };
 
   constructor(private route: ActivatedRoute,
@@ -99,13 +99,13 @@ export class EmployeeAddComponent {
   }
 
   onSubmit(): void {
-    const { firstName, lastName, username, password, employeeTypeId } = this.form;
+    const { firstName, lastName, username, password, employeeType } = this.form;
 
-    if (firstName == null || lastName == null || username == null || password == null || employeeTypeId == null) {
+    if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return; 
     }
 
-    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeTypeId === '') {
+    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeType === '') {
       return;
     }
 
@@ -116,16 +116,14 @@ export class EmployeeAddComponent {
     newEmployeeModel.firstName = firstName;
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
+
+    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
 
     this.employeeService.saveNewEmployee(newEmployeeModel).subscribe({
       next: data => {
         newEmployeeModel = data;
-        this.form.username = newEmployeeModel.username;
-        this.form.firstName = newEmployeeModel.firstName;
-        this.form.lastName = newEmployeeModel.lastName;
-        this.form.password = newEmployeeModel.password;
-        this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
+
         this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },

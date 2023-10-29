@@ -25,6 +25,8 @@ export class JobManagementComponent {
   employeeModel!: EmployeeModel;
 
   // General properties
+
+  employees: EmployeeModel[] = [];
   jobs: JobModel[] = [];
   jobTypes!: LookupItemModel[];
 
@@ -50,13 +52,15 @@ export class JobManagementComponent {
     forkJoin([
       this.employeeService.getEmployee(this.employeeId),
       this.lookupService.getJobTypes(),
-      this.jobService.getAllJobs()
+      this.jobService.getAllJobs(),
+      this.employeeService.getAllEmployees()
     ]).subscribe({
       next: data => {
         // data is an array containing the results of the observables in the same order
         this.employeeModel = data[0];
         this.jobTypes = data[1];
         this.jobs = data[2];
+        this.employees = data[3];
         this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
@@ -111,6 +115,22 @@ export class JobManagementComponent {
     
 
     return "Incomplete";
+  }
+
+  getEmployeeName(employeeId: number | undefined) {
+    if (employeeId != undefined) {
+
+      var employee = this.employees.find(x => x.id === employeeId);
+
+      if (employee === null) {
+        return "";
+      }
+      else {
+        return employee?.lastName + ", " + employee?.firstName;
+      }
+    }
+
+    return employeeId;
   }
 
   rerouteToAddJobPage(data: EmployeeModel): void {
