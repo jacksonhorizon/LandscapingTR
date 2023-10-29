@@ -5,10 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
-import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { LookupService } from '../core/services/lookup.service';
+import { ConfirmationDialogService } from '../core/components/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-employee',
@@ -30,6 +30,7 @@ export class EmployeeManagementComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
     private lookupService: LookupService,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -101,5 +102,14 @@ export class EmployeeManagementComponent implements OnInit {
 
   rerouteToEditEmployeePage(data: EmployeeModel, employeeClicked: EmployeeModel): void {
     this.router.navigate(["employee-edit/:" + data.id + "/:" + employeeClicked.id])
+  }
+
+  deleteEmployee(employeeClicked: EmployeeModel) {
+    this.confirmationDialogService.confirm('Please confirm:', 'Are you sure you want to delete this employee?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed)
+        // do the delete
+      })
+      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 }

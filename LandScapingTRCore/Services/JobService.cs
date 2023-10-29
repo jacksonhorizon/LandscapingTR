@@ -81,10 +81,24 @@ namespace LandscapingTR.Core.Services
         /// <returns>The added job.</returns>
         public async Task<JobModel> SaveJobAsync(JobModel jobModel)
         {
-            var job = Mapper.Map<Job>(jobModel);
-            job = await JobRepository.SaveJobAsync(job);
+            if (jobModel.Id != null)
+            {
+                var existingEntity = await this.JobRepository.GetJobByIdAsync(jobModel.Id.Value);
 
-            return Mapper.Map<JobModel>(job);
+                this.Mapper.Map(jobModel, existingEntity);
+
+                var savedJob = await this.JobRepository.SaveJobAsync(existingEntity);
+
+                return this.Mapper.Map<JobModel>(savedJob);
+            }
+            else
+            {
+                var job = this.Mapper.Map<Job>(jobModel);
+
+                var savedJob = await this.JobRepository.SaveJobAsync(job);
+
+                return this.Mapper.Map<JobModel>(savedJob);
+            }
         }
 
         /// <summary>

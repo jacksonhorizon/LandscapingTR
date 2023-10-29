@@ -33,7 +33,8 @@ namespace LandscapingTR.Core
                 .ReverseMap()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Employee, EmployeeModel>()
-               .ReverseMap();
+               .ReverseMap()
+               .ForMember(dest => dest.CreatedDate, opt => opt.Ignore());
             CreateMap<Job, JobModel>()
                .ReverseMap();
             CreateMap<Location, LocationModel>()

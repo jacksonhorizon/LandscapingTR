@@ -10,6 +10,7 @@ import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { JobService } from '../core/services/job.service';
 import { LookupService } from '../core/services/lookup.service';
+import { ConfirmationDialogService } from '../core/components/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-job-management',
@@ -25,6 +26,8 @@ export class JobManagementComponent {
   employeeModel!: EmployeeModel;
 
   // General properties
+
+  employees: EmployeeModel[] = [];
   jobs: JobModel[] = [];
   jobTypes!: LookupItemModel[];
 
@@ -32,6 +35,7 @@ export class JobManagementComponent {
     private employeeService: EmployeeService,
     private lookupService: LookupService,
     private jobService: JobService,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -50,13 +54,15 @@ export class JobManagementComponent {
     forkJoin([
       this.employeeService.getEmployee(this.employeeId),
       this.lookupService.getJobTypes(),
-      this.jobService.getAllJobs()
+      this.jobService.getAllJobs(),
+      this.employeeService.getAllEmployees()
     ]).subscribe({
       next: data => {
         // data is an array containing the results of the observables in the same order
         this.employeeModel = data[0];
         this.jobTypes = data[1];
         this.jobs = data[2];
+        this.employees = data[3];
         this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
@@ -113,11 +119,36 @@ export class JobManagementComponent {
     return "Incomplete";
   }
 
+  getEmployeeName(employeeId: number | undefined) {
+    if (employeeId != undefined) {
+
+      var employee = this.employees.find(x => x.id === employeeId);
+
+      if (employee === null) {
+        return "";
+      }
+      else {
+        return employee?.lastName + ", " + employee?.firstName;
+      }
+    }
+
+    return employeeId;
+  }
+
   rerouteToAddJobPage(data: EmployeeModel): void {
     this.router.navigate(["job-add/:" + data.id])
   }
 
   rerouteToEditJobPage(data: EmployeeModel, jobClicked: JobModel): void {
-    this.router.navigate(["job-edit/:" + data.id + "/:" + jobClicked.id])
+    this.router.navigate(["job-edit/:" + data.id + "/:" + jobClicked.id]);
+  }
+
+  deleteJob(jobClicked: JobModel) {
+    this.confirmationDialogService.confirm('Please confirm:', 'Are you sure you want to delete this job?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed)
+        // do the delete
+      })
+      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 }

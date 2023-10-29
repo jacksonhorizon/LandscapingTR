@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
-import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
+import { LookupItemModel } from '../core/models/lookups/lookup-item.model';
 import { EmployeeService } from '../core/services/employee.service';
+import { LookupService } from '../core/services/lookup.service';
 
 @Component({
   selector: 'app-employee-add',
@@ -18,19 +20,20 @@ export class EmployeeAddComponent {
   pathEmployeeId!: string;
 
   employeeModel!: EmployeeModel;
-  lookupsModel!: LandscapingTRLookupsModel;
 
   // General properties
+  employeeTypes!: LookupItemModel[];
   form: any = {
     username: null,
     firstName: null,
     lastName: null,
     password: null,
-    employeeTypeId: 1,
+    employeeType: "Field Crew Worker",
   };
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
+    private lookupService: LookupService,
     private router: Router,
     private toastr: ToastrService,) { }
 
@@ -51,6 +54,21 @@ export class EmployeeAddComponent {
 
         this.employeeModel = data;
         this.loaded = true;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
+      this.lookupService.getEmployeeTypes()
+    ]).subscribe({
+      next: data => {
+        this.employeeModel = data[0];
+        this.employeeTypes = data[1];
+
+        this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
         console.log(err);
@@ -81,13 +99,13 @@ export class EmployeeAddComponent {
   }
 
   onSubmit(): void {
-    const { firstName, lastName, username, password, employeeTypeId } = this.form;
+    const { firstName, lastName, username, password, employeeType } = this.form;
 
-    if (firstName == null || lastName == null || username == null || password == null || employeeTypeId == null) {
+    if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return; 
     }
 
-    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeTypeId === '') {
+    if (firstName === '' || lastName === '' || username === '' || password === '' || employeeType === '') {
       return;
     }
 
@@ -98,20 +116,19 @@ export class EmployeeAddComponent {
     newEmployeeModel.firstName = firstName;
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
+
+    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
 
     this.employeeService.saveNewEmployee(newEmployeeModel).subscribe({
       next: data => {
         newEmployeeModel = data;
-        this.form.username = newEmployeeModel.username;
-        this.form.firstName = newEmployeeModel.firstName;
-        this.form.lastName = newEmployeeModel.lastName;
-        this.form.password = newEmployeeModel.password;
-        this.form.employeeTypeId = newEmployeeModel.employeeTypeId;
+
         this.toastr.success('Employee was saved successfully!', 'Saved Employee: ');
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
+        this.toastr.error("There was a probelm saving.", 'Error: ');
         console.log(err);
       }
     });

@@ -50,8 +50,6 @@
   <p *ngIf="!employees"><em>Loading...</em></p>
   <br />
   <button class="btn btn-primary" (click)="rerouteToAddEmployeePage(employeeModel)">Add Employee</button>
-  &nbsp;
-  <button class="btn btn-secondary">Delete Employee</button>
   <br />
   <hr />
   <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="employees">
@@ -72,7 +70,11 @@
         <td>{{ employee.username }}</td>
         <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
         <td>{{ getFormattedDate(employee.createdDate) }}</td>
-        <td><button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">Edit</button></td>
+        <td>
+          <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">Edit</button> &nbsp; <button (click)="deleteEmployee(employee)" type="button" class="btn btn-secondary">
+            <app-trash-can></app-trash-can>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
