@@ -10,4 +10,5 @@ export enum JobTypes {
   CommercialLandscaping = 8,
   SeasonalLandscaping = 9,
   ArtisticLandscaping = 10,
+  Administrition = 11,
 }

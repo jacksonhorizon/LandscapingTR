@@ -168,4 +168,8 @@ export class JobAddComponent {
   getSupervisors() {
     return this.employees.filter(x => x.employeeTypeId == EmployeeTypes.CrewSupervisor);
   }
+
+  getFieldCrewWorkers() {
+    return this.employees.filter(x => x.employeeTypeId == EmployeeTypes.FieldCrewWorker);
+  }
 }

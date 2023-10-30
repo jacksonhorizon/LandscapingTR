@@ -47,6 +47,11 @@ namespace LandscapingTR.Core.Services
         /// <returns>The saved employee.</returns>
         public async Task<EmployeeModel> SaveEmployeeAsync(EmployeeModel employeeModel)
         {
+            employeeModel.FirstName = employeeModel.FirstName.Trim();
+            employeeModel.LastName = employeeModel.LastName.Trim();
+            employeeModel.Username = employeeModel.Username.Trim();
+            employeeModel.Password = employeeModel.Password.Trim();
+
             if (employeeModel.Id != null)
             {
                 var existingEntity = await this.EmployeeRepository.GetEmployeeAsync(employeeModel.Id.Value);
@@ -66,6 +71,12 @@ namespace LandscapingTR.Core.Services
             }
             else
             {
+                var existingEntities = await this.EmployeeRepository.GetAllAsync();
+                if (existingEntities.Any(x => x.Username.Equals(employeeModel.Username)))
+                {
+                    return null;
+                }
+
                 var employee = this.Mapper.Map<Employee>(employeeModel);
 
                 employee.Password = Cryptography.Encrypt(employee.Password);
@@ -74,6 +85,20 @@ namespace LandscapingTR.Core.Services
 
                 return this.Mapper.Map<EmployeeModel>(savedEmployee);
             }
+        }
+
+        /// <summary>
+        /// Deletes an employee.
+        /// </summary>
+        /// <param name="employeeId">The employee id to delete.</param>
+        /// <returns>The task.</returns>
+        public async Task<EmployeeModel> DeleteEmployeeAsync(int employeeId)
+        {
+            var entityToDelete = await this.EmployeeRepository.GetEmployeeAsync(employeeId);
+
+            await this.EmployeeRepository.DeleteAsync(entityToDelete);
+
+            return this.Mapper.Map<EmployeeModel>(entityToDelete);
         }
 
         /// <summary>

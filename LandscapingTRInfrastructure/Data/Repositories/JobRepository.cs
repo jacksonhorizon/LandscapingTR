@@ -21,12 +21,12 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
-        /// Gets the time entries by employee id.
+        /// Gets the jobs by employee id.
         /// </summary>
         /// <param name="employeeId">The employee id.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
-        /// <returns>The time entries.</returns>
+        /// <returns>The jobs.</returns>
         public async Task<List<Job>> GetJobsByEmployeeIdAsync(int employeeId, DateTime? startDate = null, DateTime? endDate = null)
         {
             return await this.DataContext.Jobs
@@ -54,11 +54,21 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
-        /// Gets the time entries in a date range.
+        /// Gets the all jobs.
+        /// </summary>
+        /// <returns>The jobs.</returns>
+        public async Task<List<Job>> GetAllJobsAsync()
+        {
+            return await this.DataContext.Jobs
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Gets the jobs in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
-        /// <returns>The time entries.</returns>
+        /// <returns>The jobs.</returns>
         public async Task<List<Job>> GetJobsByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
             return await this.DataContext.Jobs
@@ -67,10 +77,10 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
-        /// Gets the time entries by jobe type.
+        /// Gets the jobs by jobe type.
         /// </summary>
         /// <param name="jobTypeId">The job type id.</param>
-        /// <returns>The time entries.</returns>
+        /// <returns>The jobs.</returns>
         public async Task<List<Job>> GetJobsByJobTypeAsync(int jobTypeId)
         {
             return await this.DataContext.Jobs
@@ -103,9 +113,9 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
         }
 
         /// <summary>
-        /// Saves a list of time entries.
+        /// Saves a list of jobs.
         /// </summary>
-        /// <param name="timeEntries">The time entries.</param>
+        /// <param name="timeEntries">The jobs.</param>
         /// <returns>The saved time entry.</returns>
         public async Task<List<Job>> SaveJobRangeAsync(List<Job> jobs)
         {

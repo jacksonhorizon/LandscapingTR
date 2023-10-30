@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -35,6 +36,7 @@ export class JobEditComponent {
     id: null,
     jobName: null,
     jobType: null,
+    originalJobDate: null,
     jobDate: null,
     locationId: null,
     firstCrewMember: null,
@@ -97,6 +99,7 @@ export class JobEditComponent {
         this.form.jobType = jobType;
 
         this.form.jobDate = this.jobToEditModel.jobDate as Date;
+        this.form.originalJobDate = this.form.jobDate;
 
         var firstCrewMember = this.employees.find(x => x.id === this.jobToEditModel.firstCrewMemberId);
         this.form.firstCrewMember = firstCrewMember?.lastName + ", " + firstCrewMember?.firstName;
@@ -215,9 +218,20 @@ export class JobEditComponent {
     this.router.navigate(["job-management/:" + data.id])
   }
 
+  getFieldCrewWorkers() {
+    return this.employees.filter(x => x.employeeTypeId == EmployeeTypes.FieldCrewWorker);
+  }
 
   getSupervisors() {
     return this.employees.filter(x => x.employeeTypeId == EmployeeTypes.CrewSupervisor);
   }
 
+  getFormattedDate(dateToFormat: Date | undefined) {
+    if (dateToFormat != undefined) {
+
+      return formatDate(dateToFormat, "MM-dd-yyyy", 'en-US');
+    }
+
+    return dateToFormat;
+  }
 }

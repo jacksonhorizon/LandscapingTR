@@ -92,7 +92,7 @@ namespace LandscapingTR.Test.Lookups
             {
                 FirstName = firstName,
                 LastName = "Test Last Name",
-                Username = "Test Username",
+                Username = "Test Username -" + firstName,
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
             };

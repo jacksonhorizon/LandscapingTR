@@ -98,7 +98,7 @@ export class JobManagementComponent {
   getFormattedDate(dateToFormat: Date | undefined) {
     if (dateToFormat != undefined) {
 
-      return formatDate(dateToFormat, "yyy-MM-dd", 'en-US');
+      return formatDate(dateToFormat, "MM-dd-yyyy", 'en-US');
     }
 
     return dateToFormat;
@@ -135,6 +135,33 @@ export class JobManagementComponent {
     return employeeId;
   }
 
+  getNumberOfEmployees(job: JobModel) {
+    var count = 0;
+    if (job.firstCrewMemberId !== null) {
+      count += 1;
+    }
+    if (job.secondCrewMemberId !== null) {
+      count += 1;
+    }
+    if (job.thirdCrewMemberId !== null) {
+      count += 1;
+    }
+    if (job.fourthCrewMemberId !== null) {
+      count += 1;
+    }
+    if (job.crewSupervisorId !== null) {
+      count += 1;
+    }
+    if (job.equipmentAndSafetyOfficerId !== null) {
+      count += 1;
+    }
+    if (job.landscapeDesignerId !== null) {
+      count += 1;
+    }
+
+    return count;
+  }
+
   rerouteToAddJobPage(data: EmployeeModel): void {
     this.router.navigate(["job-add/:" + data.id])
   }
@@ -143,11 +170,23 @@ export class JobManagementComponent {
     this.router.navigate(["job-edit/:" + data.id + "/:" + jobClicked.id]);
   }
 
-  deleteJob(jobClicked: JobModel) {
+  deleteJob(jobClicked: EmployeeModel) {
     this.confirmationDialogService.confirm('Please confirm:', 'Are you sure you want to delete this job?')
       .then((confirmed) => {
         console.log('User confirmed:', confirmed)
-        // do the delete
+
+        if (confirmed) {
+          this.jobService.deleteJob(jobClicked).subscribe({
+            next: data => {
+              this.toastr.success('Job was deleted successfully!', 'Delete Job: ');
+
+              location.reload();
+            },
+            error: err => {
+              console.log(err);
+            }
+          });
+        }
       })
       .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }

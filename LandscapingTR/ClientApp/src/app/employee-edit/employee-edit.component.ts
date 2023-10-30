@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -35,6 +36,8 @@ export class EmployeeEditComponent {
     lastName: null,
     password: null,
     employeeType: null,
+    hireDate: null,
+    originalHireDate: null,
   };
 
   constructor(private route: ActivatedRoute,
@@ -79,6 +82,8 @@ export class EmployeeEditComponent {
         this.form.firstName = this.employeeToEditModel.firstName;
         this.form.lastName = this.employeeToEditModel.lastName;
         this.form.password = this.employeeToEditModel.password;
+        this.form.hireDate = this.employeeToEditModel.createdDate as Date;
+        this.form.originalHireDate = this.form.hireDate;
 
         this.employeeTypes = data[2];
 
@@ -116,7 +121,7 @@ export class EmployeeEditComponent {
   }
 
   onSubmit(): void {
-    const { id, firstName, lastName, username, password, employeeType } = this.form;
+    const { id, firstName, lastName, username, password, employeeType, hireDate} = this.form;
 
     if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return;
@@ -134,6 +139,7 @@ export class EmployeeEditComponent {
     newEmployeeModel.firstName = firstName;
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
+    newEmployeeModel.createdDate = hireDate;
 
     var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
@@ -156,5 +162,14 @@ export class EmployeeEditComponent {
 
   onCancel(data: EmployeeModel): void {
     this.router.navigate(["admin/:" + data.id])
+  }
+
+  getFormattedDate(dateToFormat: Date | undefined) {
+    if (dateToFormat != undefined) {
+
+      return formatDate(dateToFormat, "MM-dd-yyyy", 'en-US');
+    }
+
+    return dateToFormat;
   }
 }

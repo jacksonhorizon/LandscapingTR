@@ -42,6 +42,8 @@
   </nav>
 </header>
 
+<div class="dummy-header"></div>
+
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 
@@ -59,11 +61,11 @@
         <th>Name:</th>
         <th>Job Type:</th>
         <th>Date:</th>
-        <th>Primary Crew Member:</th>
+        <th class="td-center">Crew Size:</th>
         <th>Supervisor:</th>
-        <th>Estimated Time:</th>
-        <th>Logged Time:</th>
-        <th>Status:</th>
+        <th class="td-center">Estimated Time:</th>
+        <th class="td-center">Logged Time:</th>
+        <th class="td-center">Status:</th>
         <th>Action:</th>
       </tr>
     </thead>
@@ -72,13 +74,15 @@
         <td>{{ job.jobName }}</td>
         <td>{{ matchJobType(job.jobTypeId) }}</td>
         <td>{{ getFormattedDate(job.jobDate)}}</td>
-        <td>{{ getEmployeeName(job.firstCrewMemberId) }}</td>
+        <td class="td-center">{{ getNumberOfEmployees(job) }}</td>
         <td>{{ getEmployeeName(job.crewSupervisorId) }}</td>
-        <td>{{ job.estimatedTotalHours }} hours</td>
-        <td>{{ job.totalLoggedHours }} hours</td>
+        <td class="td-center">{{ job.estimatedTotalHours }} hours</td>
+        <td class="td-center">{{ job.totalLoggedHours }} hours</td>
         <td>{{ getJobStatus(job.isCompleted) }}</td>
         <td>
-          <button class="btn btn-primary" (click)="rerouteToEditJobPage(employeeModel, job)">View</button> &nbsp; <button (click)="deleteJob(job)" type="button" class="btn btn-secondary">
+          <button class="btn btn-primary" (click)="rerouteToEditJobPage(employeeModel, job)">View</button>
+          &nbsp;
+          <button (click)="deleteJob(job)" type="button" class="btn btn-secondary">
             <app-trash-can></app-trash-can>
           </button>
         </td>

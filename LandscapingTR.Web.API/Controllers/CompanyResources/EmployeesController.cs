@@ -39,7 +39,7 @@ namespace LandscapingTR.Web.API.Controllers.CompanyResources
 
             if (employeeModel == null)
             {
-                return BadRequest();
+                return StatusCode(500, "That username already exists.");
             }
 
             return Ok(employeeModel);
@@ -71,6 +71,15 @@ namespace LandscapingTR.Web.API.Controllers.CompanyResources
             }
 
             return Ok(savedEmployeeModel);
+        }
+
+        [HttpDelete]
+        [Route("Employee")]
+        public async Task<IActionResult> DeleteEmployee(EmployeeModel employeeModel)
+        {
+            var deletedEmployeeModel = await this.EmployeeService.DeleteEmployeeAsync(employeeModel.Id.Value);
+
+            return Ok(deletedEmployeeModel);
         }
 
         [HttpPut]

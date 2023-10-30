@@ -42,6 +42,8 @@
   </nav>
 </header>
 
+<div class="dummy-header"></div>
+
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 
@@ -137,6 +139,36 @@
           <option disabled>Select Employee Type</option>
           <option *ngFor="let employeeType of employeeTypes">{{employeeType.lookupValue}}</option>
         </select>
+      </div>
+    </div>
+    <br /><div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="currentHireDate">Current Hire Date</label>
+        <input [ngModel]="getFormattedDate(form.originalHireDate)"
+               type="text"
+               name="currentHireDate"
+               id="currentHireDate"
+               disabled
+               #currentHireDate="ngModel"
+               class="form-control" />
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="hireDate">Change Hire Date</label>
+        <input [(ngModel)]="form.hireDate"
+               type="date"
+               name="hireDate"
+               id="hireDate"
+               required
+               #hireDate="ngModel"
+               class="form-control" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="hireDate.errors && f.submitted">
+          Job date is required!
+        </div>
       </div>
     </div>
     <br />

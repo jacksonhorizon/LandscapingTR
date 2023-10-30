@@ -28,6 +28,12 @@ namespace LandscapingTR.Core.Interfaces
         Task<List<Job>> GetJobsByLocationIdAsync(int locationId);
 
         /// <summary>
+        /// Gets the all jobs.
+        /// </summary>
+        /// <returns>The jobs.</returns>
+        Task<List<Job>> GetAllJobsAsync();
+
+        /// <summary>
         /// Gets the jobs in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>

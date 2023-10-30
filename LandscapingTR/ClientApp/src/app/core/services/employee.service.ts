@@ -35,6 +35,16 @@ export class EmployeeService {
     return this.http.put(API_URL + 'Employee', employeeModel, httpOptions);
   }
 
+  deleteEmployee(employeeModel: EmployeeModel): Observable<EmployeeModel> {
+    const url = `${API_URL}Employee`;
+
+    const options = {
+      body: employeeModel, // Send the model as the request body
+    };
+
+    return this.http.request<EmployeeModel>('delete', url, options);
+  }
+
   private convertDates(employee: EmployeeModel): EmployeeModel {
     if (employee.createdDate == null) {
       employee.createdDate = new Date();

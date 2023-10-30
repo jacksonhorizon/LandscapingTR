@@ -42,6 +42,8 @@
   </nav>
 </header>
 
+<div class="dummy-header"></div>
+
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 <div *ngIf="loaded" class="container">
@@ -111,6 +113,7 @@
                 #firstCrewMember="ngModel"
                 class="form-control">
           <option disabled>Select Employee</option>
+          <option></option>
           <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
@@ -125,7 +128,8 @@
                 #secondCrewMember="ngModel"
                 class="form-control">
           <option disabled>Select Employee</option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option></option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>
@@ -139,7 +143,8 @@
                 #thirdCrewMember="ngModel"
                 class="form-control">
           <option disabled>Select Employee</option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option></option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>
@@ -153,7 +158,8 @@
                 #fourthCrewMember="ngModel"
                 class="form-control">
           <option disabled>Select Employee</option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option></option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>
@@ -167,6 +173,7 @@
                 #crewSupervisor="ngModel"
                 class="form-control">
           <option disabled>Select Employee</option>
+          <option></option>
           <option *ngFor="let employee of getSupervisors()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>

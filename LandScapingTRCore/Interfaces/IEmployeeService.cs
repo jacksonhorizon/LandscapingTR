@@ -24,6 +24,12 @@ namespace LandscapingTR.Core.Interfaces
         /// <returns>The saved employee.</returns>
         Task<EmployeeModel> SaveEmployeeAsync(EmployeeModel employeeModel);
 
+        /// <summary>
+        /// Deletes an employee.
+        /// </summary>
+        /// <param name="employeeId">The employee id to delete.</param>
+        /// <returns>The task.</returns>
+        Task<EmployeeModel> DeleteEmployeeAsync(int employeeId);
 
         /// <summary>
         /// Returns the model of an employee if they are able to login.

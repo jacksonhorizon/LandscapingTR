@@ -56,5 +56,10 @@
         /// Artistic landscaping.
         /// </summary>
         ArtisticLandscaping = 10,
+
+        /// <summary>
+        /// Administration.
+        /// </summary>
+        Administration = 11,
     }
 }

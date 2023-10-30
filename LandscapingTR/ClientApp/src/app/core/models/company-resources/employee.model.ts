@@ -6,4 +6,5 @@ export class EmployeeModel {
   password?: string;
   employeeTypeId?: number;
   createdDate?: Date;
+  active?: boolean;
 }
