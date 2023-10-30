@@ -90,7 +90,7 @@ export class EmployeeManagementComponent implements OnInit {
   getFormattedDate(dateToFormat: Date | undefined) {
     if (dateToFormat != undefined) {
 
-      return formatDate(dateToFormat, "yyy-MM-dd", 'en-US');
+      return formatDate(dateToFormat, "MM-dd-yyyy", 'en-US');
     }
 
     return dateToFormat;
@@ -108,7 +108,18 @@ export class EmployeeManagementComponent implements OnInit {
     this.confirmationDialogService.confirm('Please confirm:', 'Are you sure you want to delete this employee?')
       .then((confirmed) => {
         console.log('User confirmed:', confirmed)
-        // do the delete
+
+        if (confirmed) {
+          this.employeeService.deleteEmployee(employeeClicked).subscribe({
+            next: data => {
+              this.toastr.success('Employee was deleted successfully!', 'Delete Employee: ');
+              location.reload();
+            },
+            error: err => {
+              console.log(err);
+            }
+          });
+        }
       })
       .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }

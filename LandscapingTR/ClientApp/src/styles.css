@@ -30,3 +30,21 @@ code {
 .login-page {
     margin-top: 3%;
 }
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 150px;
+}
+
+.dummy-header {
+  width: 100%;
+  height: 80px;/*
+  background-color: chartreuse;*/
+}
+
+
+.td-center {
+    text-align: center;
+}

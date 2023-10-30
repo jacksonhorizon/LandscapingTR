@@ -10,6 +10,8 @@ import { JobModel } from '../core/models/domain/job.model';
 import { TimeEntryWeekModel } from '../core/models/time/week-entry-week.model';
 import { JobTypes } from '../core/enums/job-types.enum';
 import { TimeEntryService } from '../core/services/time-entry.service';
+import { JobService } from '../core/services/job.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-time-entry',
@@ -28,9 +30,12 @@ export class TimeEntryComponent {
   // General properties
   jobs: JobModel[] = []
   forms: TimeEntryWeekModel[] = [];
+  weekStartDate: Date | null = null;
+  weekEndDate: Date | null = null;
 
   constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService,
+    private jobService: JobService,
     private timeEntryService: TimeEntryService,
     private router: Router) { }
 
@@ -45,25 +50,23 @@ export class TimeEntryComponent {
 
     this.pathEmployeeId = ":" + this.employeeId.toString();
 
-
-
-    // Add forms to time entry table
-    this.getMockJobs();
-
-    // Gets employee model
-    this.employeeService.getEmployee(this.employeeId).subscribe({
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
+      this.jobService.getJobsByEmployeeId(this.employeeId, this.weekStartDate, this.weekStartDate),
+    ]).subscribe({
       next: data => {
+        // data is an array containing the results of the observables in the same order
+        this.employeeModel = data[0];
 
-        this.employeeModel = data;
+        this.jobs = data[1];
 
-        // will have to get saved time entries 
         this.jobs.forEach(job => {
           var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId);
 
           this.forms.push(timeEntryWeek);
         });
 
-        this.loaded = true;
+        this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
         console.log(err);

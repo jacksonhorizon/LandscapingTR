@@ -52,6 +52,16 @@ namespace LandscapingTR.Core.Services
         }
 
         /// <summary>
+        /// Gets all the jobs.
+        /// </summary>
+        /// <returns>The jobs.</returns>
+        public async Task<List<JobModel>> GetAllJobsAsync()
+        {
+            var jobModels = (await JobRepository.GetAllJobsAsync()).Select(x => Mapper.Map<JobModel>(x)).ToList();
+            return jobModels;
+        }
+
+        /// <summary>
         /// Gets the jobs in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>
@@ -99,6 +109,20 @@ namespace LandscapingTR.Core.Services
 
                 return this.Mapper.Map<JobModel>(savedJob);
             }
+        }
+
+        /// <summary>
+        /// Deletes a job.
+        /// </summary>
+        /// <param name="jobId">The job id to delete.</param>
+        /// <returns>The task.</returns>
+        public async Task<JobModel> DeleteJobAsync(int jobId)
+        {
+            var entityToDelete = await this.JobRepository.GetJobByIdAsync(jobId);
+
+            await this.JobRepository.DeleteAsync(entityToDelete);
+
+            return this.Mapper.Map<JobModel>(entityToDelete);
         }
 
         /// <summary>

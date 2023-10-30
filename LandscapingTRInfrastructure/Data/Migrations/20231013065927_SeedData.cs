@@ -52,7 +52,8 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                                     $"({(int)JobTypes.ErosionControlAndRestoration},  'Erosion Control And Restoration',    @CurrentDate,   1,      8)," +
                                     $"({(int)JobTypes.CommercialLandscaping},         'Commercial Landscaping',             @CurrentDate,   1,      9)," +
                                     $"({(int)JobTypes.SeasonalLandscaping},           'Seasonal Landscaping',               @CurrentDate,   1,      10)," +
-                                    $"({(int)JobTypes.ArtisticLandscaping},           'ArtisticLandscaping',                @CurrentDate,   1,      11);" +
+                                    $"({(int)JobTypes.ArtisticLandscaping},           'ArtisticLandscaping',                @CurrentDate,   1,      11)," +
+                                    $"({(int)JobTypes.Administration},                'Administration',                     @CurrentDate,   1,      12);" +
 
                 "SET IDENTITY_INSERT [JobType] OFF; ";
 

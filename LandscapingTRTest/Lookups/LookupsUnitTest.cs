@@ -85,7 +85,7 @@ namespace LandscapingTR.Test.Lookups
             var lookupEntities = await LookupService.GetJobTypesAsync();
             var entity = lookupEntities.FirstOrDefault();
             Assert.IsInstanceOfType(entity, typeof(LookupItemModel));
-            Assert.AreEqual(11, lookupEntities.Count);
+            Assert.AreEqual(12, lookupEntities.Count);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace LandscapingTR.Test.Lookups
             Assert.AreEqual(5, locationTypes.Count);
             Assert.AreEqual(5, employeeTypes.Count);
             Assert.AreEqual(3, customerTypes.Count);
-            Assert.AreEqual(11, jobTypes.Count);
+            Assert.AreEqual(12, jobTypes.Count);
         }
     }
 }

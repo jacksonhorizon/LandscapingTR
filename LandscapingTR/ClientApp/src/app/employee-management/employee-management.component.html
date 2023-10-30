@@ -42,6 +42,8 @@
   </nav>
 </header>
 
+<div class="dummy-header"></div>
+
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 <div *ngIf="loaded" class="container">
@@ -60,6 +62,9 @@
         <th>Username:</th>
         <th>Employee Type:</th>
         <th>Hire Date:</th>
+        <th class="td-center">Rate:</th>
+        <th class="td-center">Efficiency:</th>
+        <th class="td-center">Status:</th>
         <th>Action:</th>
       </tr>
     </thead>
@@ -70,8 +75,13 @@
         <td>{{ employee.username }}</td>
         <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
         <td>{{ getFormattedDate(employee.createdDate) }}</td>
+        <td class="td-center">$14.50</td>
+        <td class="td-center">100%</td>
+        <td>{{ employee.active || 'Active'}}</td>
         <td>
-          <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">Edit</button> &nbsp; <button (click)="deleteEmployee(employee)" type="button" class="btn btn-secondary">
+          <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">View</button>
+          &nbsp;
+          <button (click)="deleteEmployee(employee)" type="button" class="btn btn-secondary">
             <app-trash-can></app-trash-can>
           </button>
         </td>

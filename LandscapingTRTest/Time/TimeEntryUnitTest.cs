@@ -115,7 +115,7 @@ namespace LandscapingTR.Test.Time
             {
                 FirstName = "Test Name",
                 LastName = "Test Last Name",
-                Username = "Test Username",
+                Username = "Test Username -",
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
             };
@@ -182,7 +182,7 @@ namespace LandscapingTR.Test.Time
 
             var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
-            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(8, updatedJob.TotalLoggedHours);
             Assert.IsNotNull(savedTimeEntryModel);
             Assert.AreEqual(8, savedTimeEntryModel.TotalLoggedHours);
         }
@@ -216,7 +216,7 @@ namespace LandscapingTR.Test.Time
 
             var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
-            Assert.AreEqual(3, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
             Assert.IsNotNull(savedTimeEntry);
             Assert.AreEqual(timeEntryModel.EntryDate, savedTimeEntry.EntryDate);
         }
@@ -249,16 +249,16 @@ namespace LandscapingTR.Test.Time
 
             var updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
-            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(3, updatedJob.TotalLoggedHours);
             Assert.AreEqual(3, savedTimeEntryModel.TotalLoggedHours);
 
             savedTimeEntryModel.TotalLoggedHours = 4;
 
-            var updatedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(timeEntryModel);
+            var updatedTimeEntryModel = await TimeEntryService.SaveTimeEntryAsync(savedTimeEntryModel);
 
             updatedJob = await JobService.GetJobByIdAsync(savedJobModel.Id.Value);
 
-            Assert.AreEqual(0, updatedJob.TotalLoggedHours);
+            Assert.AreEqual(4, updatedJob.TotalLoggedHours);
             Assert.IsNotNull(savedTimeEntryModel);
             Assert.AreEqual(4, savedTimeEntryModel.TotalLoggedHours);
         }
@@ -282,7 +282,7 @@ namespace LandscapingTR.Test.Time
                 JobId = savedJobModel.Id.Value,
                 TotalLoggedHours = 3,
                 LastModifiedDate = DateTime.Now,
-                IsSubmitted = true,
+                IsSubmitted = false,
                 IsApproved = false
             };
 

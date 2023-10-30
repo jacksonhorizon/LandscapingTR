@@ -19,7 +19,7 @@ namespace LandscapingTR.Web.API.Controllers.Domain
         [Route("GetAllJobs")]
         public async Task<IActionResult> GetAllJobs()
         {
-            var jobModels = await this.JobService.GetJobsByDateRangeAsync(DateTime.MinValue, DateTime.Now);
+            var jobModels = await this.JobService.GetAllJobsAsync();
 
             return Ok(jobModels);
         }
@@ -39,15 +39,10 @@ namespace LandscapingTR.Web.API.Controllers.Domain
         }
 
         [HttpGet]
-        [Route("JobByEmployeeId")]
-        public async Task<IActionResult> GetJobsByEmployeeId(int employeeId)
+        [Route("JobsByEmployeeId")]
+        public async Task<IActionResult> GetJobsByEmployeeId(int employeeId, DateTime startDate, DateTime endDate)
         {
-            var jobModels = await this.JobService.GetJobsByEmployeeIdAsync(employeeId);
-
-            if (jobModels.Count == 0)
-            {
-                return BadRequest();
-            }
+            var jobModels = await this.JobService.GetJobsByEmployeeIdAsync(employeeId, startDate, endDate);
 
             return Ok(jobModels);
         }
@@ -113,6 +108,20 @@ namespace LandscapingTR.Web.API.Controllers.Domain
         public async Task<IActionResult> SaveJob(JobModel jobModel)
         {
             var savedJobModel = await this.JobService.SaveJobAsync(jobModel);
+
+            if (savedJobModel == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(savedJobModel);
+        }
+
+        [HttpDelete]
+        [Route("Job")]
+        public async Task<IActionResult> DeleteJob(JobModel jobModel)
+        {
+            var savedJobModel = await this.JobService.DeleteJobAsync(jobModel.Id.Value);
 
             if (savedJobModel == null)
             {

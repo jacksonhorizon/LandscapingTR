@@ -42,6 +42,8 @@
   </nav>
 </header>
 
+<div class="dummy-header"></div>
+
 <!--DO NOT TOUCH THE HEADER, IT KEEPS TRACK OF THE LOGGED-IN EMPLOYEE VIA THE ROUTE-->
 
 <div *ngIf="loaded" class="container">
@@ -86,7 +88,20 @@
     <br />
     <div class="col-md-12">
       <div class="form-group col-md-6">
-        <label for="jobDate">Job Date</label>
+        <label for="currentJobDate">Current Job Date</label>
+        <input [ngModel]="getFormattedDate(form.originalJobDate)"
+               type="text"
+               name="currentJobDate"
+               id="currentJobDate"
+               disabled
+               #currentJobDate="ngModel"
+               class="form-control" />
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="jobDate">Change Job Date</label>
         <input [(ngModel)]="form.jobDate"
                type="date"
                name="jobDate"
@@ -127,7 +142,7 @@
                 class="form-control">
           <option disabled>Select Employee</option>
           <option></option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>
@@ -142,7 +157,7 @@
                 class="form-control">
           <option disabled>Select Employee</option>
           <option></option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>
@@ -157,7 +172,7 @@
                 class="form-control">
           <option disabled>Select Employee</option>
           <option></option>
-          <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
+          <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
     </div>

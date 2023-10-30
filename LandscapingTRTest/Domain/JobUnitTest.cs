@@ -107,7 +107,7 @@ namespace LandscapingTR.Test.Time
             {
                 FirstName = firstName,
                 LastName = "Test Last Name",
-                Username = "Test Username",
+                Username = "Test Username -" + firstName,
                 Password = "Test Password",
                 EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
             };
@@ -265,7 +265,9 @@ namespace LandscapingTR.Test.Time
             await AddNewJobModelAsync((int)JobTypes.WaterManagement, new DateTime(2023, 8, 30));
 
             var jobsOfTypeWaterManagement = await JobService.GetJobsByDateRangeAsync(new DateTime(2023, 9, 1), DateTime.Now);
-            Assert.AreEqual(7, jobsOfTypeWaterManagement.Count());
+
+            // accounts for test job as well
+            Assert.AreEqual(8, jobsOfTypeWaterManagement.Count());
         }
 
         [TestMethod]

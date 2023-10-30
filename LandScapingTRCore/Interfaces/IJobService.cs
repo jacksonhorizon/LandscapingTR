@@ -28,6 +28,12 @@ namespace LandscapingTR.Core.Interfaces
         Task<List<JobModel>> GetJobsByLocationIdAsync(int locationId);
 
         /// <summary>
+        /// Gets all the jobs.
+        /// </summary>
+        /// <returns>The jobs.</returns>
+        Task<List<JobModel>> GetAllJobsAsync();
+
+        /// <summary>
         /// Gets the jobs in a date range.
         /// </summary>
         /// <param name="startDate">The start date.</param>
@@ -48,6 +54,13 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="jobModel">The job.</param>
         /// <returns>The added job.</returns>
         Task<JobModel> SaveJobAsync(JobModel jobModel);
+
+        /// <summary>
+        /// Deletes a job.
+        /// </summary>
+        /// <param name="jobId">The job id to delete.</param>
+        /// <returns>The task.</returns>
+        Task<JobModel> DeleteJobAsync(int jobId);
 
         /// <summary>
         /// Assigns an employee to a job.

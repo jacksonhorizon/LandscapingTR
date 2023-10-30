@@ -117,7 +117,7 @@ export class EmployeeAddComponent {
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
 
-    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
+    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 0;
     newEmployeeModel.employeeTypeId = employeeTypeId;
 
     this.employeeService.saveNewEmployee(newEmployeeModel).subscribe({
@@ -128,7 +128,7 @@ export class EmployeeAddComponent {
         this.router.navigate(["admin/:" + this.employeeModel.id])
       },
       error: err => {
-        this.toastr.error("There was a probelm saving.", 'Error: ');
+        this.toastr.error("There was a probelm saving.", 'Error: ' + err);
         console.log(err);
       }
     });
