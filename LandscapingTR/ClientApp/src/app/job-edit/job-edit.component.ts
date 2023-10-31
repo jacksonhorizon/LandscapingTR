@@ -120,7 +120,6 @@ export class JobEditComponent {
 
         this.form.isCompleted = this.jobToEditModel.isCompleted;
 
-        console.log(this.form);
         this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
@@ -151,7 +150,7 @@ export class JobEditComponent {
   }
 
   onSubmit(): void {
-    const { id, jobName, jobType, jobDate, firstCrewMember, secondCrewMember, thirdCrewMember, fourthCrewMember, crewSupervisor, estimatedTotalHours } = this.form;
+    const { id, jobName, jobType, jobDate, firstCrewMember, secondCrewMember, thirdCrewMember, fourthCrewMember, crewSupervisor, estimatedTotalHours , isCompleted } = this.form;
 
     if (jobName === null || jobDate === null || jobType === null || estimatedTotalHours === null) {
       return;
@@ -172,6 +171,7 @@ export class JobEditComponent {
 
     newJobModel.jobDate = jobDate;
 
+    newJobModel.isCompleted = isCompleted;
 
     if (firstCrewMember !== null) {
       var firstCrewMemberId = this.employees.find(x => firstCrewMember.includes(x.firstName) && firstCrewMember.includes(x.lastName))?.id || undefined;

@@ -63,7 +63,9 @@ export class TimeEntryComponent {
         this.jobs.forEach(job => {
           var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId);
 
-          this.forms.push(timeEntryWeek);
+          if (!job.isCompleted) {
+            this.forms.push(timeEntryWeek);
+          }
         });
 
         this.loaded = true; // Set loaded to true once all observables complete

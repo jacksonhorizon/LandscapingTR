@@ -206,6 +206,20 @@
       </div>
     </div>
     <br />
+    <div class="form-check">
+      <input mdbCheckbox
+             class="form-check-input larger"
+             type="checkbox"
+             value=""
+             name="isCompleted"
+             id="isCompleted"
+             [(ngModel)]="form.isCompleted"
+             #estimatedTotalHours="ngModel"/>
+      <label class="form-check-label" for="isCompleted">
+        Job Completed
+      </label>
+    </div>
+    <br />
     <button class="btn btn-primary btn-block" (click)="onSubmit()">
       Save
     </button>

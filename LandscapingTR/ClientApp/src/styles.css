@@ -48,3 +48,9 @@ header {
 .td-center {
     text-align: center;
 }
+
+.larger {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}

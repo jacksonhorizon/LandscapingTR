@@ -107,6 +107,9 @@ export class JobManagementComponent {
   getJobStatus(isCompleted: boolean | undefined) {
     if (isCompleted != undefined) {
 
+
+
+      // call to see if there are any jobs in progress
       if (isCompleted) {
 
         return "Completed";
