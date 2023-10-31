@@ -9,6 +9,10 @@ code {
   color: #e01a76;
 }
 
+body {
+  background-color: whitesmoke;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -53,4 +57,18 @@ header {
     width: 20px;
     height: 20px;
     margin-right: 10px;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+.navbar {
+    background-color: darkolivegreen;
 }

@@ -1,5 +1,5 @@
 <header *ngIf="loaded">
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/employee-home', pathEmployeeId]">LandscapingTR</a>
       <button class="navbar-toggler"
@@ -17,24 +17,24 @@
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
+            <a class="nav-link text-light" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time</a>
+            <a class="nav-link text-light" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time</a>
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
           <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Employees</a>
+            <a class="nav-link text-light" [routerLink]="['/admin', pathEmployeeId]">Employees</a>
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
           <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/job-management', pathEmployeeId]">Jobs</a>
+            <a class="nav-link text-light" [routerLink]="['/job-management', pathEmployeeId]">Jobs</a>
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
+            <a class="nav-link text-light" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
           </li>
         </ul>
       </div>
@@ -54,21 +54,28 @@
     <div class="col-md-6" style="display: flex; flex-direction: column;">
       <div style="display: flex; flex-direction: column;">
         <h5>Yesterday's Work:</h5>
-        No work performed yesterday.
+        No work performed yesterday
       </div>
       <br />
       <div style="display: flex; flex-direction: column;">
         <h5>Recent Timesheets</h5>
       </div>
     </div>
-    <div  class="col-md-6" style="display: flex; flex-direction: column;">
+    <div class="col-md-6" style="display: flex; flex-direction: column;">
       <div style="display: flex; flex-direction: column; align-self:flex-start;">
         <h5>Assigned Jobs</h5>
-        No assigned jobs.
+        <div *ngIf="assignedJobs.length === 0">
+          No assigned jobs
+        </div>
+        <div *ngIf="!(assignedJobs.length === 0)">
+          <ul>
+            <li *ngFor="let job of assignedJobs"> {{ job.jobName }} - {{ getHoursRemaining(job) }} hours remaining</li>
+          </ul>
+        </div>
       </div>
     </div>
 
   </div>
-  
+
 
 </div>
