@@ -81,7 +81,7 @@
         <td>
           <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">View</button>
           &nbsp;
-          <button (click)="deleteEmployee(employee)" type="button" class="btn btn-secondary">
+          <button *ngIf="employee.id !== employeeId" (click)="deleteEmployee(employee)" type="button" class="btn btn-secondary">
             <app-trash-can></app-trash-can>
           </button>
         </td>
