@@ -96,6 +96,15 @@ export class EmployeeManagementComponent implements OnInit {
     return dateToFormat;
   }
 
+  getEmployeeStatus(active: boolean | undefined) {
+    if (active != undefined) {
+
+      return "Active";
+    }
+
+    return "Inactive";
+  }
+
   rerouteToAddEmployeePage(data: EmployeeModel): void {
     this.router.navigate(["employee-add/:" + data.id])
   }

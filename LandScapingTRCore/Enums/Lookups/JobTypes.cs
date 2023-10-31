@@ -10,7 +10,7 @@
         /// <summary>
         /// Intermediate Maintenance.
         /// </summary>
-        IntermediateMaintenace = 1,
+        IntermediateMaintenance = 1,
 
         /// <summary>
         /// Hardscaping and construction.

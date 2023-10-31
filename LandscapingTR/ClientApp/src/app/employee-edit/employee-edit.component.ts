@@ -39,6 +39,7 @@ export class EmployeeEditComponent {
     payRate: 0,
     hireDate: null,
     originalHireDate: null,
+    active: true,
   };
 
   constructor(private route: ActivatedRoute,
@@ -86,6 +87,7 @@ export class EmployeeEditComponent {
         this.form.hireDate = this.employeeToEditModel.createdDate as Date;
         this.form.originalHireDate = this.form.hireDate;
         this.form.payRate = this.employeeToEditModel.payRate;
+        this.form.active = this.employeeToEditModel.active;
 
         this.employeeTypes = data[2];
 
@@ -123,7 +125,7 @@ export class EmployeeEditComponent {
   }
 
   onSubmit(): void {
-    const { id, firstName, lastName, username, password, employeeType, hireDate, payRate} = this.form;
+    const { id, firstName, lastName, username, password, employeeType, hireDate, payRate, active} = this.form;
 
     if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return;
@@ -143,11 +145,10 @@ export class EmployeeEditComponent {
     newEmployeeModel.password = password;
     newEmployeeModel.createdDate = hireDate;
     newEmployeeModel.payRate = payRate;
+    newEmployeeModel.active = active;
 
     var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
-
-
 
     this.employeeService.updateEmployee(newEmployeeModel).subscribe({
       next: data => {

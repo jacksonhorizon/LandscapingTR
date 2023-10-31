@@ -118,6 +118,7 @@ export class EmployeeAddComponent {
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
     newEmployeeModel.payRate = payRate;
+    newEmployeeModel.active = true;
 
     var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 0;
     newEmployeeModel.employeeTypeId = employeeTypeId;

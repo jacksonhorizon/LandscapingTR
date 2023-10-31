@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { EmployeeModel } from '../core/models/company-resources/employee.model';
+import { JobModel } from '../core/models/domain/job.model';
 import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups.model';
 import { EmployeeService } from '../core/services/employee.service';
+import { JobService } from '../core/services/job.service';
 
 @Component({
   selector: 'app-employee-home',
@@ -19,10 +22,13 @@ export class EmployeeHomeComponent {
   employeeModel!: EmployeeModel;
   lookupsModel!: LandscapingTRLookupsModel;
   // General properties
-  
+  assignedJobs!: JobModel[];
+  weekStartDate: Date | null = null;
+  weekEndDate: Date | null = null;
 
   constructor(private route: ActivatedRoute,
-              private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private jobService: JobService,  ) { }
 
   ngOnInit() {
     // Gets the employee Id
@@ -35,16 +41,20 @@ export class EmployeeHomeComponent {
 
     this.pathEmployeeId = ":" + this.employeeId.toString();
 
-    // Gets employee model
-    this.employeeService.getEmployee(this.employeeId).subscribe({
+    forkJoin([
+      this.employeeService.getEmployee(this.employeeId),
+      this.jobService.getJobsByEmployeeId(this.employeeId, this.weekStartDate, this.weekStartDate),
+    ]).subscribe({
       next: data => {
-        this.employeeModel = data;
+        // data is an array containing the results of the observables in the same order
+        this.employeeModel = data[0];
 
-        this.loaded = true;
+        this.assignedJobs = data[1];
+
+        this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
         console.log(err);
-        this.loaded = false;
       }
     });
   }
@@ -67,5 +77,13 @@ export class EmployeeHomeComponent {
 
   getSupervisorType() {
     return EmployeeTypes.CrewSupervisor as number;
+  }
+
+  getHoursRemaining(job: JobModel) {
+    if (job.estimatedTotalHours != undefined && job.totalLoggedHours != undefined) {
+      return job.estimatedTotalHours - job.totalLoggedHours;
+    } else {
+      return job.estimatedTotalHours
+    }
   }
 }

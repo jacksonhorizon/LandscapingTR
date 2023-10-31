@@ -1,5 +1,5 @@
 <header *ngIf="loaded">
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/employee-home', pathEmployeeId]">LandscapingTR</a>
       <button class="navbar-toggler"
@@ -17,24 +17,24 @@
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
+            <a class="nav-link text-light" [routerLink]="['/employee-home', pathEmployeeId]">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time</a>
+            <a class="nav-link text-light" [routerLink]="['/time-entry', pathEmployeeId]">Weekly Time</a>
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
           <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/admin', pathEmployeeId]">Employees</a>
+            <a class="nav-link text-light" [routerLink]="['/admin', pathEmployeeId]">Employees</a>
           </li>
 
           <!-- Make this only if the employee is of type admin, must use enums that match c#-->
           <li *ngIf="employeeModel.employeeTypeId === getAdminType()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/job-management', pathEmployeeId]">Jobs</a>
+            <a class="nav-link text-light" [routerLink]="['/job-management', pathEmployeeId]">Jobs</a>
           </li>
 
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
+            <a class="nav-link text-light" [routerLink]="['/settings', pathEmployeeId]">Settings</a>
           </li>
         </ul>
       </div>
@@ -48,14 +48,14 @@
 
 <div *ngIf="loaded" class="container">
 
-  <h1>Add Job</h1>
+  <h1>Edit Job</h1>
   <form *ngIf="loaded"
         name="form"
         #f="ngForm"
         novalidate>
 
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+    <div class="col-md-12 gap-3" style="display: flex; flex-direction: row;">
+      <div class="form-group col-md-5">
         <label for="jobName">Job Name</label>
         <input type="text"
                class="form-control"
@@ -70,10 +70,7 @@
           Job name is required!
         </div>
       </div>
-    </div>
-    <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="jobType">Job Type</label>
         <select [(ngModel)]="form.jobType"
                 name="jobType"
@@ -86,8 +83,8 @@
       </div>
     </div>
     <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+    <div class="col-md-12 gap-3" style="display: flex; flex-direction: row;">
+      <div class="form-group col-md-5">
         <label for="currentJobDate">Current Job Date</label>
         <input [ngModel]="getFormattedDate(form.originalJobDate)"
                type="text"
@@ -97,10 +94,7 @@
                #currentJobDate="ngModel"
                class="form-control" />
       </div>
-    </div>
-    <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="jobDate">Change Job Date</label>
         <input [(ngModel)]="form.jobDate"
                type="date"
@@ -117,8 +111,8 @@
       </div>
     </div>
     <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+    <div class="col-md-12 gap-3" style="display: flex; flex-direction: row;">
+      <div class="form-group col-md-5">
         <label for="firstCrewMember">Primary Crew Member</label>
         <select [(ngModel)]="form.firstCrewMember"
                 name="firstCrewMember"
@@ -130,10 +124,7 @@
           <option *ngFor="let employee of employees">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
-    </div>
-    <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="secondCrewMember">Second Crew Member</label>
         <select [(ngModel)]="form.secondCrewMember"
                 name="secondCrewMember"
@@ -147,8 +138,8 @@
       </div>
     </div>
     <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+    <div class="col-md-12 gap-3" style="display: flex; flex-direction: row;">
+      <div class="form-group col-md-5">
         <label for="thirdCrewMember">Third Crew Member</label>
         <select [(ngModel)]="form.thirdCrewMember"
                 name="thirdCrewMember"
@@ -160,10 +151,7 @@
           <option *ngFor="let employee of getFieldCrewWorkers()">{{employee.lastName}}, {{employee.firstName}}</option>
         </select>
       </div>
-    </div>
-    <br />
-    <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="fourthCrewMember">Fourth Crew Member</label>
         <select [(ngModel)]="form.fourthCrewMember"
                 name="fourthCrewMember"
@@ -178,7 +166,7 @@
     </div>
     <br />
     <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="crewSupervisor">Crew Supervisor</label>
         <select [(ngModel)]="form.crewSupervisor"
                 name="crewSupervisor"
@@ -193,7 +181,7 @@
     </div>
     <br />
     <div class="col-md-12">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="estimatedTotalHours">Estimated Total Hours</label>
         <input type="number"
                class="form-control"
@@ -206,18 +194,22 @@
       </div>
     </div>
     <br />
-    <div class="form-check">
-      <input mdbCheckbox
-             class="form-check-input larger"
-             type="checkbox"
-             value=""
-             name="isCompleted"
-             id="isCompleted"
-             [(ngModel)]="form.isCompleted"
-             #estimatedTotalHours="ngModel"/>
-      <label class="form-check-label" for="isCompleted">
-        Job Completed
-      </label>
+    <div class="col-md-12">
+      <div class="form-group col-md-5">
+        <div class="form-check">
+          <input mdbCheckbox
+                 class="form-check-input larger"
+                 type="checkbox"
+                 value=""
+                 name="isCompleted"
+                 id="isCompleted"
+                 [(ngModel)]="form.isCompleted"
+                 #isCompleted="ngModel" />
+          <label class="form-check-label" for="isCompleted">
+            Job Completed
+          </label>
+        </div>
+      </div>
     </div>
     <br />
     <button class="btn btn-primary btn-block" (click)="onSubmit()">

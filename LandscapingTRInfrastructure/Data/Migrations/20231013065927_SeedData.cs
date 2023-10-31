@@ -43,7 +43,7 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                 "                   ([JobTypeId],                                     [JobTypeDisplayValue],               [CreatedDate], [Active], [SortOrder])" +
                 "VALUES " +
                                     $"({(int)JobTypes.RoutineMaintenance},            'Routine Maintenance',                @CurrentDate,   1,      1)," +
-                                    $"({(int)JobTypes.IntermediateMaintenace},        'Intermediate Maintenace',            @CurrentDate,   1,      2)," +
+                                    $"({(int)JobTypes.IntermediateMaintenance},       'Intermediate Maintenance',            @CurrentDate,   1,      2)," +
                                     $"({(int)JobTypes.HardscapingAndConstruction},    'Hardscaping And Construction',       @CurrentDate,   1,      3)," +
                                     $"({(int)JobTypes.LandscapeDesign},               'Landscape Design',                   @CurrentDate,   1,      4)," +
                                     $"({(int)JobTypes.TreeCare},                      'Tree Care',                          @CurrentDate,   1,      5)," +

@@ -37,7 +37,7 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                 "INSERT INTO [Job] " +
                 "                   ([JobId],         [JobName],         [JobDate],   [LocationId],     [JobTypeId],                  [EstimatedTotalHours], [TotalLoggedHours],  [isCompleted],    [CreatedDate])" +
                 "VALUES " +
-                                    $"(1,           'GS Landscape',    @CurrentDate,    1,      {(int)JobTypes.IntermediateMaintenace},      24,                 0,                    0x0,       @CurrentDate);" +
+                                    $"(1,           'GS Landscape',    @CurrentDate,    1,      {(int)JobTypes.IntermediateMaintenance},      24,                 0,                    0x0,       @CurrentDate);" +
 
 
                 "SET IDENTITY_INSERT [Location] OFF; ";
