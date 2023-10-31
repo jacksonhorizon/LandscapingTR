@@ -7,4 +7,6 @@ export class EmployeeModel {
   employeeTypeId?: number;
   createdDate?: Date;
   active?: boolean;
+  payRate?: number;
+  efficiency?: number;
 }

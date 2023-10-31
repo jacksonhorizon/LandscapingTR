@@ -79,6 +79,8 @@ namespace LandscapingTR.Core.Services
 
                 var employee = this.Mapper.Map<Employee>(employeeModel);
 
+                employee.Efficiency = 100;
+
                 employee.Password = Cryptography.Encrypt(employee.Password);
 
                 var savedEmployee = await this.EmployeeRepository.SaveEmployeeAsync(employee);
