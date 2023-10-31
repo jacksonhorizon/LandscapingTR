@@ -192,6 +192,25 @@
       </div>
     </div>
     <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <div class="form-check">
+          <input mdbCheckbox
+                 class="form-check-input larger"
+                 type="checkbox"
+                 value=""
+                 name="isActive"
+                 id="isActive"
+                 disabled
+                 [ngModel]="form.active"
+                 #isActive="ngModel" />
+          <label class="form-check-label" for="isActive">
+            Active
+          </label>
+        </div>
+      </div>
+    </div>
+    <br />
     <button class="btn btn-primary btn-block" (click)="onSubmit()">
       Save
     </button>

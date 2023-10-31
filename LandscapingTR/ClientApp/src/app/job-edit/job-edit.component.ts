@@ -170,7 +170,15 @@ export class JobEditComponent {
     newJobModel.id = id;
     newJobModel.jobName = jobName;
 
-    var jobTypeId = this.jobTypes.find(x => x.lookupValue === jobType)?.id || 1;
+    var jobTypeId: number | undefined;
+
+    for (let i = 0; i < this.jobTypes.length; i++) {
+      var x = this.jobTypes[i].lookupValue?.match(jobType) || [];
+      if (x.length >= 1) {
+        jobTypeId = this.jobTypes[i].id;
+      }
+    }
+
     newJobModel.jobTypeId = jobTypeId;
 
     newJobModel.jobDate = jobDate;

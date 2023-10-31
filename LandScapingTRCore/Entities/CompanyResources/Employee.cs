@@ -43,5 +43,10 @@ namespace LandscapingTR.Core.Entities.CompanyResources
         /// Gets or sets the employee's efficiency.
         /// </summary>
         public double? Efficiency { get; set; }
+
+        /// <summary>
+        /// Gets or sets that indicates whether the employee is active.
+        /// </summary>
+        public bool? Active { get; set; }
     }
 }

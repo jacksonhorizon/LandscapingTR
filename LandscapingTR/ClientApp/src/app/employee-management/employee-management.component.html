@@ -75,9 +75,9 @@
         <td>{{ employee.username }}</td>
         <td>{{ matchEmployeeType(employee.employeeTypeId) }}</td>
         <td>{{ getFormattedDate(employee.createdDate) }}</td>
-        <td class="td-center">${{employee.payRate}}</td>
-        <td class="td-center">{{employee.efficiency}}%</td>
-        <td class="td-center">{{ employee.active || 'Active'}}</td>
+        <td class="td-center">${{ employee.payRate}}</td>
+        <td class="td-center">{{ employee.efficiency}}%</td>
+        <td class="td-center">{{ getEmployeeStatus(employee.active)}}</td>
         <td>
           <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">View</button>
           &nbsp;

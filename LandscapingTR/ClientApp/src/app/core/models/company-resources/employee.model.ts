@@ -6,7 +6,7 @@ export class EmployeeModel {
   password?: string;
   employeeTypeId?: number;
   createdDate?: Date;
-  active?: boolean;
   payRate?: number;
   efficiency?: number;
+  active?: boolean;
 }

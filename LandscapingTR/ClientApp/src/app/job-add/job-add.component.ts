@@ -28,7 +28,7 @@ export class JobAddComponent {
   employees: EmployeeModel[] = [];
   form: any = {
     jobName: null,
-    jobType: "Routine Maintenance",
+    jobType: null,
     jobDate: null,
     locationId: null,
     firstCrewMember: null,
@@ -68,6 +68,7 @@ export class JobAddComponent {
         // data is an array containing the results of the observables in the same order
         this.employeeModel = data[0];
         this.jobTypes = data[1];
+        this.form.jobType = this.jobTypes[0].lookupValue;
         this.employees = data[2];
         this.loaded = true; // Set loaded to true once all observables complete
       },
@@ -113,7 +114,15 @@ export class JobAddComponent {
 
     newJobModel.jobName = jobName;
 
-    var jobTypeId = this.jobTypes.find(x => x.lookupValue === jobType)?.id || 1;
+    var jobTypeId : number | undefined;
+
+    for (let i = 0; i < this.jobTypes.length; i++) {
+      var x = this.jobTypes[i].lookupValue?.match(jobType) || [];
+      if (x.length >= 1) {
+        jobTypeId = this.jobTypes[i].id;
+      }
+    }
+
     newJobModel.jobTypeId = jobTypeId;
 
     newJobModel.jobDate = jobDate;
