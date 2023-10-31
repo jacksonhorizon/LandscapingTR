@@ -174,6 +174,7 @@ namespace LandscapingTR.Core.Services
                     this.Mapper.Map(timeEntryModel, existingTimeEntry);
 
                     job.TotalLoggedHours += existingTimeEntry.TotalLoggedHours;
+                    job.InProgress = true;
 
                     var timeEntryHistory = this.Mapper.Map<TimeEntryHistory>(timeEntryModel);
 
@@ -189,6 +190,7 @@ namespace LandscapingTR.Core.Services
 
                     var job = await this.JobRepository.GetJobByIdAsync(timeEntry.JobId.Value);
                     job.TotalLoggedHours += timeEntry.TotalLoggedHours;
+                    job.InProgress = true;
 
                     await this.JobRepository.SaveJobAsync(job);
                     var savedTimeEntry = await this.TimeEntryRepository.SaveTimeEntryAsync(timeEntry);

@@ -77,7 +77,7 @@
         <td>{{ getFormattedDate(employee.createdDate) }}</td>
         <td class="td-center">${{employee.payRate}}</td>
         <td class="td-center">{{employee.efficiency}}%</td>
-        <td>{{ employee.active || 'Active'}}</td>
+        <td class="td-center">{{ employee.active || 'Active'}}</td>
         <td>
           <button class="btn btn-primary" (click)="rerouteToEditEmployeePage(employeeModel, employee)">View</button>
           &nbsp;

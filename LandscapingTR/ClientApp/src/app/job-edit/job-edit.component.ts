@@ -48,6 +48,8 @@ export class JobEditComponent {
     equipmentAndSafetyOfficer: null,
     estimatedTotalHours: 0,
     isCompleted: false,
+    inProgress: false,
+    totalLoggedHours: 0,
   };
 
   constructor(private route: ActivatedRoute,
@@ -119,7 +121,9 @@ export class JobEditComponent {
         this.form.estimatedTotalHours = this.jobToEditModel.estimatedTotalHours;
 
         this.form.isCompleted = this.jobToEditModel.isCompleted;
+        this.form.inProgress = this.jobToEditModel.inProgress;
 
+        this.form.totalLoggedHours = this.jobToEditModel.totalLoggedHours;
         this.loaded = true; // Set loaded to true once all observables complete
       },
       error: err => {
@@ -150,7 +154,7 @@ export class JobEditComponent {
   }
 
   onSubmit(): void {
-    const { id, jobName, jobType, jobDate, firstCrewMember, secondCrewMember, thirdCrewMember, fourthCrewMember, crewSupervisor, estimatedTotalHours , isCompleted } = this.form;
+    const { id, jobName, jobType, jobDate, firstCrewMember, secondCrewMember, thirdCrewMember, fourthCrewMember, crewSupervisor, estimatedTotalHours , isCompleted, inProgress, totalLoggedHours} = this.form;
 
     if (jobName === null || jobDate === null || jobType === null || estimatedTotalHours === null) {
       return;
@@ -199,6 +203,8 @@ export class JobEditComponent {
     }
 
     newJobModel.estimatedTotalHours = estimatedTotalHours;
+    newJobModel.inProgress = inProgress;
+    newJobModel.totalLoggedHours = totalLoggedHours;
 
     this.jobService.updateJob(newJobModel).subscribe({
       next: data => {

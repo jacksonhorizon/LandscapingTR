@@ -14,4 +14,5 @@ export class JobModel{
   estimatedTotalHours?: number;
   totalLoggedHours?: number;
   isCompleted?: boolean;
+  inProgress?: boolean;
 }
