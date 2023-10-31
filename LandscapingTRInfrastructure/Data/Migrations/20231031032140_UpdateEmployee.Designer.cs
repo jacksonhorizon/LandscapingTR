@@ -4,6 +4,7 @@ using LandscapingTR.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandscapingTR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LandscapingTRDbContext))]
-    partial class LandscapingTRDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231031032140_UpdateEmployee")]
+    partial class UpdateEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +55,8 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("PayRate")
-                        .HasColumnType("float");
+                    b.Property<int?>("PayRate")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -93,12 +96,6 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
                     b.Property<int?>("FourthCrewMemberId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("InProgress")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("JobDate")
                         .HasColumnType("datetime2");
 
@@ -123,6 +120,9 @@ namespace LandscapingTR.Infrastructure.Data.Migrations
 
                     b.Property<double>("TotalLoggedHours")
                         .HasColumnType("float");
+
+                    b.Property<bool>("isCompleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

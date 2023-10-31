@@ -141,7 +141,27 @@
         </select>
       </div>
     </div>
-    <br /><div class="col-md-12">
+    <br />
+    <div class="col-md-12">
+      <div class="form-group col-md-6">
+        <label for="payRate">Pay Rate</label>
+        <input type="number"
+               class="form-control"
+               name="payRate"
+               id="payRate"
+               [(ngModel)]="form.payRate"
+               required
+               min="0"
+               #payRate="ngModel" />
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="payRate.errors && f.submitted">
+          <div *ngIf="payRate.errors['required']">Pay rate is required</div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="col-md-12">
       <div class="form-group col-md-6">
         <label for="currentHireDate">Current Hire Date</label>
         <input [ngModel]="getFormattedDate(form.originalHireDate)"

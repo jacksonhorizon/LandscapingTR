@@ -85,6 +85,11 @@ namespace LandscapingTR.Core.Entities.Domain
         /// <summary>
         /// Gets or sets a value that indicates whether the job is completed.
         /// </summary>
-        public bool isCompleted { get; set; }
+        public bool IsCompleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the job is in progress.
+        /// </summary>
+        public bool InProgress { get; set; }
     }
 }

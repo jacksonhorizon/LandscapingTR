@@ -33,5 +33,15 @@ namespace LandscapingTR.Core.Entities.CompanyResources
         /// Gets or sets the employee type.
         /// </summary>
         public EmployeeType EmployeeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee pay rate.
+        /// </summary>
+        public double? PayRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee's efficiency.
+        /// </summary>
+        public double? Efficiency { get; set; }
     }
 }

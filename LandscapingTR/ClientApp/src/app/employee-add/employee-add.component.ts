@@ -29,6 +29,7 @@ export class EmployeeAddComponent {
     lastName: null,
     password: null,
     employeeType: "Field Crew Worker",
+    payRate: 0
   };
 
   constructor(private route: ActivatedRoute,
@@ -99,7 +100,7 @@ export class EmployeeAddComponent {
   }
 
   onSubmit(): void {
-    const { firstName, lastName, username, password, employeeType } = this.form;
+    const { firstName, lastName, username, password, employeeType, payRate} = this.form;
 
     if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return; 
@@ -116,6 +117,7 @@ export class EmployeeAddComponent {
     newEmployeeModel.firstName = firstName;
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
+    newEmployeeModel.payRate = payRate;
 
     var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 0;
     newEmployeeModel.employeeTypeId = employeeTypeId;

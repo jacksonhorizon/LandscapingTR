@@ -35,7 +35,7 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 150px;
+  height: 80px;
 }
 
 .dummy-header {
@@ -47,4 +47,10 @@ header {
 
 .td-center {
     text-align: center;
+}
+
+.larger {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }

@@ -36,5 +36,15 @@
         /// Gets or sets the employee created date.
         /// </summary>
         public DateTime? CreatedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee pay rate.
+        /// </summary>
+        public double? PayRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee's efficiency.
+        /// </summary>
+        public double? Efficiency { get; set; }
     }
 }

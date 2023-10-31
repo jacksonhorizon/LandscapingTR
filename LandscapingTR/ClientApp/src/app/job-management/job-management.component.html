@@ -78,11 +78,11 @@
         <td>{{ getEmployeeName(job.crewSupervisorId) }}</td>
         <td class="td-center">{{ job.estimatedTotalHours }} hours</td>
         <td class="td-center">{{ job.totalLoggedHours }} hours</td>
-        <td>{{ getJobStatus(job.isCompleted) }}</td>
+        <td class="td-center">{{ getJobStatus(job.isCompleted, job.inProgress) }}</td>
         <td>
           <button class="btn btn-primary" (click)="rerouteToEditJobPage(employeeModel, job)">View</button>
           &nbsp;
-          <button (click)="deleteJob(job)" type="button" class="btn btn-secondary">
+          <button *ngIf="!(job.isCompleted || job.inProgress)" (click)="deleteJob(job)" type="button" class="btn btn-secondary">
             <app-trash-can></app-trash-can>
           </button>
         </td>

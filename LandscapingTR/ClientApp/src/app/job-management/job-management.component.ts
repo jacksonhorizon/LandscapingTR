@@ -104,19 +104,25 @@ export class JobManagementComponent {
     return dateToFormat;
   }
 
-  getJobStatus(isCompleted: boolean | undefined) {
-    if (isCompleted != undefined) {
+  getJobStatus(isCompleted: boolean | undefined, inProgress: boolean | undefined) {
+    if (isCompleted != undefined && inProgress != undefined) {
 
+
+
+      // call to see if there are any jobs in progress
       if (isCompleted) {
 
         return "Completed";
       }
+      if (inProgress) {
+        return "In Progress";
+      }
 
-      return "Incomplete";
+      return "New";
     }
     
 
-    return "Incomplete";
+    return "New";
   }
 
   getEmployeeName(employeeId: number | undefined) {

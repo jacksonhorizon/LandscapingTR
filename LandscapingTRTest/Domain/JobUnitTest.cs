@@ -7,8 +7,6 @@ using LandscapingTR.Core.Factories;
 using LandscapingTR.Core.Interfaces;
 using LandscapingTR.Core.Models.CompanyResources;
 using LandscapingTR.Core.Models.Domain;
-using LandscapingTR.Core.Models.Lookups;
-using LandscapingTR.Core.Models.Time;
 using LandscapingTR.Core.Services;
 using LandscapingTR.Infrastructure;
 using LandscapingTR.Infrastructure.Data.Repositories;
@@ -138,7 +136,7 @@ namespace LandscapingTR.Test.Time
                 EstimatedTotalHours = 8,
                 TotalLoggedHours = 0,
                 JobDate = date.HasValue ? date.Value : DateTime.Now,
-                isCompleted = false,
+                IsCompleted = false,
                 LocationId = locationId
             };
 

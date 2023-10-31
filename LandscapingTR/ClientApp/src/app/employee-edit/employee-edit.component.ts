@@ -36,6 +36,7 @@ export class EmployeeEditComponent {
     lastName: null,
     password: null,
     employeeType: null,
+    payRate: 0,
     hireDate: null,
     originalHireDate: null,
   };
@@ -84,6 +85,7 @@ export class EmployeeEditComponent {
         this.form.password = this.employeeToEditModel.password;
         this.form.hireDate = this.employeeToEditModel.createdDate as Date;
         this.form.originalHireDate = this.form.hireDate;
+        this.form.payRate = this.employeeToEditModel.payRate;
 
         this.employeeTypes = data[2];
 
@@ -121,7 +123,7 @@ export class EmployeeEditComponent {
   }
 
   onSubmit(): void {
-    const { id, firstName, lastName, username, password, employeeType, hireDate} = this.form;
+    const { id, firstName, lastName, username, password, employeeType, hireDate, payRate} = this.form;
 
     if (firstName == null || lastName == null || username == null || password == null || employeeType == null) {
       return;
@@ -140,6 +142,7 @@ export class EmployeeEditComponent {
     newEmployeeModel.lastName = lastName;
     newEmployeeModel.password = password;
     newEmployeeModel.createdDate = hireDate;
+    newEmployeeModel.payRate = payRate;
 
     var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
     newEmployeeModel.employeeTypeId = employeeTypeId;
