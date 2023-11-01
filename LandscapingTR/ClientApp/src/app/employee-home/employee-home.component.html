@@ -70,8 +70,9 @@
         <div *ngIf="!(assignedJobs.length === 0)">
           <div class="display: flex; gap-3">
             <div *ngFor="let job of assignedJobs" style="margin:10px; padding: 10px; min-width:300px;">
-              <div class="card" style="padding: 5px;">
+              <div class="card" style="padding: 10px;">
                 <h5>{{ job.jobName }}:</h5>
+                <p> {{getHoursRemaining(job)}} hours left</p>
                 <div class="progress">
                   <div *ngIf="calculateJobPercentage(job) <= 100" class="progress-bar bg-success"
                        role="progressbar"

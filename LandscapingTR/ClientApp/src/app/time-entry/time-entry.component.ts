@@ -159,7 +159,7 @@ export class TimeEntryComponent {
 
         console.log(data);
 
-        this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entires: ');
+        this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entries: ');
 
       },
       error: err => {
