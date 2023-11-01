@@ -12,6 +12,7 @@ import { JobTypes } from '../core/enums/job-types.enum';
 import { TimeEntryService } from '../core/services/time-entry.service';
 import { JobService } from '../core/services/job.service';
 import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-time-entry',
@@ -37,6 +38,7 @@ export class TimeEntryComponent {
     private employeeService: EmployeeService,
     private jobService: JobService,
     private timeEntryService: TimeEntryService,
+    private toastr: ToastrService,  
     private router: Router) { }
 
   ngOnInit() {
@@ -148,9 +150,6 @@ export class TimeEntryComponent {
       timeEntries.forEach(entry => allTimeEntries.push(entry));
     });
 
-    console.log("all");
-    console.log(allTimeEntries);
-
     var newTimeEntries = allTimeEntries.filter(x => x.id == null);
 
     var updateTimeEntries = allTimeEntries.filter(x => x.id != null);
@@ -160,7 +159,8 @@ export class TimeEntryComponent {
 
         console.log(data);
 
-        this.loaded = true;
+        this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entires: ');
+
       },
       error: err => {
         console.log(err);

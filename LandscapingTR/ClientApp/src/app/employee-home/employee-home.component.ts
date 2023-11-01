@@ -86,4 +86,25 @@ export class EmployeeHomeComponent {
       return job.estimatedTotalHours
     }
   }
+
+  calculateJobPercentage(job: JobModel): number {
+    if (job.estimatedTotalHours != undefined && job.totalLoggedHours != undefined) {
+      if (job.totalLoggedHours === 0) {
+        return 0;
+      }
+      var returnValue = ((job.totalLoggedHours / job.estimatedTotalHours) * 100);
+
+      if (returnValue === 100) {
+        return 100;
+      } else if (returnValue < 100) {
+        returnValue = +returnValue.toFixed(3);
+        return returnValue
+      } else {
+        returnValue = +returnValue.toFixed(2);
+        return returnValue
+      }
+    } else {
+      return 0;
+    }
+  }
 }
