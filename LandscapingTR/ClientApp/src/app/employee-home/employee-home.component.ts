@@ -49,7 +49,7 @@ export class EmployeeHomeComponent {
         // data is an array containing the results of the observables in the same order
         this.employeeModel = data[0];
 
-        this.assignedJobs = data[1];
+        this.assignedJobs = data[1].filter(x => x.isCompleted != true);
 
         this.loaded = true; // Set loaded to true once all observables complete
       },
