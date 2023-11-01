@@ -10,7 +10,7 @@ code {
 }
 
 body {
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
 }
 
 .btn-primary {
@@ -70,5 +70,5 @@ a.navbar-brand {
 }
 
 .navbar {
-    background-color: darkolivegreen;
+  background-color: whitesmoke;
 }
