@@ -8,7 +8,6 @@ import { LandscapingTRLookupsModel } from '../core/models/landscaping-tr-lookups
 import { EmployeeTypes } from '../core/enums/employee-types.enum';
 import { JobModel } from '../core/models/domain/job.model';
 import { TimeEntryWeekModel } from '../core/models/time/week-entry-week.model';
-import { JobTypes } from '../core/enums/job-types.enum';
 import { TimeEntryService } from '../core/services/time-entry.service';
 import { JobService } from '../core/services/job.service';
 import { forkJoin } from 'rxjs';
@@ -55,15 +54,15 @@ export class TimeEntryComponent {
     forkJoin([
       this.employeeService.getEmployee(this.employeeId),
       this.jobService.getJobsByEmployeeId(this.employeeId, this.weekStartDate, this.weekStartDate),
+      this.timeEntryService.getAllTimeEntriesByEmployeeId(this.employeeId)
     ]).subscribe({
       next: data => {
         // data is an array containing the results of the observables in the same order
         this.employeeModel = data[0];
 
-        this.jobs = data[1];
-
+        this.jobs = data[1].filter(x => x.isCompleted != true);
         this.jobs.forEach(job => {
-          var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId);
+          var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId, data[2]);
 
           if (!job.isCompleted) {
             this.forms.push(timeEntryWeek);
@@ -91,15 +90,30 @@ export class TimeEntryComponent {
 
   // General methods
 
-  private generateWeeklyTimeEntryModel(employeeId: number, employeeTypeId: number | undefined, jobId: number | undefined, jobTypeId: number | undefined) {
+  private generateWeeklyTimeEntryModel(employeeId: number, employeeTypeId: number | undefined, jobId: number | undefined, jobTypeId: number | undefined, timeEntries: TimeEntryModel[]) {
+    const sunday = timeEntries.find(entry => entry.dayNumber === 1 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const monday = timeEntries.find(entry => entry.dayNumber === 2 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const tuesday = timeEntries.find(entry => entry.dayNumber === 3 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const wednesday = timeEntries.find(entry => entry.dayNumber === 4 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const thursday = timeEntries.find(entry => entry.dayNumber === 5 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const friday = timeEntries.find(entry => entry.dayNumber === 6 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+    const saturday = timeEntries.find(entry => entry.dayNumber === 7 && entry.jobId === jobId && entry.employeeId === this.employeeId);
+
     const timeEntryWeek: TimeEntryWeekModel = {
-      sunday: null,
-      monday: null,
-      tuesday: null,
-      wednesday: null,
-      thursday: null,
-      friday: null,
-      saturday: null,
+      sunday: sunday?.totalLoggedHours,
+      monday: monday?.totalLoggedHours,
+      tuesday: tuesday?.totalLoggedHours,
+      wednesday: wednesday?.totalLoggedHours,
+      thursday: thursday?.totalLoggedHours,
+      friday: friday?.totalLoggedHours,
+      saturday: saturday?.totalLoggedHours,
+      sundayId: sunday?.id,
+      mondayId: monday?.id,
+      tuesdayId: tuesday?.id,
+      wednesdayId: wednesday?.id,
+      thursdayId: thursday?.id,
+      fridayId: friday?.id,
+      saturdayId: saturday?.id,
       employeeId: employeeId,
       employeeTypeId: employeeTypeId,
       jobId: jobId,
@@ -107,27 +121,6 @@ export class TimeEntryComponent {
     };
 
     return timeEntryWeek;
-  }
-
-  private getMockJobs() {
-    const job1: JobModel = {
-      id: 1,
-      jobTypeId: JobTypes.ArtisticLandscaping
-    };
-
-    const job2: JobModel = {
-      id: 3,
-      jobTypeId: JobTypes.CommercialLandscaping
-    };
-
-    const job3: JobModel = {
-      id: 25,
-      jobTypeId: JobTypes.RoutineMaintenance
-    };
-
-    this.jobs.push(job1);
-    this.jobs.push(job2);
-    this.jobs.push(job3);
   }
 
   getAdminType() {
@@ -142,7 +135,7 @@ export class TimeEntryComponent {
     this.router.navigate(["approve-time-sheets/:" + data.id])
   }
 
-  saveTimesheet() {
+  saveTimesheet(isSubmitted: boolean) {
     var allTimeEntries: TimeEntryModel[] = [];
     this.forms.forEach(form => {
       var timeEntries = this.createTimeEntries(form);
@@ -150,17 +143,29 @@ export class TimeEntryComponent {
       timeEntries.forEach(entry => allTimeEntries.push(entry));
     });
 
-    var newTimeEntries = allTimeEntries.filter(x => x.id == null);
+    // If submitted
+    if (isSubmitted) {
+      allTimeEntries.forEach(x => x.isSubmitted = true);
+    }
 
-    var updateTimeEntries = allTimeEntries.filter(x => x.id != null);
-
-    this.timeEntryService.saveNewTimeEntries(newTimeEntries).subscribe({
+    forkJoin([
+      this.timeEntryService.saveNewTimeEntries(allTimeEntries)
+    ]).subscribe({
       next: data => {
-
-        console.log(data);
-
+        // data is an array containing the results of the observables in the same order
         this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entries: ');
 
+        // re-fill in form with saved time entries from data
+        const savedTimeEntryModels = data[0];
+
+        this.forms = [];
+        this.jobs.forEach(job => {
+          var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId, savedTimeEntryModels);
+
+          if (!job.isCompleted) {
+            this.forms.push(timeEntryWeek);
+          }
+        });
       },
       error: err => {
         console.log(err);
@@ -168,117 +173,158 @@ export class TimeEntryComponent {
     });
   }
 
-
   createTimeEntries(timeEntryWeek: TimeEntryWeekModel): TimeEntryModel[] {
+
+    // does not save properly
+
+    // needs to use id's pulled from matching time entries
+
+    // Create global ????
+    // Check for null????
     var timeEntries: TimeEntryModel[] = [];
 
-    if (timeEntryWeek.sunday != null && timeEntryWeek.sunday != 0) {
+    if (timeEntryWeek.sunday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-11-26T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.sunday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 1
+      }
+
+      if (timeEntryWeek.sundayId !== null) {
+        timeEntry.id = timeEntryWeek.sundayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.monday != null && timeEntryWeek.monday != 0) {
+    if (timeEntryWeek.monday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-11-27T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.monday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 2
+      }
+
+      if (timeEntryWeek.mondayId !== null) {
+        timeEntry.id = timeEntryWeek.mondayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.tuesday != null && timeEntryWeek.tuesday != 0) {
+    if (timeEntryWeek.tuesday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-11-28T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.tuesday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 3
+      }
+
+      if (timeEntryWeek.tuesdayId !== null) {
+        timeEntry.id = timeEntryWeek.tuesdayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.wednesday != null && timeEntryWeek.wednesday != 0) {
+    if (timeEntryWeek.wednesday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-11-29T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.wednesday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 4
+      }
+
+      if (timeEntryWeek.wednesdayId !== null) {
+        timeEntry.id = timeEntryWeek.wednesdayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.thursday != null && timeEntryWeek.thursday != 0) {
+    if (timeEntryWeek.thursday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-11-30T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.thursday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 5
+      }
+
+      if (timeEntryWeek.thursdayId !== null) {
+        timeEntry.id = timeEntryWeek.thursdayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.friday != null && timeEntryWeek.friday != 0) {
+    if (timeEntryWeek.friday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-12-01T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.friday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 6
+      }
+
+      if (timeEntryWeek.fridayId !== null) {
+        timeEntry.id = timeEntryWeek.fridayId;
       }
 
       timeEntries.push(timeEntry);
     }
 
-    if (timeEntryWeek.saturday != null && timeEntryWeek.saturday != 0) {
+    if (timeEntryWeek.saturday != null) {
       var timeEntry: TimeEntryModel = {
         employeeId: timeEntryWeek.employeeId,
-        entryDate: new Date(),
+        entryDate: new Date('2023-12-02T03:24:00'),
         employeeTypeId: timeEntryWeek.employeeTypeId,
         jobTypeId: timeEntryWeek.jobTypeId,
         jobId: timeEntryWeek.jobId,
         totalLoggedHours: timeEntryWeek.saturday,
         lastModifiedDate: new Date(),
         isSubmitted: false,
-        isApproved: false
+        isApproved: false,
+        dayNumber: 7
+      }
+
+      if (timeEntryWeek.saturdayId !== null) {
+        timeEntry.id = timeEntryWeek.saturdayId;
       }
 
       timeEntries.push(timeEntry);

@@ -48,5 +48,10 @@
         /// Gets or sets whether the time entry is approved.
         /// </summary>
         public bool IsApproved { get; set; }
+
+        /// <summary>
+        /// Gets or sets the day number.
+        /// </summary>
+        public int? DayNumber { get; set; }
     }
 }

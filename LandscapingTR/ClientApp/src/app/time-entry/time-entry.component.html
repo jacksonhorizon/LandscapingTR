@@ -57,7 +57,7 @@
 
   </div>
   <br />
-  <b><h2>Week #45: 10/29 - 11/04</h2></b>
+  <b><h2>Week #49: 11/26 - 12/02</h2></b>
   <hr />
   <form *ngIf="loaded"
         name="form"
@@ -162,8 +162,8 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn bg-success btn-save">Submit</button>
+    <button class="btn bg-success btn-save" (click)="saveTimesheet(true)">Submit</button>
     &nbsp;
-    <button class="btn btn-primary" (click)="saveTimesheet()">Save</button>
+    <button class="btn btn-primary" (click)="saveTimesheet(false)">Save</button>
   </form>
 </div>

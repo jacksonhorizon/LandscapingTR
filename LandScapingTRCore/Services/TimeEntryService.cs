@@ -212,10 +212,45 @@ namespace LandscapingTR.Core.Services
             var savedTimeEntryModels = new List<TimeEntryModel>();
             foreach (var timeEntryModel in timeEntryModels)
             {
-                savedTimeEntryModels.Add(await this.SaveTimeEntryAsync(timeEntryModel));
+                if (timeEntryModel.TotalLoggedHours > 0)
+                {
+                    savedTimeEntryModels.Add(await this.SaveTimeEntryAsync(timeEntryModel));
+                }
+                else
+                {
+                    // fixes job hours
+                    var existingTimeEntry = await this.TimeEntryRepository.GetTimeEntryByIdAsync(timeEntryModel.Id.Value);
+
+                    // fixes job hours
+                    var job = await this.JobRepository.GetJobByIdAsync(existingTimeEntry.JobId.Value);
+                    job.TotalLoggedHours -= existingTimeEntry.TotalLoggedHours;
+                    await this.JobRepository.SaveJobAsync(job);
+
+                    var deletedEntry = await this.DeleteTimeEntry(timeEntryModel);
+
+                    savedTimeEntryModels.Add(deletedEntry);
+
+                }
             }
 
             return timeEntryModels;
+        }
+
+        /// <summary>
+        /// Deletes a time entry.
+        /// </summary>
+        /// <param name="timeEntryModel">The time entry.</param>
+        /// <returns>The deleted time entry.</returns>
+        public async Task<TimeEntryModel> DeleteTimeEntry(TimeEntryModel timeEntryModel)
+        {
+            var timeEntry = (await this.TimeEntryRepository.GetAllAsync()).FirstOrDefault(x => x.Id == timeEntryModel.Id);
+            
+            if (timeEntry != null)
+            {
+                await this.TimeEntryRepository.DeleteAsync(timeEntry);
+            }
+
+            return this.Mapper.Map<TimeEntryModel>(timeEntry);
         }
     }
 }

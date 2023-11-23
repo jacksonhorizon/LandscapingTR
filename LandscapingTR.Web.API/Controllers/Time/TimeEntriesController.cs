@@ -20,13 +20,8 @@ namespace LandscapingTR.Web.API.Controllers.Time
         public async Task<IActionResult> GetAllTimeEntriesByEmployeeId(int employeeId)
         {
             var startDate = DateTime.MinValue;
-            var endDate = DateTime.Now;
+            var endDate = DateTime.MaxValue;
             var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
-
-            if (timeEntryModels.Count == 0)
-            {
-                return BadRequest();
-            }
 
             return Ok(timeEntryModels);
         }
