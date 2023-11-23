@@ -76,6 +76,12 @@ namespace LandscapingTR.Core.Services
         /// <returns>The time entries.</returns>
         public async Task<List<TimeEntryModel>> GetTimeEntriesByDateRangeAsync(DateTime? startDate, DateTime? endDate)
         {
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+
             var entities = await this.TimeEntryRepository.GetTimeEntriesByDateRangeAsync(startDate, endDate);
 
             if (entities == null)
