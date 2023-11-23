@@ -147,7 +147,7 @@ export class EmployeeEditComponent {
     newEmployeeModel.payRate = payRate;
     newEmployeeModel.active = active;
 
-    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue === employeeType)?.id || 1;
+    var employeeTypeId = this.employeeTypes.find(x => x.lookupValue == employeeType)?.id || 0;
     newEmployeeModel.employeeTypeId = employeeTypeId;
 
     this.employeeService.updateEmployee(newEmployeeModel).subscribe({

@@ -6,6 +6,13 @@ export class TimeEntryWeekModel {
   friday?: number | null;
   saturday?: number | null;
   sunday?: number | null;
+  mondayId?: number | null;
+  tuesdayId?: number | null;
+  wednesdayId?: number | null;
+  thursdayId?: number | null;
+  fridayId?: number | null;
+  saturdayId?: number | null;
+  sundayId?: number | null;
   jobId?: number | null;
   jobTypeId?: number | null;
   employeeId?: number | null;

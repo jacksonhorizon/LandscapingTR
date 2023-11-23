@@ -83,7 +83,7 @@ export class EmployeeHomeComponent {
     if (job.estimatedTotalHours != undefined && job.totalLoggedHours != undefined) {
       return job.estimatedTotalHours - job.totalLoggedHours;
     } else {
-      return job.estimatedTotalHours
+      return 0;
     }
   }
 

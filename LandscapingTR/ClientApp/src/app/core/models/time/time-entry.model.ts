@@ -9,4 +9,5 @@ export class TimeEntryModel {
   lastModifiedDate?: Date;
   isSubmitted?: boolean = false;
   isApproved = false;
+  dayNumber?: number | null;
 }

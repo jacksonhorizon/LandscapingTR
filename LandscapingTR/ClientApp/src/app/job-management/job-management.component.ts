@@ -126,11 +126,11 @@ export class JobManagementComponent {
   }
 
   getEmployeeName(employeeId: number | undefined) {
-    if (employeeId != undefined) {
+    if (employeeId !== undefined) {
 
       var employee = this.employees.find(x => x.id === employeeId);
 
-      if (employee === null) {
+      if (employee === null || employee === undefined) {
         return "";
       }
       else {
