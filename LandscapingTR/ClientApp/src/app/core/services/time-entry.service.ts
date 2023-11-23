@@ -15,6 +15,9 @@ const httpOptions = {
 export class TimeEntryService {
   constructor(private http: HttpClient) { }
 
+  getAllSubmittedTimeEntries(): Observable<TimeEntryModel[]> {
+    return this.http.get<TimeEntryModel[]>(API_URL + 'AllSubmittedTimeEntriesWithinDates');
+  }
 
   getAllTimeEntriesByEmployeeId(employeeId: number): Observable<TimeEntryModel[]> {
     return this.http.get<TimeEntryModel[]>(API_URL + 'AllTimeEntriesByEmployeeId');

@@ -28,7 +28,7 @@ namespace LandscapingTR.Web.API.Controllers.Time
 
         [HttpGet]
         [Route("AllTimeEntriesByEmployeeIdWithinDates")]
-        public async Task<IActionResult> GetAllTimeEntriesByEmployeeId(int employeeId, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetAllTimeEntriesByEmployeeId(int employeeId, DateTime? startDate, DateTime? endDate)
         {
             var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
 
@@ -48,38 +48,23 @@ namespace LandscapingTR.Web.API.Controllers.Time
             var endDate = DateTime.Now;
             var timeEntryModels = await this.TimeEntryService.GetSubmittedTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
 
-            if (timeEntryModels.Count == 0)
-            {
-                return BadRequest();
-            }
-
             return Ok(timeEntryModels);
         }
 
         [HttpGet]
         [Route("AllSubmittedTimeEntriesByEmployeeIdWithinDates")]
-        public async Task<IActionResult> GetSubmittedTimeEntriesByEmployeeIdWithinDates(int employeeId, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetSubmittedTimeEntriesByEmployeeIdWithinDates(int employeeId, DateTime? startDate, DateTime? endDate)
         {
             var timeEntryModels = await this.TimeEntryService.GetSubmittedTimeEntriesByEmployeeIdAsync(employeeId, startDate, endDate);
-
-            if (timeEntryModels.Count == 0)
-            {
-                return BadRequest();
-            }
 
             return Ok(timeEntryModels);
         }
 
         [HttpGet]
         [Route("AllSubmittedTimeEntriesWithinDates")]
-        public async Task<IActionResult> GetAllSubmittedTimeEntriesWithinDates(DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetAllSubmittedTimeEntriesWithinDates()
         {
-            var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByDateRangeAsync(startDate, endDate);
-
-            if (timeEntryModels.Count == 0)
-            {
-                return BadRequest();
-            }
+            var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByDateRangeAsync(null, null);
 
             return Ok(timeEntryModels);
         }
