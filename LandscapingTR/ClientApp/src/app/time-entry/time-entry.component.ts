@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimeEntryModel } from '../core/models/time/time-entry.model';
 import { EmployeeService } from '../core/services/employee.service';
@@ -30,6 +29,7 @@ export class TimeEntryComponent {
   // General properties
   jobs: JobModel[] = []
   forms: TimeEntryWeekModel[] = [];
+  timeEntries: TimeEntryModel[] = [];
   weekStartDate: Date | null = null;
   weekEndDate: Date | null = null;
 
@@ -61,8 +61,9 @@ export class TimeEntryComponent {
         this.employeeModel = data[0];
 
         this.jobs = data[1].filter(x => x.isCompleted != true);
+        this.timeEntries = data[2];
         this.jobs.forEach(job => {
-          var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId, data[2]);
+          var timeEntryWeek = this.generateWeeklyTimeEntryModel(this.employeeId, this.employeeModel.employeeTypeId, job.id, job.jobTypeId, this.timeEntries);
 
           if (!job.isCompleted) {
             this.forms.push(timeEntryWeek);
@@ -155,6 +156,9 @@ export class TimeEntryComponent {
     // If submitted
     if (isSubmitted) {
       allTimeEntries.forEach(x => x.isSubmitted = true);
+    } else {
+      allTimeEntries.forEach(x => x.isSubmitted = false);
+      allTimeEntries.forEach(x => x.isApproved = false);
     }
 
     forkJoin([
@@ -345,5 +349,15 @@ export class TimeEntryComponent {
     }
 
     return timeEntries;
-  } 
+  }
+
+
+  timeIsSubmitted() {
+    console.log(this.timeEntries.filter(x => x.employeeId == this.employeeId))
+    if (this.timeEntries.filter(x => x.employeeId == this.employeeId).some(x => x.isSubmitted) == true) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -58,6 +58,9 @@
   </div>
   <br />
   <b><h2>Week #49: 11/26 - 12/02</h2></b>
+  <div *ngIf="timeIsSubmitted()">
+    <b>Submitted!</b>
+  </div>
   <hr />
   <form *ngIf="loaded"
         name="form"

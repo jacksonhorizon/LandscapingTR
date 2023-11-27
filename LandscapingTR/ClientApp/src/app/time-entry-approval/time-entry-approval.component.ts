@@ -174,28 +174,31 @@ export class TimeEntryApprovalComponent implements OnInit {
 
   deleteTimeEntry(timeEntry: TimeEntryModel) {
     timeEntry.totalLoggedHours = 0;
+    timeEntry.isApproved = false;
+    timeEntry.isSubmitted = false;
     this.timeEntryService.saveNewTimeEntry(timeEntry).subscribe({
       next: data => {
 
-        this.timeEntryService.deleteTimeEntry(timeEntry).subscribe({
-          next: data => {
-            // data is an array containing the results of the observables in the same order
-            this.toastr.error('Time Entry was rejected!', 'Rejected Time Entry: ');
+        //this.timeEntryService.deleteTimeEntry(timeEntry).subscribe({
+        //  next: data => {
+        //    // data is an array containing the results of the observables in the same order
+        //    this.toastr.error('Time Entry was rejected!', 'Rejected Time Entry: ');
 
-            // re-fill in form with saved time entries from data
-            const savedTimeEntryModel = data;
-            console.log(savedTimeEntryModel);
-          },
-          error: err => {
-            console.log(err);
-          }
-        });
+        //    // re-fill in form with saved time entries from data
+        //    const savedTimeEntryModel = data;
+        //    console.log(savedTimeEntryModel);
+        //  },
+        //  error: err => {
+        //    console.log(err);
+        //  }
+        //});
+        this.toastr.error('Time Entry was rejected!', 'Rejected Time Entry: ');
+        const savedTimeEntryModel = data;
+        console.log(savedTimeEntryModel);
       },
       error: err => {
         console.log(err);
       }
     });
   }
-
-
 }
