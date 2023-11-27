@@ -60,7 +60,7 @@
         <th>Job Name:</th>
         <th>Job Type:</th>
         <th>Total Logged Hours:</th>
-        <th>Approve:</th>
+        <th>Action:</th>
       </tr>
     </thead>
     <tbody>
@@ -73,6 +73,10 @@
         <td>{{ timeEntry.totalLoggedHours }}</td>
         <td>
           <button class="btn bg-success btn-save" (click)="approveTimeEntry(timeEntry)">Approve</button>
+          &nbsp;
+          <button class="btn bg-danger btn-save" (click)="deleteTimeEntry(timeEntry)" type="button">
+            Reject
+          </button>
         </td>
       </tr>
     </tbody>

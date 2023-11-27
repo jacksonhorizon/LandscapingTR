@@ -58,5 +58,12 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="timeEntries">The time entries.</param>
         /// <returns>The saved time entry.</returns>
         Task<List<TimeEntryModel>> SaveTimeEntryRangeAsync(List<TimeEntryModel> timeEntries);
+
+        /// <summary>
+        /// Deletes a time entry.
+        /// </summary>
+        /// <param name="timeEntryModel">The time entry.</param>
+        /// <returns>The deleted time entry.</returns>
+        Task<TimeEntryModel> DeleteTimeEntry(TimeEntryModel timeEntryModel);
     }
 }
