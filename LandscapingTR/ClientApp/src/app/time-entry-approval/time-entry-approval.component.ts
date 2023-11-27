@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -170,6 +170,31 @@ export class TimeEntryApprovalComponent implements OnInit {
 
   matchJobType(jobTypeId: number | undefined | null) {
     return this.jobTypes.find(x => x.id === jobTypeId)?.lookupValue || "Unknown";
+  }
+
+  deleteTimeEntry(timeEntry: TimeEntryModel) {
+    timeEntry.totalLoggedHours = 0;
+    this.timeEntryService.saveNewTimeEntry(timeEntry).subscribe({
+      next: data => {
+
+        this.timeEntryService.deleteTimeEntry(timeEntry).subscribe({
+          next: data => {
+            // data is an array containing the results of the observables in the same order
+            this.toastr.error('Time Entry was rejected!', 'Rejected Time Entry: ');
+
+            // re-fill in form with saved time entries from data
+            const savedTimeEntryModel = data;
+            console.log(savedTimeEntryModel);
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
 

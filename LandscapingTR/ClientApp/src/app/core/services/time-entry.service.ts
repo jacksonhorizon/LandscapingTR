@@ -38,4 +38,14 @@ export class TimeEntryService {
   updateTimeEntries(timeEntryModel: TimeEntryModel[]): Observable<TimeEntryModel[]> {
     return this.http.put<TimeEntryModel[]>(API_URL + 'SaveTimeEntries', timeEntryModel, httpOptions);
   }
+
+  deleteTimeEntry(timeEntryModel: TimeEntryModel): Observable<TimeEntryModel> {
+    const url = `${API_URL}DeleteTimeEntry`;
+
+    const options = {
+      body: timeEntryModel, // Send the model as the request body
+    };
+
+    return this.http.request<TimeEntryModel>('delete', url, options);
+  } 
 }

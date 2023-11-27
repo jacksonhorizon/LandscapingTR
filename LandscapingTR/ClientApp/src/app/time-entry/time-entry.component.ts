@@ -153,7 +153,12 @@ export class TimeEntryComponent {
     ]).subscribe({
       next: data => {
         // data is an array containing the results of the observables in the same order
-        this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entries: ');
+        if (isSubmitted) {
+
+          this.toastr.success('Time Entries were submitted successfully!', 'Submitted Time Entries: ');
+        } else {
+          this.toastr.success('Time Entries were saved successfully!', 'Saved Time Entries: ');
+        }
 
         // re-fill in form with saved time entries from data
         const savedTimeEntryModels = data[0];

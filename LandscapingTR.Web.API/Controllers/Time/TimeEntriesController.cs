@@ -124,5 +124,14 @@ namespace LandscapingTR.Web.API.Controllers.Time
 
             return Ok(savedTimeEntryModels);
         }
+
+        [HttpDelete]
+        [Route("DeleteTimeEntry")]
+        public async Task<IActionResult> DeleteTimeEntry(TimeEntryModel timeEntryModel)
+        {
+            var deletedTimeEntryModel = await this.TimeEntryService.DeleteTimeEntry(timeEntryModel);
+
+            return Ok(deletedTimeEntryModel); 
+        }
     }
 }
