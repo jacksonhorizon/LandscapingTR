@@ -192,13 +192,6 @@ export class TimeEntryComponent {
   }
 
   createTimeEntries(timeEntryWeek: TimeEntryWeekModel): TimeEntryModel[] {
-
-    // does not save properly
-
-    // needs to use id's pulled from matching time entries
-
-    // Create global ????
-    // Check for null????
     var timeEntries: TimeEntryModel[] = [];
 
     if (timeEntryWeek.sunday != null) {
