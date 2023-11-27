@@ -13,6 +13,13 @@ export class TimeEntryWeekModel {
   fridayId?: number | null;
   saturdayId?: number | null;
   sundayId?: number | null;
+  mondayApproved?: boolean;
+  tuesdayApproved?: boolean;
+  wednesdayApproved?: boolean;
+  thursdayApproved?: boolean;
+  fridayApproved?: boolean;
+  saturdayApproved?: boolean;
+  sundayApproved?: boolean;
   jobId?: number | null;
   jobTypeId?: number | null;
   employeeId?: number | null;
