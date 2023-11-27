@@ -82,81 +82,172 @@
             {{job.jobName}}:
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="sunday{{i}}"
-                   id="sunday{{i}}"
-                   [(ngModel)]="forms[i].sunday"
-                   required
-                   #sunday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="sunday{{i}}"
+                     id="sunday{{i}}"
+                     [(ngModel)]="forms[i].sunday"
+                     required
+                     #sunday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].thursdayApproved"
+                       name="thursdayApproved{{i}}"
+                       id="thursdayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].thursdayApproved"
+                       #thursdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="monday{{i}}"
-                   id="monday{{i}}"
-                   [(ngModel)]="forms[i].monday"
-                   required
-                   #monday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="monday{{i}}"
+                     id="monday{{i}}"
+                     [(ngModel)]="forms[i].monday"
+                     required
+                     #monday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].mondayApproved"
+                       name="mondayApproved{{i}}"
+                       id="mondayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].mondayApproved"
+                       #mondayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="tuesday{{i}}"
-                   id="tuesday{{i}}"
-                   [(ngModel)]="forms[i].tuesday"
-                   required
-                   #tuesday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="tuesday{{i}}"
+                     id="tuesday{{i}}"
+                     [(ngModel)]="forms[i].tuesday"
+                     required
+                     #tuesday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].tuesdayApproved"
+                       name="tuesdayApproved{{i}}"
+                       id="tuesdayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].tuesdayApproved"
+                       #tuesdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="wednesday{{i}}"
-                   id="wednesday{{i}}"
-                   [(ngModel)]="forms[i].wednesday"
-                   required
-                   #wednesday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="wednesday{{i}}"
+                     id="wednesday{{i}}"
+                     [(ngModel)]="forms[i].wednesday"
+                     required
+                     #wednesday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].wednesdayApproved"
+                       name="wednesdayApproved{{i}}"
+                       id="wednesdayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].wednesdayApproved"
+                       #wednesdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="thursday{{i}}"
-                   id="thursday{{i}}"
-                   [(ngModel)]="forms[i].thursday"
-                   required
-                   #thursday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="thursday{{i}}"
+                     id="thursday{{i}}"
+                     [(ngModel)]="forms[i].thursday"
+                     required
+                     #thursday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].thursdayApproved"
+                       name="thursdayApproved{{i}}"
+                       id="thursdayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].thursdayApproved"
+                       #thursdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="friday{{i}}"
-                   id="friday{{i}}"
-                   [(ngModel)]="forms[i].friday"
-                   required
-                   #friday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="friday{{i}}"
+                     id="friday{{i}}"
+                     [(ngModel)]="forms[i].friday"
+                     required
+                     #friday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].fridayApproved"
+                       name="fridayApproved{{i}}"
+                       id="fridayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].fridayApproved"
+                       #thursdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="number"
-                   min="0"
-                   max="24"
-                   class="form-control"
-                   name="saturday{{i}}"
-                   id="saturday{{i}}"
-                   [(ngModel)]="forms[i].saturday"
-                   required
-                   #saturday{{i}}="ngModel" />
+            <div style="display: flex; flex-direction: row;">
+              <input type="number"
+                     min="0"
+                     max="24"
+                     class="form-control"
+                     name="saturday{{i}}"
+                     id="saturday{{i}}"
+                     [(ngModel)]="forms[i].saturday"
+                     required
+                     #saturday{{i}}="ngModel" />
+              <div class="form-check" style="margin-left: 5px; padding-top: 5px">
+                <input mdbCheckbox
+                       class="form-check-input larger"
+                       type="checkbox"
+                       value="forms[i].saturdayApproved"
+                       name="saturdayApproved{{i}}"
+                       id="saturdayApproved{{i}}"
+                       disabled
+                       [(ngModel)]="forms[i].saturdayApproved"
+                       #thursdayApproved{{i}}="ngModel" />
+              </div>
+            </div>
           </td>
           <br />
         </tr>

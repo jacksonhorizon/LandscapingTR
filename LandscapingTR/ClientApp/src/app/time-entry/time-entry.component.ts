@@ -114,6 +114,15 @@ export class TimeEntryComponent {
       thursdayId: thursday?.id,
       fridayId: friday?.id,
       saturdayId: saturday?.id,
+
+      mondayApproved: monday?.isApproved,
+      tuesdayApproved: tuesday?.isApproved,
+      wednesdayApproved: wednesday?.isApproved,
+      thursdayApproved: thursday?.isApproved,
+      fridayApproved: friday?.isApproved,
+      saturdayApproved: saturday?.isApproved,
+      sundayApproved: sunday?.isApproved,
+
       employeeId: employeeId,
       employeeTypeId: employeeTypeId,
       jobId: jobId,

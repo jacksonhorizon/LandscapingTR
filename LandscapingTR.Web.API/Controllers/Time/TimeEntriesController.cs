@@ -66,7 +66,7 @@ namespace LandscapingTR.Web.API.Controllers.Time
         {
             var timeEntryModels = await this.TimeEntryService.GetTimeEntriesByDateRangeAsync(null, null);
 
-            return Ok(timeEntryModels);
+            return Ok(timeEntryModels.OrderBy(x => x.EntryDate));
         }
 
         [HttpPost]
