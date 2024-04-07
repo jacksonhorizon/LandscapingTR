@@ -85,7 +85,7 @@ namespace LandscapingTR.Test.Lookups
         /// Adds a new employee.
         /// </summary>
         /// <returns>The saved employee.</returns>
-        private async Task<EmployeeModel> AddNewEmployeeAsync(string firstName)
+        private async Task<EmployeeModel> AddNewEmployeeAsync(string firstName, bool active = true)
         {
             // Add a new employee.
             var newEmployee = new Employee()
@@ -94,7 +94,8 @@ namespace LandscapingTR.Test.Lookups
                 LastName = "Test Last Name",
                 Username = "Test Username -" + firstName,
                 Password = "Test Password",
-                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker
+                EmployeeTypeId = (int)EmployeeTypes.FieldCrewWorker,
+                Active = active
             };
             var newEmployeeModel = Mapper.Map<EmployeeModel>(newEmployee);
 
