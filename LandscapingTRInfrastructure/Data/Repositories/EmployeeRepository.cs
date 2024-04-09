@@ -59,5 +59,11 @@ namespace LandscapingTR.Infrastructure.Data.Repositories
 
             return employee;
         }
+
+        public async Task<List<Employee>> GetAllActiveEmployeesAsync()
+        {
+            var employee = await this.DataContext.Employees.Where(em => em.Active == true).ToListAsync();
+            return employee;
+        }
     }
 }

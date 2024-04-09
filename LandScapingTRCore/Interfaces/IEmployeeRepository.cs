@@ -23,5 +23,7 @@ namespace LandscapingTR.Core.Interfaces
         /// <param name="employee">The employee.</param>
         /// <returns>The saved employee.</returns>
         Task<Employee> SaveEmployeeAsync(Employee employee);
+
+        Task<List<Employee>> GetAllActiveEmployeesAsync();
     }
 }

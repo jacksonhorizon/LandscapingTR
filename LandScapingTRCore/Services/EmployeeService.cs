@@ -89,6 +89,13 @@ namespace LandscapingTR.Core.Services
             }
         }
 
+        public async Task<List<EmployeeModel>> GetAllActiveEmployeesAsync()
+        {
+            var employ = await this.EmployeeRepository.GetAllActiveEmployeesAsync();
+            var mapped = employ.Select(e => this.Mapper.Map<EmployeeModel>(e));
+            return (List<EmployeeModel>)mapped;
+        }
+
         /// <summary>
         /// Deletes an employee.
         /// </summary>
